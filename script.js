@@ -543,53 +543,301 @@ document.addEventListener("DOMContentLoaded", () => {
   // Clicking the Teacher Button reveals Head Master first, then square teachers
   // =========================================================================
   const btnToggleTeachers = document.getElementById("btn-toggle-teachers");
+  const btnToggleExTeachers = document.getElementById("btn-toggle-ex-teachers");
   const teachersRosterWrapper = document.getElementById("teachers-roster-wrapper");
+  const exTeachersRosterWrapper = document.getElementById("ex-teachers-roster-wrapper");
   const teacherBtnStatus = document.getElementById("teacher-btn-status");
+  const exTeacherBtnStatus = document.getElementById("ex-teacher-btn-status");
   const headmasterCard = document.getElementById("headmaster-showcase-card");
 
-  if (btnToggleTeachers && teachersRosterWrapper) {
-    const openTeachersRoster = (shouldScroll = true) => {
-      teachersRosterWrapper.classList.add("is-open");
-      btnToggleTeachers.classList.add("active");
-      btnToggleTeachers.setAttribute("aria-expanded", "true");
-      if (teacherBtnStatus) {
-        teacherBtnStatus.textContent = "তালিকা প্রদর্শিত";
-      }
-      if (shouldScroll && headmasterCard) {
-        setTimeout(() => {
-          headmasterCard.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 120);
-      }
-    };
-
-    const closeTeachersRoster = () => {
-      teachersRosterWrapper.classList.remove("is-open");
-      btnToggleTeachers.classList.remove("active");
-      btnToggleTeachers.setAttribute("aria-expanded", "false");
-      if (teacherBtnStatus) {
-        teacherBtnStatus.textContent = "ক্লিক করে দেখুন";
-      }
-    };
-
-    btnToggleTeachers.addEventListener("click", () => {
-      if (teachersRosterWrapper.classList.contains("is-open")) {
-        closeTeachersRoster();
-      } else {
-        openTeachersRoster(true);
-      }
-    });
-
-    // Auto-open if navigating via navbar link #teachers
-    document.querySelectorAll('a[href="#teachers"]').forEach((navLink) => {
-      navLink.addEventListener("click", () => {
-        openTeachersRoster(false);
-      });
-    });
-
-    if (window.location.hash === "#teachers") {
-      openTeachersRoster(false);
+  // Open / Close Current Faculty Roster
+  const openTeachersRoster = (shouldScroll = true) => {
+    if (exTeachersRosterWrapper?.classList.contains("is-open")) {
+      closeExTeachersRoster();
     }
+    teachersRosterWrapper?.classList.add("is-open");
+    btnToggleTeachers?.classList.add("active");
+    btnToggleTeachers?.setAttribute("aria-expanded", "true");
+    if (teacherBtnStatus) {
+      teacherBtnStatus.textContent = "তালিকা প্রদর্শিত";
+    }
+    if (shouldScroll && headmasterCard) {
+      setTimeout(() => {
+        headmasterCard.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 120);
+    }
+  };
+
+  const closeTeachersRoster = () => {
+    teachersRosterWrapper?.classList.remove("is-open");
+    btnToggleTeachers?.classList.remove("active");
+    btnToggleTeachers?.setAttribute("aria-expanded", "false");
+    if (teacherBtnStatus) {
+      teacherBtnStatus.textContent = "Click করুন";
+    }
+  };
+
+  btnToggleTeachers?.addEventListener("click", () => {
+    if (teachersRosterWrapper?.classList.contains("is-open")) {
+      closeTeachersRoster();
+    } else {
+      openTeachersRoster(true);
+    }
+  });
+
+  // Open / Close Ex-Teachers Roster
+  const openExTeachersRoster = (shouldScroll = true) => {
+    if (teachersRosterWrapper?.classList.contains("is-open")) {
+      closeTeachersRoster();
+    }
+    exTeachersRosterWrapper?.classList.add("is-open");
+    btnToggleExTeachers?.classList.add("active");
+    btnToggleExTeachers?.setAttribute("aria-expanded", "true");
+    if (exTeacherBtnStatus) {
+      exTeacherBtnStatus.textContent = "তালিকা প্রদর্শিত";
+    }
+    if (shouldScroll && exTeachersRosterWrapper) {
+      setTimeout(() => {
+        exTeachersRosterWrapper.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 120);
+    }
+  };
+
+  const closeExTeachersRoster = () => {
+    exTeachersRosterWrapper?.classList.remove("is-open");
+    btnToggleExTeachers?.classList.remove("active");
+    btnToggleExTeachers?.setAttribute("aria-expanded", "false");
+    if (exTeacherBtnStatus) {
+      exTeacherBtnStatus.textContent = "স্মৃতি ও সেবাকাল";
+    }
+  };
+
+  btnToggleExTeachers?.addEventListener("click", () => {
+    if (exTeachersRosterWrapper?.classList.contains("is-open")) {
+      closeExTeachersRoster();
+    } else {
+      openExTeachersRoster(true);
+    }
+  });
+
+  // Auto-open if navigating via navbar link #teachers
+  document.querySelectorAll('a[href="#teachers"]').forEach((navLink) => {
+    navLink.addEventListener("click", () => {
+      openTeachersRoster(false);
+    });
+  });
+
+  if (window.location.hash === "#teachers") {
+    openTeachersRoster(false);
   }
+
+  // =========================================================================
+  // 6b. Add Ex-Teacher Modal & LocalStorage Persistence System
+  // =========================================================================
+  const exTeacherModal = document.getElementById("ex-teacher-modal-overlay");
+  const btnOpenExModal = document.getElementById("btn-open-ex-teacher-modal");
+  const btnCloseExModal = document.getElementById("btn-close-ex-modal");
+  const btnCancelExModal = document.getElementById("btn-cancel-ex-modal");
+  const formAddExTeacher = document.getElementById("form-add-ex-teacher");
+  const exTeachersGrid = document.getElementById("ex-teachers-grid");
+
+  const openExTeacherModal = () => {
+    if (exTeacherModal) {
+      exTeacherModal.classList.add("active");
+      exTeacherModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      setTimeout(() => {
+        document.getElementById("ex-name")?.focus();
+      }, 100);
+    }
+  };
+
+  const closeExTeacherModal = () => {
+    if (exTeacherModal) {
+      exTeacherModal.classList.remove("active");
+      exTeacherModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+  };
+
+  btnOpenExModal?.addEventListener("click", openExTeacherModal);
+  btnCloseExModal?.addEventListener("click", closeExTeacherModal);
+  btnCancelExModal?.addEventListener("click", closeExTeacherModal);
+
+  exTeacherModal?.addEventListener("click", (e) => {
+    if (e.target === exTeacherModal) {
+      closeExTeacherModal();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && exTeacherModal?.classList.contains("active")) {
+      closeExTeacherModal();
+    }
+  });
+
+  // Helper to build Card HTML for Ex-Teacher
+  const createExTeacherCardElement = (item, isCustom = false) => {
+    const card = document.createElement("article");
+    card.className = "ex-teacher-card";
+    if (isCustom && item.id) {
+      card.setAttribute("data-id", item.id);
+    }
+
+    const photoSrc = item.photo && item.photo.trim() !== ""
+      ? item.photo
+      : "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=400&q=80";
+
+    const isLate = (item.status || "").includes("মরহুম");
+    const statusClass = isLate ? "status-late" : "status-retired";
+    const statusText = item.status || "অবসরপ্রাপ্ত গুণী শিক্ষক";
+
+    const badgeIcon = isLate ? "🕊️" : "🎖️";
+    const badgeTitle = isLate ? "চিরস্মরণীয় শিক্ষক" : "সম্মানিত শিক্ষক";
+
+    card.innerHTML = `
+      <div class="ex-teacher-card-badge">
+        <span class="badge-icon">${badgeIcon}</span>
+        <span>${badgeTitle}</span>
+      </div>
+      <div class="ex-teacher-header">
+        <div class="ex-teacher-photo-wrap">
+          <img src="${photoSrc}" alt="${item.name}" class="ex-teacher-photo" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=400&q=80'">
+          <span class="ex-teacher-status-tag ${statusClass}">${statusText}</span>
+        </div>
+        <div class="ex-teacher-bio-top">
+          <h4 class="ex-teacher-name">${item.name}</h4>
+          <div class="ex-teacher-designation">${item.designation}</div>
+          <div class="ex-teacher-subject-tag">${item.period}</div>
+        </div>
+      </div>
+
+      <div class="ex-teacher-service-box">
+        <div class="service-pill-row">
+          <div class="service-stat">
+            <span class="service-label">সেবাকাল:</span>
+            <strong class="service-period">${item.period}</strong>
+          </div>
+          <div class="service-tenure-badge">
+            <span class="tenure-clock">⏳</span>
+            <strong>${item.years}</strong>
+          </div>
+        </div>
+        ${item.qualification ? `
+          <div class="ex-teacher-qual">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+            <span><strong>যোগ্যতা:</strong> ${item.qualification}</span>
+          </div>
+        ` : ''}
+      </div>
+
+      <p class="ex-teacher-tribute">
+        ${item.tribute}
+      </p>
+
+      <div class="ex-teacher-card-footer">
+        <span class="honor-tag">★ শ্রদ্ধা ও সম্মাননা</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="service-years-count">মোট সেবা: <strong>${item.years}</strong></span>
+          ${isCustom ? `<button type="button" class="btn-remove-custom-ex" title="তালিকায় থেকে সরান">মুছে ফেলুন</button>` : ''}
+        </div>
+      </div>
+    `;
+
+    if (isCustom && item.id) {
+      const removeBtn = card.querySelector(".btn-remove-custom-ex");
+      removeBtn?.addEventListener("click", () => {
+        removeCustomExTeacher(item.id, card, item.name);
+      });
+    }
+
+    return card;
+  };
+
+  // LocalStorage handling for custom ex-teachers
+  const getSavedExTeachers = () => {
+    try {
+      const data = localStorage.getItem("ghoshgaon_custom_ex_teachers");
+      return data ? JSON.parse(data) : [];
+    } catch (e) {
+      return [];
+    }
+  };
+
+  const saveCustomExTeacher = (item) => {
+    const list = getSavedExTeachers();
+    list.unshift(item);
+    localStorage.setItem("ghoshgaon_custom_ex_teachers", JSON.stringify(list));
+  };
+
+  const removeCustomExTeacher = (id, cardElement, name) => {
+    if (confirm(`আপনি কি সত্যিই "${name}" শিক্ষকের তথ্য তালিকা থেকে মুছে ফেলতে চান?`)) {
+      const list = getSavedExTeachers().filter((i) => i.id !== id);
+      localStorage.setItem("ghoshgaon_custom_ex_teachers", JSON.stringify(list));
+      cardElement.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+      cardElement.style.opacity = "0";
+      cardElement.style.transform = "scale(0.9)";
+      setTimeout(() => cardElement.remove(), 300);
+      showToast(`প্রাক্তন শিক্ষক ${name}-এর তথ্য তালিকা থেকে অপসারিত হয়েছে।`);
+    }
+  };
+
+  // Load custom ex-teachers into grid on page start
+  const loadCustomExTeachers = () => {
+    if (!exTeachersGrid) return;
+    const list = getSavedExTeachers();
+    list.forEach((item) => {
+      const cardEl = createExTeacherCardElement(item, true);
+      exTeachersGrid.prepend(cardEl);
+    });
+  };
+
+  loadCustomExTeachers();
+
+  // Form Submit Handler
+  formAddExTeacher?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const nameVal = document.getElementById("ex-name")?.value.trim() || "";
+    const designationVal = document.getElementById("ex-designation")?.value.trim() || "";
+    const periodVal = document.getElementById("ex-period")?.value.trim() || "";
+    const yearsVal = document.getElementById("ex-years")?.value.trim() || "";
+    const qualVal = document.getElementById("ex-qual")?.value.trim() || "";
+    const statusVal = document.getElementById("ex-status")?.value || "অবসরপ্রাপ্ত গুণী শিক্ষক";
+    const photoVal = document.getElementById("ex-photo")?.value.trim() || "";
+    const tributeVal = document.getElementById("ex-tribute")?.value.trim() || "";
+
+    if (!nameVal || !designationVal || !periodVal || !yearsVal || !tributeVal) {
+      showToast("অনুগ্রহ করে শিক্ষকের নাম, পদবি, সেবাকাল ও অবদান পূরণ করুন।");
+      return;
+    }
+
+    const newExTeacher = {
+      id: "ex_" + Date.now(),
+      name: nameVal,
+      designation: designationVal,
+      period: periodVal,
+      years: yearsVal,
+      qualification: qualVal,
+      status: statusVal,
+      photo: photoVal,
+      tribute: tributeVal
+    };
+
+    saveCustomExTeacher(newExTeacher);
+    const newCard = createExTeacherCardElement(newExTeacher, true);
+    newCard.style.animation = "fadeIn 0.5s ease forwards";
+    exTeachersGrid?.prepend(newCard);
+
+    // Make sure ex-teachers roster is open so the user sees their new addition!
+    openExTeachersRoster(true);
+
+    showToast(`ধন্যবাদ! প্রাক্তন শিক্ষক ${nameVal}-এর তথ্য ও সেবাকাল সফলভাবে সংরক্ষিত হয়েছে।`);
+    formAddExTeacher.reset();
+    closeExTeacherModal();
+  });
 
   const facultyBtns = document.querySelectorAll(".faculty-btn");
   const teacherCards = document.querySelectorAll(".teacher-card");
@@ -1276,7 +1524,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const parentName = document.getElementById("inq-parent-name")?.value || "অভিভাবক";
       inquiryForm.reset();
-      showToast(`বার্তা প্রেরিত হয়েছে! ধন্যবাদ ${parentName}। আমাদের ভর্তি উপদেষ্টাগণ দ্রুত আপনার সাথে যোগাযোগ করবেন।`);
+      showToast(`আপনার নোট ও বার্তা জমা হয়েছে! ধন্যবাদ ${parentName}। প্রতিষ্ঠান প্রশাসন দ্রুত আপনার সাথে যোগাযোগ করবে।`);
     });
   }
 
@@ -1591,6 +1839,805 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   initMobileTestimonialsSlider();
+
+  // ==========================================================================
+  // YEARLY GOV. HOLIDAY LIST MODAL POPUP & EDUCATIONAL SHOWCASE
+  // ==========================================================================
+  const holidayEducationalData = {
+    "mother-language-day": {
+      id: "mother-language-day",
+      name: "শহীদ দিবস ও আন্তর্জাতিক মাতৃভাষা দিবস",
+      date: "📅 ২১ ফেব্রুয়ারি ২০২৬ (শনিবার)",
+      duration: "১ দিন",
+      type: "জাতীয় দিবস ও আন্তর্জাতিক স্বীকৃতি",
+      icon: "🇧🇩",
+      whatHappened: "১৯৫২ সালের ২১শে ফেব্রুয়ারি (৮ই ফাল্গুন ১৩৫৮) তৎকালীন পাকিস্তানি শাসকগোষ্ঠী উর্দুকে একমাত্র রাষ্ট্রভাষা করার ষড়যন্ত্রে লিপ্ত হলে বাংলার দামাল ছাত্র-জনতা ১৪৪ ধারা ভঙ্গ করে ঢাকা বিশ্ববিদ্যালয় এলাকা থেকে ঐতিহাসিক মিছিল বের করে। মেডিকেল কলেজের সামনে সেই শান্তিপূর্ণ মিছিলে পুলিশ নির্বিচারে গুলি বর্ষণ করে। এতে সালাম, বরকত, রফিক, জব্বার, শফিউর সহ নাম না জানা অনেকে বুকের তাজা রক্ত ঢেলে দিয়ে রাজপথ রঞ্জিত করেন। পৃথিবীর সমগ্র ইতিহাসে নিজের মাতৃভাষার মর্যাদা রক্ষায় রক্ত দেওয়ার এটিই প্রথম ও অনন্য ঘটনা।",
+      whyCelebrated: "ভাষাশহীদদের অবিস্মরণীয় আত্মত্যাগের প্রতি বিনম্র শ্রদ্ধা জানাতে এবং রক্তের বিনিময়ে অর্জিত মায়ের ভাষা বাংলার মর্যাদা চিরউন্নত রাখতে প্রতি বছর গভীর শ্রদ্ধা ও ভালোবাসায় দিবসটি পালিত হয়। ১৯৯৯ সালের ১৭ নভেম্বর জাতিসংঘের অঙ্গসংস্থা ইউনেস্কো (UNESCO) এই দিনটিকে 'আন্তর্জাতিক মাতৃভাষা দিবস' হিসেবে স্বীকৃতি দেয়। ফলে আজ বিশ্বের ১৯৩টিরও বেশি দেশে সব জাতিগোষ্ঠীর নিজ নিজ মাতৃভাষা ও সাংস্কৃতিক বৈচিত্র্য সংরক্ষণের বৈশ্বিক প্রতীক হিসেবে এ দিনটি সগৌরবে উদযাপিত হয়।",
+      studentMessage: "শহীদদের আত্মত্যাগ থেকে নিঃস্বার্থ দেশপ্রেম ও অন্যায়ের বিরুদ্ধে ন্যায়ের পক্ষে দাঁড়ানোর শিক্ষা নেওয়া। মাতৃভাষা বাংলাকে ভালোবাসা, শুদ্ধ উচ্চারণে কথা বলা ও লেখা এবং দেশের ইতিহাসকে শ্রদ্ধার সাথে স্মরণ করা প্রতিটি শিক্ষার্থীর পবিত্র দায়িত্ব।"
+    },
+    "independence-day": {
+      id: "independence-day",
+      name: "স্বাধীনতা ও জাতীয় দিবস",
+      date: "📅 ২৬ মার্চ ২০২৬ (বৃহস্পতিবার)",
+      duration: "১ দিন",
+      type: "জাতীয় দিবস ও রাষ্ট্রীয় গৌরব",
+      icon: "🇧🇩",
+      whatHappened: "১৯৭১ সালের ২৫শে মার্চ কালরাতে পাকিস্তানি হানাদার বাহিনী তাদের বর্বর 'অপারেশন সার্চলাইট'-এর মাধ্যমে ঢাকাসহ সারা দেশে নিরস্ত্র বাঙালিদের ওপর বর্বরোচিত গণহত্যা শুরু করে। ২৬শে মার্চ প্রথম প্রহরে জাতির পিতা বঙ্গবন্ধু শেখ মুজিবুর রহমান বাংলাদেশের স্বাধীনতা ঘোষণা করেন। এরপরই বীর বাঙালি দেশমাতৃকাকে শত্রুমুক্ত করতে সশস্ত্র মুক্তিযুদ্ধে ঝাঁপিয়ে পড়ে।",
+      whyCelebrated: "দীর্ঘ ৯ মাসের রক্তক্ষয়ী মুক্তিযুদ্ধের সূচনা এবং ৩০ লাখ শহীদ ও ২ লাখ মা-বোনের অসীম ত্যাগের বিনিময়ে অর্জিত স্বাধীন বাংলাদেশের আত্মপ্রকাশকে চিরস্মরণীয় করে রাখতে এ দিনটি পালিত হয়। মুক্ত স্বাধীন স্বদেশ গড়ার শপথ ও বীর মুক্তিযোদ্ধাদের প্রতি কৃতজ্ঞতা প্রকাশে পুরো জাতি এ দিনটি উদযাপন করে।",
+      studentMessage: "স্বাধীনতার মূল্য বোঝা, মুক্তিযোদ্ধাদের অবদান শ্রদ্ধাভরে স্মরণ করা এবং সুশিক্ষায় শিক্ষিত হয়ে মেধা ও চরিত্র দিয়ে দেশ গড়ার কারিগর হওয়া।"
+    },
+    "victory-day": {
+      id: "victory-day",
+      name: "বিজয় দিবস, বড়দিন ও শীতকালীন অবকাশ",
+      date: "📅 ১৬ ডিসেম্বর – ৩১ ডিসেম্বর ২০২৬",
+      duration: "১৩ দিন",
+      type: "জাতীয় দিবস ও দীর্ঘ অবকাশ",
+      icon: "❄️",
+      whatHappened: "১৯৭১ সালের ১৬ই ডিসেম্বর দীর্ঘ ৯ মাসের রক্তক্ষয়ী মুক্তিযুদ্ধ শেষে ঢাকার ঐতিহাসিক রেসকোর্স ময়দানে (বর্তমান সোহরাওয়ার্দী উদ্যান) পাকিস্তানি বাহিনীর ৯৩ হাজার সৈন্য মিত্র ও মুক্তিবাহিনীর যৌথ কমান্ডের কাছে নিঃশর্ত আত্মসমর্পণ করতে বাধ্য হয়। এর মাধ্যমে বিশ্বের মানচিত্রে লাল-সবুজের স্বাধীন সার্বভৌম বাংলাদেশের চূড়ান্ত বিজয় প্রতিষ্ঠিত হয়। একই সাথে ২৫শে ডিসেম্বর যিশু খ্রিস্টের শুভ জন্মদিন (বড়দিন) হিসেবেও উদযাপিত হয়।",
+      whyCelebrated: "বাঙালি জাতির বীরত্বপূর্ণ সংগ্রাম ও বিজয়ের চিরস্মরণীয় অর্জনকে উদযাপন করতে এবং স্বাধীনতা যুদ্ধে আত্মোৎসর্গকারী বীর সেনানীদের প্রতি শ্রদ্ধা নিবেদনে এ দিবসটি উদযাপিত হয়। একই সাথে শীতকালীন অবকাশ ও বড়দিনের সর্বজনীন আনন্দের বার্তা নিয়ে দিনগুলো অতিবাহিত হয়।",
+      studentMessage: "বিজয়ের ইতিহাস জানা, জাতীয় পতাকার মর্যাদা রক্ষা করা এবং অবকাশকালীন সময়ে পাঠ্যবইয়ের পাশাপাশি শিক্ষণীয় বই পড়ে জ্ঞানকে সমৃদ্ধ করা।"
+    },
+    "pahela-baishakh": {
+      id: "pahela-baishakh",
+      name: "বাংলা নববর্ষ (পহেলা বৈশাখ)",
+      date: "📅 ১৪ এপ্রিল ২০২৬ (মঙ্গলবার)",
+      duration: "১ দিন",
+      type: "জাতীয় ও সর্বজনীন সাংস্কৃতিক উৎসব",
+      icon: "🌾",
+      whatHappened: "মোঘল সম্রাট আকবরের শাসনামলে ফসলি সন হিসেবে বাংলা সনের প্রবর্তন হয়। বৈশাখের প্রথম দিনে ব্যবসায়ীরা নতুন হিসাবের খাতা বা 'হালখাতা' খুলতেন এবং ক্রেতাদের মিষ্টিমুখ করাতেন। যুগ যুগ ধরে গ্রামবাংলায় মঙ্গল শোভাযাত্রা, লোকজ মেলা, পান্তা-ইলিশ ও সাংস্কৃতিক পরিবেশনার মাধ্যমে দিনটি পালিত হয়ে আসছে।",
+      whyCelebrated: "বাঙালি জাতির হাজার বছরের ঐতিহ্য, সম্প্রীতি ও অহিংস সংস্কৃতির প্রতীক পহেলা বৈশাখ। জাতি, ধর্ম, বর্ণ নির্বিশেষে সবাইকে এক সূত্রে গেঁথে সব গ্লানি মুছে নতুন উদ্যমে বছর শুরু করার প্রত্যয়ে দিনটি অত্যন্ত আনন্দের সাথে পালিত হয়। ২০১৬ সালে মঙ্গল শোভাযাত্রা ইউনেস্কোর বিশ্ব সাংস্কৃতিক ঐতিহ্যের স্বীকৃতি পায়।",
+      studentMessage: "নিজ সংস্কৃতি ও শেকড়কে ভালোবাসা, সাম্প্রদায়িক সম্প্রীতি বজায় রাখা এবং কুসংস্কারমুক্ত আধুনিক চিন্তাচেতনায় নিজেকে গড়ে তোলা।"
+    },
+    "ramadan-eid": {
+      id: "ramadan-eid",
+      name: "পবিত্র রমজান, শবে কদর ও ঈদুল ফিতর",
+      date: "📅 ০১ মার্চ – ০১ এপ্রিল ২০২৬",
+      duration: "২৬ দিন",
+      type: "মুসলিম প্রধান ধর্মীয় উৎসব ও দীর্ঘ অবকাশ",
+      icon: "🕌",
+      whatHappened: "পবিত্র রমজান মাসে মানবজাতির হেদায়েতের জন্য মহাগ্রন্থ কুরআনুল কারিম নাজিল হয়। এক মাস ধরে মুসলিমগণ রোজা পালন করে আত্মসংযম ও তাকওয়ার প্রশিক্ষণ নেন। রমজানের শেষ দশকের লাইলাতুল কদর হাজার মাসের চেয়ে শ্রেষ্ঠ রাত হিসেবে পালিত হয়। এরপর শাওয়াল মাসের নতুন চাঁদ ওঠার সাথে সাথে মুসলিম উম্মাহ ঈদুল ফিতরের আনন্দে মেতে ওঠে।",
+      whyCelebrated: "আল্লাহর সন্তুষ্টি অর্জন, আত্মশুদ্ধি, গরিব-অসহায় মানুষের ক্ষুধার কষ্ট উপলব্ধি করা এবং ফিতরা ও জাকাতের মাধ্যমে সমাজে ধনী-গরিবের বৈষম্য দূর করে ভ্রাতৃত্ব ও আনন্দের ভাগাভাগি করতে ঈদুল ফিতর পালিত হয়।",
+      studentMessage: "সংযম, সততা, সহমর্মিতা ও গরিবের পাশে দাঁড়ানোর মহান শিক্ষা নিজের জীবনে বাস্তবায়ন করা।"
+    },
+    "eid-ul-adha": {
+      id: "eid-ul-adha",
+      name: "পবিত্র ঈদুল আজহা ও গ্রীষ্মকালীন অবকাশ",
+      date: "📅 ২৬ মে – ১১ জুন ২০২৬",
+      duration: "১৪ দিন",
+      type: "মুসলিম ধর্মীয় উৎসব ও দীর্ঘ অবকাশ",
+      icon: "☀️",
+      whatHappened: "আল্লাহর আদেশে হযরত ইব্রাহিম (আ.) তাঁর প্রিয়তম পুত্র হযরত ইসমাইল (আ.)-কে কোরবানি দেওয়ার কঠিন পরীক্ষায় অবতীর্ণ হন। তাঁর পরম আনুগত্যে সন্তুষ্ট হয়ে আল্লাহ একটি দুম্বা কোরবানি হিসেবে গ্রহণ করেন। সেই অনন্য আত্মত্যাগের স্মরণে মুসলিম উম্মাহ প্রতি বছর পশু কোরবানি দিয়ে থাকে।",
+      whyCelebrated: "নিজের ভেতরের অহংকার ও পাশবিকতাকে বিসর্জন দিয়ে আল্লাহর প্রতি পূর্ণ সমর্পণ এবং কোরবানির পশুর গোশত আত্মীয় ও দুস্থ মানুষদের মাঝে বিতরণের মাধ্যমে সামাজিক সাম্য প্রতিষ্ঠার লক্ষ্যে ঈদুল আজহা পালিত হয়।",
+      studentMessage: "ত্যাগের মহিমা শেখা, অপরের মঙ্গলের জন্য নিজের স্বার্থ ত্যাগ করা এবং চারপাশের সুবিধাবঞ্চিত মানুষের মুখে হাসি ফোটানো।"
+    },
+    "durga-puja": {
+      id: "durga-puja",
+      name: "শ্রী শ্রী দুর্গাপূজা ও বিজয়া দশমী",
+      date: "📅 ১৯ অক্টোবর – ২৪ অক্টোবর ২০২৬",
+      duration: "৬ দিন",
+      type: "সনাতন প্রধান ধর্মীয় উৎসব",
+      icon: "🕉️",
+      whatHappened: "পৌরাণিক কাহিনি অনুযায়ী, অত্যাচারী অসুর মহিষাসুরকে বধ করে বিশ্বব্রহ্মাণ্ডে শান্তি ও কল্যাণ ফিরিয়ে আনতে দেবী দুর্গার আবির্ভাব হয়েছিল। শরৎকালে অকালবোধন করে রামচন্দ্রও দুর্গোৎসব করেছিলেন। বিজয়া দশমীতে প্রতিমা বিসর্জনের মাধ্যমে এ পূজার সমাপ্তি ঘটে।",
+      whyCelebrated: "অন্যায়ের ওপর ন্যায়ের, অসত্যের ওপর সত্যের এবং অন্ধকারের ওপর আলোর চিরন্তন বিজয়ের প্রতীক হলো দুর্গাপূজা। এটি সৌহার্দ্য, ভ্রাতৃত্ব ও সমাজে অপশক্তির বিরুদ্ধে ঐক্যবদ্ধ থাকার বার্তা নিয়ে আসে।",
+      studentMessage: "সকল ধর্মের প্রতি শ্রদ্ধা রাখা, অশুভ ও অন্যায়ের বিরুদ্ধে ন্যায়ের পথে অবিচল থাকা এবং পারস্পরিক সম্প্রীতি রক্ষা করা।"
+    },
+    "shab-e-meraj": {
+      id: "shab-e-meraj",
+      name: "পবিত্র শবে মেরাজ",
+      date: "📅 ২৯ জানুয়ারি ২০২৬ (বৃহস্পতিবার)",
+      duration: "১ দিন",
+      type: "মুসলিম ধর্মীয় পর্ব",
+      icon: "🕌",
+      whatHappened: "রজব মাসের ২৬ তারিখের রাতে মহানবী হযরত মুহাম্মদ (সা.) অলৌকিকভাবে মক্কার মসজিদুল হারাম থেকে বায়তুল মুকাদ্দাস (ইসরা) এবং সেখান থেকে সপ্তাকাশ অতিক্রম করে মহান আল্লাহর সান্নিধ্যে (মেরাজ) গমন করেন। এই রাতে মুসলিমদের জন্য দৈনিক পাঁচ ওয়াক্ত নামাজ উপহার হিসেবে ফরজ করা হয়।",
+      whyCelebrated: "আল্লাহর কুদরত ও নামাজের সর্বোচ্চ গুরুত্ব স্মরণ করে আত্মশুদ্ধি, ইবাদত-বন্দেগি ও আল্লাহর নিকট ক্ষমা প্রার্থনার উদ্দেশ্যে রাতটি ভাবগাম্ভীর্যের সাথে পালন করা হয়।",
+      studentMessage: "নিয়মিত নামাজ ও প্রার্থনার মাধ্যমে শৃঙ্খলা, পরিচ্ছন্নতা ও নৈতিক চরিত্র গঠনে মনোযোগী হওয়া।"
+    },
+    "saraswati-puja": {
+      id: "saraswati-puja",
+      name: "শ্রী শ্রী সরস্বতী পূজা",
+      date: "📅 ০৩ ফেব্রুয়ারি ২০২৬ (মঙ্গলবার)",
+      duration: "১ দিন",
+      type: "সনাতন ধর্মীয় ও বিদ্যার উৎসব",
+      icon: "🕉️",
+      whatHappened: "শুক্লা পঞ্চমী তিথিতে জ্ঞান, বুদ্ধি, বিদ্যা ও ললিতকলার দেবী সরস্বতীর আরাধনা করা হয়। দেবীর হাতে থাকে বীণা ও পুস্তক, যা সুর ও জ্ঞানের সমন্বয়ের প্রতীক এবং তাঁর বাহন শ্বেতহংস, যা সত্য ও মিথ্যার পার্থক্য বোঝার নির্দেশ করে।",
+      whyCelebrated: "অজ্ঞতার অন্ধকার দূর করে শিক্ষার্থীদের মাঝে জ্ঞানের আলো, শুদ্ধ মেধা ও বিনয় ছড়িয়ে দেওয়ার উদ্দেশ্যে বিশেষ করে সকল শিক্ষাপ্রতিষ্ঠানে এ পূজা উদযাপিত হয়।",
+      studentMessage: "অধ্যবসায়, শ্রদ্ধা ও মনোযোগের সাথে জ্ঞান অর্জন করা এবং সেই জ্ঞানকে মানুষের কল্যাণে ব্যবহার করা।"
+    },
+    "shab-e-barat": {
+      id: "shab-e-barat",
+      name: "পবিত্র শবে বরাত (সৌভাগ্যের রজনী)",
+      date: "📅 ১৫ ফেব্রুয়ারি ২০২৬ (রবিবার)",
+      duration: "১ দিন",
+      type: "মুসলিম ধর্মীয় পর্ব",
+      icon: "🌙",
+      whatHappened: "শাবান মাসের ১৪ তারিখ দিবাগত রাতটি মুসলিমদের নিকট 'লাইলাতুল বরাত' বা মুক্তির রজনী হিসেবে পরিচিত। এ রাতে মহান আল্লাহ তাঁর বান্দাদের ক্ষমার দুয়ার উন্মুক্ত করেন এবং তওবা কবুল করেন।",
+      whyCelebrated: "অতীতের ভুলের জন্য ক্ষমা প্রার্থনা, নিজের ভবিষ্যৎ জীবনের কল্যাণ কামনা এবং নফল নামাজ ও কুরআন তিলাওয়াতের মাধ্যমে আল্লাহর সন্তুষ্টি লাভের জন্য রাতটি উদযাপিত হয়।",
+      studentMessage: "ভুল থেকে শিক্ষা নিয়ে সৎ পথে চলার প্রতিজ্ঞা করা এবং সহপাঠী ও পরিবারের সদস্যদের সাথে উত্তম ব্যবহার করা।"
+    },
+    "doljatra": {
+      id: "doljatra",
+      name: "শুভ দোলযাত্রা",
+      date: "📅 ০৪ মার্চ ২০২৬ (বুধবার)",
+      duration: "১ দিন",
+      type: "সনাতন ধর্মীয় পর্ব",
+      icon: "🌸",
+      whatHappened: "ফাল্গুনী পূর্ণিমায় বৈষ্ণব বিশ্বাসে শ্রীকৃষ্ণ ও রাধিকার প্রেমলীলাকে কেন্দ্র করে দোল উৎসবের সূচনা হয়। এদিন একে অপরের গায়ে আবির ও নানা রঙের গুলাব মেখে আনন্দ উল্লাস করা হয়।",
+      whyCelebrated: "শীতের রুক্ষতা কাটিয়ে বসন্তের রঙিন আগমনে মানুষের মন থেকে হিংসা-বিদ্বেষ দূর করে ভালোবাসা, ভ্রাতৃত্ব ও সামাজিক সম্প্রীতি বৃদ্ধির লক্ষ্যে এ দিনটি উদযাপিত হয়।",
+      studentMessage: "বৈচিত্র্যকে গ্রহণ করা, সহপাঠীদের সাথে আনন্দ ভাগ করে নেওয়া এবং পারস্পরিক বন্ধুত্বের বন্ধন দৃঢ় করা।"
+    },
+    "buddha-purnima": {
+      id: "buddha-purnima",
+      name: "বুদ্ধ পূর্ণিমা (বৈশাখী পূর্ণিমা)",
+      date: "📅 ১২ মে ২০২৬ (মঙ্গলবার)",
+      duration: "১ দিন",
+      type: "বৌদ্ধ ধর্মীয় প্রধান উৎসব",
+      icon: "☸️",
+      whatHappened: "বৈশাখী পূর্ণিমার এই পুণ্য তিথিতে গৌতম বুদ্ধের জীবনে তিনটি অলৌকিক ঘটনা ঘটেছিল—তাঁর জন্ম, বোধিবৃক্ষের নিচে পরম জ্ঞানলাভ (বুদ্ধত্ব) এবং মহাপরিনির্বাণ। এজন্য একে 'ত্রিস্মৃতি বিজড়িত বৈশাখী পূর্ণিমা' বলা হয়।",
+      whyCelebrated: "গৌতম বুদ্ধের অহিংসা, করুণা, মৈত্রী ও শান্তির বাণী সারাবিশ্বে ছড়িয়ে দিতে এ দিনটি উদযাপিত হয়। 'জগতের সকল প্রাণী সুখী হোক'—এটিই বুদ্ধের মূল বাণী।",
+      studentMessage: "'অহিংসা পরম ধর্ম'—কাউকে শারীরিক বা মানসিক আঘাত না করা, জীবের প্রতি দয়া দেখানো এবং শান্ত শিষ্ট জীবনযাপন করা।"
+    },
+    "ashura": {
+      id: "ashura",
+      name: "পবিত্র আশুরা (মুহাররম)",
+      date: "📅 ২৬ জুন ২০২৬ (শুক্রবার)",
+      duration: "১ দিন",
+      type: "মুসলিম ধর্মীয় পর্ব ও ঐতিহাসিক দিবস",
+      icon: "🕊️",
+      whatHappened: "হিজরি ৬১ সনের ১০ই মহররম ইরাকের কারবালার প্রান্তরে অন্যায় ও স্বৈরশাসনের বিরুদ্ধে মাথা নত না করে মহানবী (সা.)-এর দৌহিত্র হযরত ইমাম হোসাইন (রা.) এবং তাঁর ৭২ জন সঙ্গী শাহাদাত বরণ করেন। এছাড়া এই দিনে হযরত মুসা (আ.) ও তাঁর অনুসারীরা ফেরাউনের অত্যাচার থেকে অলৌকিকভাবে মুক্তি পেয়েছিলেন।",
+      whyCelebrated: "অন্যায়, জুলুম ও অসত্যের কাছে নতি স্বীকার না করে সত্য, ন্যায় ও ন্যায়ের পক্ষে জীবন দেওয়ার অমর শিক্ষাকে শ্রদ্ধাভরে স্মরণ করতে এ দিনটি শোক ও ইবাদতের মাধ্যমে পালিত হয়।",
+      studentMessage: "কখনও অন্যায়কে সমর্থন না করা, সত্য ও ন্যায়ের পক্ষে দৃঢ় থাকা এবং কঠিন পরিস্থিতিতেও ধৈর্য ধারণ করা।"
+    },
+    "janmashtami": {
+      id: "janmashtami",
+      name: "শুভ জন্মাষ্টমী",
+      date: "📅 ০৪ সেপ্টেম্বর ২০২৬ (শুক্রবার)",
+      duration: "১ দিন",
+      type: "সনাতন ধর্মীয় উৎসব",
+      icon: "🕉️",
+      whatHappened: "ভাদ্র মাসের কৃষ্ণপক্ষের অষ্টমী তিথিতে ঘোর অন্ধকার রাতে অত্যাচারী রাজা কংসকে দমন ও পৃথিবীতে ধর্ম রক্ষার উদ্দেশ্যে মথুরায় ভগবান শ্রীকৃষ্ণের শুভ আবির্ভাব ঘটেছিল।",
+      whyCelebrated: "'যদা যদা হি ধর্মস্য গ্লানির্ভবতি ভারত...'—শ্রীমদ্ভগবদ্গীতার এই বাণী অনুযায়ী অন্যায়ের বিনাশ ও সৎ মানুষের সুরক্ষার বার্তা নিয়ে সনাতন ধর্মাবলম্বীরা শ্রীকৃষ্ণের জন্মদিন উদযাপন করেন।",
+      studentMessage: "অন্যায়কে প্রতিহত করা, সত্যের পথে অবিচল থাকা এবং দুর্বল মানুষের পাশে দাঁড়ানো।"
+    },
+    "eid-e-miladunnabi": {
+      id: "eid-e-miladunnabi",
+      name: "পবিত্র ঈদে মিলাদুন্নবী (সা.)",
+      date: "📅 ০৫ সেপ্টেম্বর ২০২৬ (শনিবার)",
+      duration: "১ দিন",
+      type: "মুসলিম ধর্মীয় পর্ব ও বিশ্ব শান্তির দিন",
+      icon: "🕌",
+      whatHappened: "৫৭০ খ্রিস্টাব্দের ১২ই রবিউল আউয়াল পবিত্র মক্কার কুরাইশ বংশে বিশ্বনবী হযরত মুহাম্মদ (সা.) জন্মগ্রহণ করেন এবং ৬৩২ খ্রিস্টাব্দের একই দিনে তিনি ওফাত লাভ করেন। তাঁর মাধ্যমে পৃথিবীতে আইয়ামে জাহেলিয়াতের (অজ্ঞতার যুগ) অবসান ঘটে।",
+      whyCelebrated: "সমগ্র মানবজাতির মুক্তির দূত 'রাহমাতুল্লিল আলামিন' (বিশ্বজগতের জন্য শান্তি ও রহমত)-এর শুভাগমন এবং তাঁর আদর্শ, চরিত্র ও অহিংসার শিক্ষাকে শ্রদ্ধাভরে স্মরণ করতে দিনটি উদযাপিত হয়।",
+      studentMessage: "সকলের সাথে সুন্দর ব্যবহার করা, সত্যবাদী হওয়া এবং মহানবীর ক্ষমা ও ভালোবাসার আদর্শ নিজের জীবনে অনুসরণ করা।"
+    },
+    "intellectuals-day": {
+      id: "intellectuals-day",
+      name: "শহীদ বুদ্ধিজীবী দিবস",
+      date: "📅 ১৪ ডিসেম্বর ২০২৬ (সোমবার)",
+      duration: "১ দিন",
+      type: "জাতীয় শোক দিবস",
+      icon: "🇧🇩",
+      whatHappened: "১৯৭১ সালের মুক্তিযুদ্ধে চূড়ান্ত বিজয়ের মাত্র দুই দিন আগে ১৪ই ডিসেম্বর পাকিস্তানি হানাদার বাহিনী তাদের দোসরদের সহায়তায় বাঙালি জাতিকে মেধাশূন্য করতে ঢাকা বিশ্ববিদ্যালয় ও বিভিন্ন প্রতিষ্ঠানের সেরা শিক্ষক, সাংবাদিক, সাহিত্যিক, চিকিৎসক ও বুদ্ধিজীবীদের বাসা থেকে ধরে নিয়ে রায়েরবাজার ও মিরপুর বধ্যভূমিতে নির্মমভাবে হত্যা করে। শহীদ হন ড. গোবিন্দ চন্দ্র দেব, অধ্যাপক মুনীর চৌধুরী, অধ্যাপক জ্যোতির্ময় গুহঠাকুরতা, শহীদুল্লা কায়সার, ডা. আলীম চৌধুরী প্রমুখ।",
+      whyCelebrated: "দেশমাতৃকার স্বাধীনতার জন্য আত্মোৎসর্গকারী জাতির সূর্যসন্তান বুদ্ধিজীবীদের চিরস্মরণীয় অবদান ও ত্যাগকে বিনম্র শ্রদ্ধায় স্মরণ করতে পুরো জাতি গভীর শোক ও শ্রদ্ধার সাথে এ দিবসটি পালন করে।",
+      studentMessage: "জ্ঞান ও মেধার গুরুত্ব উপলব্ধি করা, দেশের সেরা চিন্তাবিদ ও শিক্ষকদের শ্রদ্ধা করা এবং নিজের মেধা দিয়ে দেশ গঠনে অবদান রাখা।"
+    }
+  };
+
+  const holidayKeys = [
+    "shab-e-meraj",
+    "saraswati-puja",
+    "shab-e-barat",
+    "mother-language-day",
+    "doljatra",
+    "ramadan-eid",
+    "independence-day",
+    "pahela-baishakh",
+    "buddha-purnima",
+    "eid-ul-adha",
+    "ashura",
+    "janmashtami",
+    "eid-e-miladunnabi",
+    "durga-puja",
+    "intellectuals-day",
+    "victory-day"
+  ];
+
+  let currentHolidayIndex = 0;
+
+  // Modal DOM Elements
+  const btnOpenHolidayModal = document.getElementById("btn-open-holiday-modal") || document.getElementById("btn-toggle-holiday");
+  const holidayModalOverlay = document.getElementById("holiday-modal-overlay");
+  const btnCloseHolidayModal = document.getElementById("btn-close-holiday-modal");
+  const btnFooterCloseHoliday = document.getElementById("btn-footer-close-holiday");
+
+  // Views inside Modal
+  const holidayListView = document.getElementById("holiday-modal-list-view");
+  const holidayDetailView = document.getElementById("holiday-modal-detail-view");
+  const holidayModalBody = document.querySelector(".holiday-modal-body");
+
+  // Detail View Elements
+  const detailIcon = document.getElementById("holiday-detail-icon");
+  const detailName = document.getElementById("holiday-detail-name");
+  const detailDate = document.getElementById("holiday-detail-date");
+  const detailDuration = document.getElementById("holiday-detail-duration");
+  const detailType = document.getElementById("holiday-detail-type");
+  const detailWhat = document.getElementById("holiday-detail-what");
+  const detailWhy = document.getElementById("holiday-detail-why");
+  const detailMessage = document.getElementById("holiday-detail-message");
+
+  // Navigation Buttons
+  const btnHolidayBack = document.getElementById("btn-holiday-back");
+  const btnHolidayReturnList = document.getElementById("btn-holiday-return-list");
+  const btnHolidayPrev = document.getElementById("btn-holiday-prev");
+  const btnHolidayNext = document.getElementById("btn-holiday-next");
+
+  const showHolidayList = () => {
+    if (holidayDetailView) holidayDetailView.style.display = "none";
+    if (holidayListView) holidayListView.style.display = "block";
+    if (holidayModalBody) holidayModalBody.scrollTop = 0;
+  };
+
+  const showHolidayDetail = (holidayId) => {
+    const data = holidayEducationalData[holidayId] || holidayEducationalData["mother-language-day"];
+    if (!data) return;
+
+    currentHolidayIndex = holidayKeys.indexOf(holidayId);
+    if (currentHolidayIndex === -1) currentHolidayIndex = 0;
+
+    if (detailIcon) detailIcon.textContent = data.icon || "🏛️";
+    if (detailName) detailName.textContent = data.name;
+    if (detailDate) detailDate.textContent = data.date;
+    if (detailDuration) detailDuration.textContent = data.duration;
+    if (detailType) detailType.textContent = data.type;
+    if (detailWhat) detailWhat.textContent = data.whatHappened;
+    if (detailWhy) detailWhy.textContent = data.whyCelebrated;
+    if (detailMessage) detailMessage.textContent = data.studentMessage;
+
+    if (holidayListView) holidayListView.style.display = "none";
+    if (holidayDetailView) {
+      holidayDetailView.style.display = "block";
+      // restart animation
+      holidayDetailView.style.animation = "none";
+      void holidayDetailView.offsetWidth;
+      holidayDetailView.style.animation = "";
+    }
+    if (holidayModalBody) holidayModalBody.scrollTop = 0;
+  };
+
+  const navigateHoliday = (direction) => {
+    currentHolidayIndex = (currentHolidayIndex + direction + holidayKeys.length) % holidayKeys.length;
+    const nextHolidayId = holidayKeys[currentHolidayIndex];
+    showHolidayDetail(nextHolidayId);
+  };
+
+  // Wire Card Clicks
+  const holidayCards = document.querySelectorAll(".holiday-card[data-holiday-id]");
+  holidayCards.forEach((card) => {
+    const hId = card.getAttribute("data-holiday-id");
+    card.addEventListener("click", () => {
+      showHolidayDetail(hId);
+    });
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        showHolidayDetail(hId);
+      }
+    });
+  });
+
+  // Wire Detail Navigation
+  btnHolidayBack?.addEventListener("click", showHolidayList);
+  btnHolidayReturnList?.addEventListener("click", showHolidayList);
+  btnHolidayPrev?.addEventListener("click", () => navigateHoliday(-1));
+  btnHolidayNext?.addEventListener("click", () => navigateHoliday(1));
+
+  // Modal Open / Close
+  const openHolidayModal = (holidayId) => {
+    if (holidayModalOverlay) {
+      if (holidayId) {
+        showHolidayDetail(holidayId);
+      } else {
+        showHolidayList();
+      }
+      holidayModalOverlay.classList.add("active");
+      holidayModalOverlay.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      btnOpenHolidayModal?.setAttribute("aria-expanded", "true");
+      setTimeout(() => {
+        btnCloseHolidayModal?.focus();
+      }, 100);
+    }
+  };
+
+  const closeHolidayModal = () => {
+    if (holidayModalOverlay) {
+      holidayModalOverlay.classList.remove("active");
+      holidayModalOverlay.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      btnOpenHolidayModal?.setAttribute("aria-expanded", "false");
+      btnOpenHolidayModal?.focus();
+      setTimeout(showHolidayList, 300);
+    }
+  };
+
+  btnOpenHolidayModal?.addEventListener("click", () => openHolidayModal());
+  btnCloseHolidayModal?.addEventListener("click", closeHolidayModal);
+  btnFooterCloseHoliday?.addEventListener("click", closeHolidayModal);
+
+  // Close when clicking backdrop
+  holidayModalOverlay?.addEventListener("click", (e) => {
+    if (e.target === holidayModalOverlay) {
+      closeHolidayModal();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && holidayModalOverlay?.classList.contains("active")) {
+      closeHolidayModal();
+    }
+  });
+
+  // =========================================================================
+  // 17. LIVE REAL-TIME CLOCK WIDGET (Time, Month, Sec, Year)
+  // =========================================================================
+  const clockDayEl = document.getElementById("clock-live-day");
+  const clockMonthEl = document.getElementById("clock-live-month");
+  const clockYearEl = document.getElementById("clock-live-year");
+  const clockTimeEl = document.getElementById("clock-live-time");
+  const clockSecEl = document.getElementById("clock-live-sec");
+  const clockAmpmEl = document.getElementById("clock-live-ampm");
+
+  const bnDigitList = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+  const toBnDigits = (val) => String(val).replace(/[0-9]/g, (d) => bnDigitList[Number(d)]);
+
+  const bnMonthNames = [
+    "জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন",
+    "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"
+  ];
+
+  const updateLiveClock = () => {
+    const now = new Date();
+    const day = now.getDate();
+    const month = now.getMonth();
+    const year = now.getFullYear();
+    let hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+
+    const ampm = hours >= 12 ? "অপরাহ্ন" : "পূর্বাহ্ন";
+    hours = hours % 12;
+    if (hours === 0) hours = 12;
+
+    const formattedHour = String(hours).padStart(2, "0");
+    const formattedMin = String(minutes).padStart(2, "0");
+    const formattedSec = String(seconds).padStart(2, "0");
+
+    if (clockDayEl) clockDayEl.textContent = toBnDigits(day);
+    if (clockMonthEl) clockMonthEl.textContent = bnMonthNames[month];
+    if (clockYearEl) clockYearEl.textContent = toBnDigits(year);
+    if (clockTimeEl) clockTimeEl.textContent = `${toBnDigits(formattedHour)}:${toBnDigits(formattedMin)}`;
+    if (clockSecEl) clockSecEl.textContent = toBnDigits(formattedSec);
+    if (clockAmpmEl) clockAmpmEl.textContent = ampm;
+  };
+
+  updateLiveClock();
+  setInterval(updateLiveClock, 1000);
+
+  // =========================================================================
+  // 18. AUTOMATED UPCOMING HOLIDAY ENGINE & ANNOUNCEMENTS
+  // =========================================================================
+  const calendarHolidaysList = [
+    {
+      id: "shab-e-meraj",
+      name: "পবিত্র শবে মেরাজ",
+      date: "২৯ জানুয়ারি ২০২৬ (বৃহস্পতিবার)",
+      startDate: "2026-01-29",
+      endDate: "2026-01-29",
+      duration: "১ দিন",
+      type: "মুসলিম ধর্মীয় পর্ব",
+      icon: "🕌"
+    },
+    {
+      id: "saraswati-puja",
+      name: "শ্রী শ্রী সরস্বতী পূজা",
+      date: "০৩ ফেব্রুয়ারি ২০২৬ (মঙ্গলবার)",
+      startDate: "2026-02-03",
+      endDate: "2026-02-03",
+      duration: "১ দিন",
+      type: "সনাতন ধর্মীয় ও বিদ্যার উৎসব",
+      icon: "🕉️"
+    },
+    {
+      id: "shab-e-barat",
+      name: "পবিত্র শবে বরাত (সৌভাগ্যের রজনী)",
+      date: "১৫ ফেব্রুয়ারি ২০২৬ (রবিবার)",
+      startDate: "2026-02-15",
+      endDate: "2026-02-15",
+      duration: "১ দিন",
+      type: "মুসলিম ধর্মীয় পর্ব",
+      icon: "🌙"
+    },
+    {
+      id: "mother-language-day",
+      name: "শহীদ দিবস ও আন্তর্জাতিক মাতৃভাষা দিবস",
+      date: "২১ ফেব্রুয়ারি ২০২৬ (শনিবার)",
+      startDate: "2026-02-21",
+      endDate: "2026-02-21",
+      duration: "১ দিন",
+      type: "জাতীয় দিবস ও আন্তর্জাতিক স্বীকৃতি",
+      icon: "🇧🇩"
+    },
+    {
+      id: "ramadan-eid",
+      name: "পবিত্র রমজান, শবে কদর ও ঈদুল ফিতর",
+      date: "০১ মার্চ – ০১ এপ্রিল ২০২৬",
+      startDate: "2026-03-01",
+      endDate: "2026-04-01",
+      duration: "২৬ দিন",
+      type: "মুসলিম প্রধান ধর্মীয় উৎসব ও দীর্ঘ অবকাশ",
+      icon: "🕌"
+    },
+    {
+      id: "doljatra",
+      name: "শুভ দোলযাত্রা",
+      date: "০৪ মার্চ ২০২৬ (বুধবার)",
+      startDate: "2026-03-04",
+      endDate: "2026-03-04",
+      duration: "১ দিন",
+      type: "সনাতন ধর্মীয় পর্ব",
+      icon: "🌸"
+    },
+    {
+      id: "independence-day",
+      name: "স্বাধীনতা ও জাতীয় দিবস",
+      date: "২৬ মার্চ ২০২৬ (বৃহস্পতিবার)",
+      startDate: "2026-03-26",
+      endDate: "2026-03-26",
+      duration: "১ দিন",
+      type: "জাতীয় দিবস ও রাষ্ট্রীয় গৌরব",
+      icon: "🇧🇩"
+    },
+    {
+      id: "pahela-baishakh",
+      name: "বাংলা নববর্ষ (পহেলা বৈশাখ)",
+      date: "১৪ এপ্রিল ২০২৬ (মঙ্গলবার)",
+      startDate: "2026-04-14",
+      endDate: "2026-04-14",
+      duration: "১ দিন",
+      type: "জাতীয় ও সর্বজনীন সাংস্কৃতিক উৎসব",
+      icon: "🌾"
+    },
+    {
+      id: "buddha-purnima",
+      name: "বুদ্ধ পূর্ণিমা (বৈশাখী পূর্ণিমা)",
+      date: "১২ মে ২০২৬ (মঙ্গলবার)",
+      startDate: "2026-05-12",
+      endDate: "2026-05-12",
+      duration: "১ দিন",
+      type: "বৌদ্ধ ধর্মীয় প্রধান উৎসব",
+      icon: "☸️"
+    },
+    {
+      id: "eid-ul-adha",
+      name: "পবিত্র ঈদুল আজহা ও গ্রীষ্মকালীন অবকাশ",
+      date: "২৬ মে – ১১ জুন ২০২৬",
+      startDate: "2026-05-26",
+      endDate: "2026-06-11",
+      duration: "১৪ দিন",
+      type: "মুসলিম ধর্মীয় উৎসব ও দীর্ঘ অবকাশ",
+      icon: "☀️"
+    },
+    {
+      id: "ashura",
+      name: "পবিত্র আশুরা (মুহাররম)",
+      date: "২৬ জুন ২০২৬ (শুক্রবার)",
+      startDate: "2026-06-26",
+      endDate: "2026-06-26",
+      duration: "১ দিন",
+      type: "মুসলিম ধর্মীয় পর্ব ও ঐতিহাসিক দিবস",
+      icon: "🕊️"
+    },
+    {
+      id: "janmashtami",
+      name: "শুভ জন্মাষ্টমী",
+      date: "০৪ সেপ্টেম্বর ২০২৬ (শুক্রবার)",
+      startDate: "2026-09-04",
+      endDate: "2026-09-04",
+      duration: "১ দিন",
+      type: "সনাতন ধর্মীয় উৎসব",
+      icon: "🕉️"
+    },
+    {
+      id: "eid-e-miladunnabi",
+      name: "পবিত্র ঈদে মিলাদুন্নবী (সা.)",
+      date: "০৫ সেপ্টেম্বর ২০২৬ (শনিবার)",
+      startDate: "2026-09-05",
+      endDate: "2026-09-05",
+      duration: "১ দিন",
+      type: "মুসলিম ধর্মীয় পর্ব ও বিশ্ব শান্তির দিন",
+      icon: "🕌"
+    },
+    {
+      id: "durga-puja",
+      name: "শ্রী শ্রী দুর্গাপূজা ও বিজয়া দশমী",
+      date: "১৯ অক্টোবর – ২৪ অক্টোবর ২০২৬",
+      startDate: "2026-10-19",
+      endDate: "2026-10-24",
+      duration: "৬ দিন",
+      type: "সনাতন প্রধান ধর্মীয় উৎসব",
+      icon: "🕉️"
+    },
+    {
+      id: "intellectuals-day",
+      name: "শহীদ বুদ্ধিজীবী দিবস",
+      date: "১৪ ডিসেম্বর ২০২৬ (সোমবার)",
+      startDate: "2026-12-14",
+      endDate: "2026-12-14",
+      duration: "১ দিন",
+      type: "জাতীয় শোক দিবস",
+      icon: "🇧🇩"
+    },
+    {
+      id: "victory-day",
+      name: "বিজয় দিবস, বড়দিন ও শীতকালীন অবকাশ",
+      date: "১৬ ডিসেম্বর – ৩১ ডিসেম্বর ২০২৬",
+      startDate: "2026-12-16",
+      endDate: "2026-12-31",
+      duration: "১৩ দিন",
+      type: "জাতীয় দিবস ও দীর্ঘ অবকাশ",
+      icon: "❄️"
+    }
+  ];
+
+  const getUpcomingHoliday = () => {
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
+    const dd = String(now.getDate()).padStart(2, "0");
+    const todayStr = `${yyyy}-${mm}-${dd}`;
+
+    let match = null;
+    for (const h of calendarHolidaysList) {
+      if (h.endDate >= todayStr) {
+        match = h;
+        break;
+      }
+    }
+    if (!match) match = calendarHolidaysList[0];
+
+    const isOngoing = (todayStr >= match.startDate && todayStr <= match.endDate);
+    return { ...match, isOngoing };
+  };
+
+  const setupUpcomingHolidayAnnouncement = () => {
+    const upcoming = getUpcomingHoliday();
+    if (!upcoming) return;
+
+    const marqueeTextEl = document.getElementById("topbar-marquee-text");
+    const statusTitle = upcoming.isOngoing ? "চলমান ছুটি:" : "আসন্ন ছুটি:";
+
+    if (marqueeTextEl) {
+      const announcementHtml = `📢 <strong>${statusTitle}</strong> <span style="color: var(--color-accent-gold); font-weight: 700;">${upcoming.name}</span> — ${upcoming.date} (${upcoming.duration}) ★ বাৎসরিক সরকারি মোট ছুটি ৭৬ দিন • ইআইআইএন: ১১১৩৬৮ • এমপিও কোড: 4002071301 • স্থাপিত: ১৯৭৩ খ্রিঃ • ময়মনসিংহ শিক্ষা বোর্ড • বিভাগ: বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা • ঘোষগাঁও, ধোবাউড়া, ময়মনসিংহ ★`;
+      marqueeTextEl.innerHTML = announcementHtml;
+      const cloneEl = document.getElementById("topbar-marquee-text-clone");
+      if (cloneEl) {
+        cloneEl.innerHTML = announcementHtml;
+      }
+    }
+
+    // Prepend to activeNotices for the Notice Board rotation
+    if (typeof activeNotices !== "undefined" && Array.isArray(activeNotices)) {
+      activeNotices.unshift({
+        date: upcoming.date.split("(")[0].replace("📅", "").trim(),
+        title: `[${statusTitle.replace(":", "")}] ${upcoming.name} উপলক্ষে শ্রেণি কার্যক্রম বন্ধ থাকবে (${upcoming.duration})`,
+        link: "#holiday-modal-overlay",
+        isHoliday: true,
+        holidayId: upcoming.id
+      });
+      if (typeof updateNotice === "function") {
+        updateNotice(0);
+      }
+    }
+  };
+
+  setupUpcomingHolidayAnnouncement();
+
+  // If notice title is clicked and it's a holiday bulletin, open holiday modal
+  noticeTitleEl?.addEventListener("click", (e) => {
+    const currentItem = activeNotices[currentNoticeIndex];
+    if (currentItem && currentItem.isHoliday) {
+      e.preventDefault();
+      openHolidayModal(currentItem.holidayId);
+    }
+  });
+
+  // =========================================================================
+  // 19. DOWNLOAD OFFICIAL HOLIDAY CALENDAR AS PDF (Vanilla / Client-Side)
+  // =========================================================================
+  const generateHolidayPdfMarkup = () => {
+    let rowsHtml = "";
+    calendarHolidaysList.forEach((item, idx) => {
+      rowsHtml += `
+        <tr style="border-bottom: 1px solid #e2e8f0; ${idx % 2 === 1 ? 'background-color: #faf8f5;' : ''}">
+          <td style="padding: 4.5px 6px; text-align: center; font-weight: bold; color: #761026;">${toBnDigits(idx + 1)}</td>
+          <td style="padding: 4.5px 8px; font-weight: 600; color: #1e293b;">${item.name}</td>
+          <td style="padding: 4.5px 8px; color: #334155;">${item.date.replace('📅', '').trim()}</td>
+          <td style="padding: 4.5px 6px; text-align: center; font-weight: bold; color: #b88628;">${item.duration}</td>
+          <td style="padding: 4.5px 8px; font-size: 10.5px; color: #64748b;">${item.type}</td>
+        </tr>
+      `;
+    });
+
+    return `
+      <div id="pdf-render-sheet" style="width: 750px; background: #ffffff; padding: 16px 20px; box-sizing: border-box; font-family: 'SolaimanLipi', 'Kalpurush', 'Hind Siliguri', 'Anek Bangla', sans-serif; color: #1e293b; margin: 0 auto;">
+        <!-- Top Institutional Header -->
+        <div style="text-align: center; border-bottom: 2px solid #761026; padding-bottom: 8px; margin-bottom: 8px;">
+          <div style="font-size: 10.5px; font-weight: bold; color: #b88628; letter-spacing: 0.04em;">
+            গণপ্রজাতন্ত্রী বাংলাদেশ সরকার ও শিক্ষা মন্ত্রণালয় অনুমোদিত শিক্ষাপঞ্জি
+          </div>
+          <h1 style="font-size: 19px; font-weight: 800; color: #520919; margin: 3px 0; font-family: 'Noto Serif Bengali', serif;">
+            ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়
+          </h1>
+          <div style="font-size: 11px; color: #475569; font-weight: 600;">
+            ডাকঘর: ঘোষগাঁও, উপজেলা: ধোবাউড়া, জেলা: ময়মনসিংহ • শিক্ষা বোর্ড: ময়মনসিংহ
+          </div>
+          <div style="font-size: 10.5px; color: #64748b; margin-top: 2px;">
+            ইআইআইএন: <strong style="color: #761026;">১১১৩৬৮</strong> | এমপিও কোড: <strong style="color: #761026;">4002071301</strong> | স্থাপিত: <strong style="color: #761026;">১৯৭৩ খ্রিঃ</strong>
+          </div>
+          <div style="display: inline-block; background: #761026; color: #ffffff; font-size: 11.5px; font-weight: bold; padding: 2px 14px; border-radius: 12px; margin-top: 5px;">
+            বাৎসরিক সরকারি ও প্রাতিষ্ঠানিক ছুটির তালিকা — ২০২৬ (মোট ৭৬ দিন)
+          </div>
+        </div>
+
+        <!-- Holidays Table -->
+        <table style="width: 100%; border-collapse: collapse; font-size: 10.5px; border: 1px solid #cbd5e1; margin-bottom: 6px;">
+          <thead>
+            <tr style="background: #761026; color: #ffffff;">
+              <th style="padding: 5px 6px; width: 6%; text-align: center;">নং</th>
+              <th style="padding: 5px 8px; text-align: left; width: 34%;">পর্ব বা ছুটির নাম</th>
+              <th style="padding: 5px 8px; text-align: left; width: 34%;">তারিখ ও বার</th>
+              <th style="padding: 5px 6px; width: 12%; text-align: center;">দিন</th>
+              <th style="padding: 5px 8px; text-align: left; width: 14%;">ধরন</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsHtml}
+          </tbody>
+          <tfoot>
+            <tr style="background: #faf3e5; font-weight: bold; border-top: 2px solid #b88628;">
+              <td colspan="3" style="padding: 5px 8px; text-align: right; color: #520919;">বাৎসরিক অনুমোদিত সর্বমোট ছুটি:</td>
+              <td style="padding: 5px 6px; text-align: center; color: #761026; font-size: 11.5px;">৭৬ দিন</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <!-- Notes & Guidelines -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 5px 10px; margin-top: 6px; font-size: 9.5px; color: #475569; line-height: 1.38;">
+          <strong>বিশেষ দ্রষ্টব্য:</strong> চাঁদ দেখার ওপর নির্ভরশীল মুসলিম ধর্মীয় পর্বসমূহের ছুটি চাঁদ দেখার ওপর কার্যকর হবে। জাতীয় গুরুত্বপূর্ণ দিবসসমূহ সুবিধাজনক সময়ে যথারীতি যথাযোগ্য মর্যাদায় প্রতিষ্ঠানে উদযাপন করা হবে।
+        </div>
+
+        <!-- Official Seal & Signature Section -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; padding-top: 10px; margin-top: 8px; border-top: 1px dashed #cbd5e1; font-size: 10.5px; color: #334155;">
+          <div style="text-align: center; width: 170px;">
+            <div style="height: 18px;"></div>
+            <div style="border-top: 1px solid #475569; padding-top: 2px; font-weight: bold;">
+              প্রধান শিক্ষক
+            </div>
+            <div style="font-size: 9px; color: #64748b;">ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়</div>
+          </div>
+
+          <div style="text-align: center; width: 120px;">
+            <div style="display: inline-block; width: 44px; height: 44px; border: 1.5px dashed #b88628; border-radius: 50%; line-height: 44px; color: #b88628; font-size: 8px; font-weight: bold;">
+              প্রাতিষ্ঠানিক সিল
+            </div>
+          </div>
+
+          <div style="text-align: center; width: 170px;">
+            <div style="height: 18px;"></div>
+            <div style="border-top: 1px solid #475569; padding-top: 2px; font-weight: bold;">
+              সভাপতি
+            </div>
+            <div style="font-size: 9px; color: #64748b;">ম্যানেজিং কমিটি / গভর্নিং বডি</div>
+          </div>
+        </div>
+      </div>
+    `;
+  };
+
+  const downloadHolidayPDF = () => {
+    // Avoid multiple simultaneous downloads
+    if (document.getElementById("pdf-download-overlay")) return;
+
+    const btnHeader = document.getElementById("btn-download-holiday-pdf");
+    const btnFooter = document.getElementById("btn-footer-download-pdf");
+    const buttons = [btnHeader, btnFooter].filter(Boolean);
+
+    // Update buttons to loading state
+    buttons.forEach((btn) => {
+      btn.classList.add("is-downloading");
+      btn.innerHTML = `<span class="holiday-download-spinner"></span> <span>PDF তৈরি হচ্ছে...</span>`;
+    });
+
+    // Create visible overlay modal containing the progress card and rendered document
+    const overlay = document.createElement("div");
+    overlay.id = "pdf-download-overlay";
+    overlay.className = "pdf-download-overlay";
+    overlay.innerHTML = `
+      <div class="pdf-download-card">
+        <div class="pdf-progress-spinner-ring"></div>
+        <div class="pdf-download-status">অফিসিয়াল বাৎসরিক ছুটির ক্যালেন্ডার PDF প্রস্তুত হচ্ছে...</div>
+        <div class="pdf-download-hint">অনুগ্রহ করে ২-৩ সেকেন্ড অপেক্ষা করুন, ডাউনলোডটি স্বয়ংক্রিয়ভাবে শুরু হবে।</div>
+      </div>
+      <div class="pdf-render-sheet-wrap">
+        ${generateHolidayPdfMarkup()}
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const sheetElement = document.getElementById("pdf-render-sheet");
+
+    const resetButtonState = () => {
+      if (document.body.contains(overlay)) {
+        document.body.removeChild(overlay);
+      }
+      buttons.forEach((btn) => {
+        btn.classList.remove("is-downloading");
+        btn.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>PDF ডাউনলোড</span>
+        `;
+      });
+    };
+
+    if (window.html2pdf && sheetElement) {
+      const opt = {
+        margin: [5, 5, 5, 5],
+        filename: "ghoshgaon-high-school-holiday-calendar-2026.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          scrollY: 0,
+          scrollX: 0,
+          windowWidth: 760
+        },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        pagebreak: { mode: "avoid-all" }
+      };
+
+      setTimeout(() => {
+        window.html2pdf()
+          .set(opt)
+          .from(sheetElement)
+          .save()
+          .then(() => {
+            resetButtonState();
+            if (typeof showToast === "function") {
+              showToast("বাৎসরিক ছুটির ক্যালেন্ডার PDF সফলভাবে ডাউনলোড হয়েছে!");
+            }
+          })
+          .catch((err) => {
+            console.error("PDF generation error:", err);
+            resetButtonState();
+            window.print();
+          });
+      }, 150);
+    } else {
+      resetButtonState();
+      window.print();
+    }
+  };
+
+  const btnDownloadHeader = document.getElementById("btn-download-holiday-pdf");
+  const btnDownloadFooter = document.getElementById("btn-footer-download-pdf");
+  btnDownloadHeader?.addEventListener("click", downloadHolidayPDF);
+  btnDownloadFooter?.addEventListener("click", downloadHolidayPDF);
 });
 
 

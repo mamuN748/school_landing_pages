@@ -1,46 +1,67 @@
 <!DOCTYPE html>
 <html lang="bn" class="notranslate" translate="no">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google" content="notranslate">
   <meta name="googlebot" content="notranslate">
   <title>ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় | ধোবাউড়া, ময়মনসিংহ</title>
-  <meta name="description" content="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়, ধোবাউড়া, ময়মনসিংহ (EIIN: ১১১৩৬৮, এমপিও কোড: 4002071301)। স্থাপিত ১৯৭৩ খ্রিঃ। বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা বিভাগের স্বনামধন্য মাধ্যমিক বিদ্যাপীঠ।">
-  <meta name="keywords" content="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়, ধোবাউড়া, ময়মনসিংহ, ১১১৩৬৮, EIIN 111368, মাধ্যমিক বিদ্যালয়, বিজ্ঞান বিভাগ, মানবিক বিভাগ, ব্যবসায় শিক্ষা বিভাগ">
+  <meta name="description"
+    content="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়, ধোবাউড়া, ময়মনসিংহ (EIIN: ১১১৩৬৮, এমপিও কোড: 4002071301)। স্থাপিত ১৯৭৩ খ্রিঃ। বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা বিভাগের স্বনামধন্য মাধ্যমিক বিদ্যাপীঠ।">
+  <meta name="keywords"
+    content="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়, ধোবাউড়া, ময়মনসিংহ, ১১১৩৬৮, EIIN 111368, মাধ্যমিক বিদ্যালয়, বিজ্ঞান বিভাগ, মানবিক বিভাগ, ব্যবসায় শিক্ষা বিভাগ">
 
   <!-- High-Legibility Bengali Web Fonts: SolaimanLipi, Kalpurush, Tiro Bangla, Noto Sans Bengali, Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Noto+Serif+Bengali:wght@500;600;700;800&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Noto+Serif+Bengali:wght@500;600;700;800&family=Tiro+Bangla:ital@0;1&display=swap"
+    rel="stylesheet">
   <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
   <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
 
   <!-- Main Design System Stylesheet -->
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body class="notranslate" translate="no">
 
   <!-- ========================================================================
-       TOP UTILITY BAR / NOTICE TICKER
+       TOP UTILITY BAR / NOTICE TICKER & LIVE REAL-TIME CLOCK
        ======================================================================== -->
-  <aside class="topbar" aria-label="জরুরি তথ্য বার">
+  <aside class="topbar" aria-label="জরুরি তথ্য বার ও লাইভ ঘড়ি">
     <div class="container topbar-content">
       <div class="topbar-marquee-area">
         <div class="ticker-badge-wrap">
           <span class="ticker-badge" data-i18n="notice_badge">জরুরি নোটিশ</span>
         </div>
+
         <div class="topbar-marquee-wrapper" id="topbar-marquee-wrapper">
-          <div class="topbar-marquee-track">
-            <span class="topbar-marquee-text" data-i18n="topbar_marquee">★ ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় • ইআইআইএন (EIIN): ১১১৩৬৮ • এমপিও কোড: 4002071301 • স্থাপিত: ১৯৭৩ খ্রিঃ (স্বীকৃতি: ১৯৭৫) • ময়মনসিংহ শিক্ষা বোর্ড • বিভাগ: বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা • ঘোষগাঁও, ধোবাউড়া, ময়মনসিংহ ★</span>
+          <div class="topbar-marquee-track" id="topbar-marquee-track">
+            <span class="topbar-marquee-text" id="topbar-marquee-text" data-i18n="topbar_marquee">★ ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় • ইআইআইএন (EIIN): ১১১৩৬৮ • এমপিও কোড: 4002071301 • স্থাপিত: ১৯৭৩ খ্রিঃ • ময়মনসিংহ শিক্ষা বোর্ড • বিভাগ: বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা • ঘোষগাঁও, ধোবাউড়া, ময়মনসিংহ ★</span>
+            <span class="topbar-marquee-text topbar-marquee-clone" id="topbar-marquee-text-clone" aria-hidden="true">★ ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় • ইআইআইএন (EIIN): ১১১৩৬৮ • এমপিও কোড: 4002071301 • স্থাপিত: ১৯৭৩ খ্রিঃ • ময়মনসিংহ শিক্ষা বোর্ড • বিভাগ: বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা • ঘোষগাঁও, ধোবাউড়া, ময়মনসিংহ ★</span>
           </div>
         </div>
       </div>
       <div class="topbar-right">
-        <a href="#notice" class="topbar-link topbar-notice-btn">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 1 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-          <span data-i18n="notice_board_btn">নোটিশ বোর্ড</span>
-        </a>
+        <!-- Live Real-Time Clock Widget: Time, Month, Sec, Year -->
+        <div class="topbar-live-clock" id="topbar-live-clock" title="বর্তমান লাইভ তারিখ ও সময়">
+          <div class="clock-date-group">
+            <span class="clock-icon" aria-hidden="true">📅</span>
+            <span class="clock-day" id="clock-live-day">২৩</span>
+            <span class="clock-month" id="clock-live-month">অক্টোবর</span>
+            <span class="clock-year" id="clock-live-year">২০২৬</span>
+          </div>
+          <span class="clock-divider" aria-hidden="true">|</span>
+          <div class="clock-time-group">
+            <span class="clock-icon" aria-hidden="true">⏰</span>
+            <span class="clock-digits" id="clock-live-time">০৩:৩১</span>
+            <span class="clock-colon" aria-hidden="true">:</span>
+            <span class="clock-sec-badge" id="clock-live-sec" title="লাইভ সেকেন্ড">৩৯</span>
+            <span class="clock-ampm" id="clock-live-ampm">অপরাহ্ন</span>
+          </div>
+        </div>
       </div>
     </div>
   </aside>
@@ -51,7 +72,8 @@
   <header class="site-header" id="header">
     <div class="container nav-container">
       <!-- Mobile Hamburger Button (Visible on Mobile Left) -->
-      <button class="ham-btn" id="menu-toggle" type="button" aria-label="মেনু" aria-expanded="false" onclick="this.classList.toggle('active')">
+      <button class="ham-btn" id="menu-toggle" type="button" aria-label="মেনু" aria-expanded="false"
+        onclick="this.classList.toggle('active')">
         <span></span>
         <span></span>
         <span></span>
@@ -62,7 +84,8 @@
         <div class="brand-crest header-brand-crest" aria-hidden="true">
           <img src="school-logo.jpg" alt="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় লোগো" class="brand-logo-img">
         </div>
-        <span class="brand-name brand-morph-name morph-style-1" id="brand-morph-name" aria-label="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়" data-i18n="brand_name">
+        <span class="brand-name brand-morph-name morph-style-1" id="brand-morph-name"
+          aria-label="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়" data-i18n="brand_name">
           <span class="brand-words-track" id="brand-words-track">
             <span class="brand-word">ঘোষগাঁও</span>
             <span class="brand-word">শেরে</span>
@@ -87,7 +110,10 @@
             </div>
           </div>
           <button class="drawer-close-btn" id="drawer-close-btn" aria-label="মেনু বন্ধ করুন">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
           </button>
         </div>
 
@@ -95,42 +121,71 @@
         <div class="nav-links-list">
           <div class="nav-item">
             <a href="#hero" class="nav-link active">
-              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
               <span data-i18n="nav_home">মূলপাতা</span>
               <span class="nav-arrow-mobile">›</span>
             </a>
           </div>
           <div class="nav-item">
             <a href="#about" class="nav-link">
-              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
               <span data-i18n="nav_about">পরিচিতি</span>
               <span class="nav-arrow-mobile">›</span>
             </a>
           </div>
           <div class="nav-item">
             <a href="#leadership" class="nav-link">
-              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
               <span data-i18n="nav_leadership">পরিচালনা পর্ষদ</span>
               <span class="nav-arrow-mobile">›</span>
             </a>
           </div>
           <div class="nav-item">
             <a href="#teachers" class="nav-link">
-              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+              </svg>
               <span data-i18n="nav_faculty">শিক্ষকমণ্ডলী</span>
               <span class="nav-arrow-mobile">›</span>
             </a>
           </div>
           <div class="nav-item">
             <a href="#gallery" class="nav-link">
-              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
               <span data-i18n="nav_gallery">ফটো গ্যালারি</span>
               <span class="nav-arrow-mobile">›</span>
             </a>
           </div>
           <div class="nav-item">
             <a href="#contact" class="nav-link">
-              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                </path>
+              </svg>
               <span data-i18n="nav_contact">যোগাযোগ</span>
               <span class="nav-arrow-mobile">›</span>
             </a>
@@ -140,7 +195,11 @@
         <!-- Mobile Drawer Footer Actions -->
         <div class="drawer-footer-actions">
           <a href="#contact" class="btn btn-primary btn-block nav-link">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+              </path>
+            </svg>
             <span data-i18n="nav_contact">যোগাযোগ করুন</span>
           </a>
         </div>
@@ -149,7 +208,11 @@
       <!-- Action Buttons -->
       <div class="nav-actions">
         <a href="#contact" class="btn btn-primary btn-sm btn-nav-contact">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+            </path>
+          </svg>
           <span data-i18n="nav_contact">যোগাযোগ</span>
         </a>
       </div>
@@ -179,7 +242,9 @@
                 মেধা ও মানবিক মূল্যবোধের সমন্বয়ে গড়ে তুলি <span class="highlight">আগামীর দূরদর্শী নেতৃত্ব</span>
               </h1>
               <p class="hero-description">
-                ময়মনসিংহ শিক্ষা বোর্ডের অধীনে ধোবাউড়ার ঐতিহ্যবাহী ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় পাঁচ দশকেরও অধিক সময় ধরে মানসম্মত মাধ্যমিক শিক্ষা নিশ্চিত করছে। ৩৮৪ শতাংশের সুবিশাল ক্যাম্পাসে প্রতিটি শিক্ষার্থীর আত্মবিশ্বাসী মেধা বিকাশ আমাদের ব্রত।
+                ময়মনসিংহ শিক্ষা বোর্ডের অধীনে ধোবাউড়ার ঐতিহ্যবাহী ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় পাঁচ দশকেরও অধিক
+                সময় ধরে মানসম্মত মাধ্যমিক শিক্ষা নিশ্চিত করছে। ৩৮৪ শতাংশের সুবিশাল ক্যাম্পাসে প্রতিটি শিক্ষার্থীর
+                আত্মবিশ্বাসী মেধা বিকাশ আমাদের ব্রত।
               </p>
             </div>
 
@@ -193,7 +258,8 @@
                 সুশৃঙ্খল জীবনাচার ও আত্মপ্রত্যয়ী পদক্ষেপে <span class="highlight">বিশ্বজয়ের সুদৃঢ় প্রস্তুতি</span>
               </h1>
               <p class="hero-description">
-                বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা শাখায় দক্ষ শিক্ষকমণ্ডলীর সার্বক্ষণিক পরিচর্যা এবং ২০০ শতাংশের বিশাল খেলার মাঠে সহশিক্ষা অনুশীলনে আমরা প্রতিটি শিক্ষার্থীকে আদর্শ সুনাগরিক হিসেবে গড়ে তুলি।
+                বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা শাখায় দক্ষ শিক্ষকমণ্ডলীর সার্বক্ষণিক পরিচর্যা এবং ২০০ শতাংশের বিশাল
+                খেলার মাঠে সহশিক্ষা অনুশীলনে আমরা প্রতিটি শিক্ষার্থীকে আদর্শ সুনাগরিক হিসেবে গড়ে তুলি।
               </p>
             </div>
 
@@ -207,19 +273,26 @@
                 যুক্তিভিত্তিক বিজ্ঞানমনস্ক শিক্ষায় <span class="highlight">উন্মোচিত হোক জ্ঞানের নবদিগন্ত</span>
               </h1>
               <p class="hero-description">
-                ১০টি সুপরিসর শ্রেণি ও ল্যাব কক্ষ বিশিষ্ট ভবনে প্রায়োগিক বিজ্ঞানাগার ও কম্পিউটার প্রশিক্ষণের মাধ্যমে আমরা শিক্ষার্থীদের মাঝে আধুনিক প্রযুক্তি ও সৃজনশীল মেধার পূর্ণ বিকাশ সাধন করি।
+                ১০টি সুপরিসর শ্রেণি ও ল্যাব কক্ষ বিশিষ্ট ভবনে প্রায়োগিক বিজ্ঞানাগার ও কম্পিউটার প্রশিক্ষণের মাধ্যমে
+                আমরা শিক্ষার্থীদের মাঝে আধুনিক প্রযুক্তি ও সৃজনশীল মেধার পূর্ণ বিকাশ সাধন করি।
               </p>
             </div>
           </div>
 
           <div class="hero-actions">
             <a href="#contact" class="btn btn-primary btn-lg">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                </path>
+              </svg>
               <span>ক্যাম্পাসে যোগাযোগ</span>
             </a>
             <a href="#about" class="btn btn-secondary btn-lg">
               <span>ক্যাম্পাস পরিচিতি</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
             </a>
           </div>
         </div>
@@ -229,36 +302,24 @@
           <div class="hero-image-frame hero-slider-container" id="hero-desktop-slider">
             <div class="hero-slides-track">
               <div class="hero-slide active">
-                <img 
-                  src="hero-campus.jpg" 
-                  alt="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় ভবন ও সবুজ প্রাঙ্গণ" 
-                  class="hero-image"
-                  loading="eager"
-                >
+                <img src="hero-campus.jpg" alt="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় ভবন ও সবুজ প্রাঙ্গণ"
+                  class="hero-image" loading="eager">
                 <div class="hero-slide-caption-pill">
                   <span class="caption-icon">🏛️</span>
                   <span>নান্দনিক ক্যাম্পাস ও উন্নত পরিবেশ</span>
                 </div>
               </div>
               <div class="hero-slide">
-                <img 
-                  src="hero-students.jpg" 
-                  alt="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ের প্রাত্যহিক সমাবেশ" 
-                  class="hero-image hero-image-assembly"
-                  loading="lazy"
-                >
+                <img src="hero-students.jpg" alt="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ের প্রাত্যহিক সমাবেশ"
+                  class="hero-image hero-image-assembly" loading="lazy">
                 <div class="hero-slide-caption-pill">
                   <span class="caption-icon">👥</span>
                   <span>প্রাত্যহিক সমাবেশ ও চারিত্রিক দৃঢ়তা</span>
                 </div>
               </div>
               <div class="hero-slide">
-                <img 
-                  src="hero-books.jpg" 
-                  alt="পাঠ্যপুস্তক উৎসব ও আনন্দময় বিজ্ঞান চর্চা" 
-                  class="hero-image hero-image-books"
-                  loading="lazy"
-                >
+                <img src="hero-books.jpg" alt="পাঠ্যপুস্তক উৎসব ও আনন্দময় বিজ্ঞান চর্চা"
+                  class="hero-image hero-image-books" loading="lazy">
                 <div class="hero-slide-caption-pill">
                   <span class="caption-icon">📚</span>
                   <span>পাঠ্যপুস্তক উৎসব ও আনন্দময় বিজ্ঞান চর্চা</span>
@@ -268,10 +329,14 @@
 
             <!-- Slider Navigation Arrows (Desktop) -->
             <button class="hero-slider-arrow prev" id="hero-slider-prev" type="button" aria-label="পূর্ববর্তী ছবি">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
             </button>
             <button class="hero-slider-arrow next" id="hero-slider-next" type="button" aria-label="পরবর্তী ছবি">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
             </button>
 
             <!-- Slider Indicator Dots (Desktop) -->
@@ -285,7 +350,12 @@
           <!-- Floating Badge Top: Top Ranking -->
           <div class="floating-card-top" aria-hidden="true">
             <div class="floating-card-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                </polygon>
+              </svg>
             </div>
             <div>
               <div class="floating-card-title">শীর্ষ মডেল বিদ্যালয়</div>
@@ -299,34 +369,16 @@
           <div class="hero-mobile-poster-frame" id="hero-mobile-slider">
             <div class="hero-mobile-slides-track">
               <div class="hero-mobile-slide active">
-                <img 
-                  src="hero-campus.jpg" 
-                  alt="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় ভবন ও সবুজ প্রাঙ্গণ" 
-                  class="hero-mobile-poster-img"
-                  width="500"
-                  height="650"
-                  loading="eager"
-                >
+                <img src="hero-campus.jpg" alt="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় ভবন ও সবুজ প্রাঙ্গণ"
+                  class="hero-mobile-poster-img" width="500" height="650" loading="eager">
               </div>
               <div class="hero-mobile-slide">
-                <img 
-                  src="hero-students.jpg" 
-                  alt="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ের প্রাত্যহিক সমাবেশ" 
-                  class="hero-mobile-poster-img hero-image-assembly"
-                  width="500"
-                  height="650"
-                  loading="lazy"
-                >
+                <img src="hero-students.jpg" alt="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ের প্রাত্যহিক সমাবেশ"
+                  class="hero-mobile-poster-img hero-image-assembly" width="500" height="650" loading="lazy">
               </div>
               <div class="hero-mobile-slide">
-                <img 
-                  src="hero-books.jpg" 
-                  alt="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় পাঠ্যপুস্তক উৎসব" 
-                  class="hero-mobile-poster-img hero-image-books"
-                  width="500"
-                  height="650"
-                  loading="lazy"
-                >
+                <img src="hero-books.jpg" alt="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় পাঠ্যপুস্তক উৎসব"
+                  class="hero-mobile-poster-img hero-image-books" width="500" height="650" loading="lazy">
               </div>
             </div>
 
@@ -334,10 +386,14 @@
 
             <!-- Mobile Navigation Arrows -->
             <button class="hero-mobile-arrow prev" id="hero-mobile-prev" type="button" aria-label="পূর্ববর্তী ছবি">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
             </button>
             <button class="hero-mobile-arrow next" id="hero-mobile-next" type="button" aria-label="পরবর্তী ছবি">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
             </button>
 
             <!-- Mobile Navigation Dots -->
@@ -403,7 +459,11 @@
         <div class="stats-card-container">
           <div class="stats-item">
             <div class="stats-icon-box">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
             </div>
             <div>
               <div class="stats-number" data-target="384" data-suffix=" শতাংশ">৩৮৪ শতাংশ</div>
@@ -413,7 +473,12 @@
 
           <div class="stats-item">
             <div class="stats-icon-box">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                <path d="M2 12h20"></path>
+              </svg>
             </div>
             <div>
               <div class="stats-number" data-target="200" data-suffix=" শতাংশ">২০০ শতাংশ</div>
@@ -423,7 +488,12 @@
 
           <div class="stats-item">
             <div class="stats-icon-box">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="3" y1="9" x2="21" y2="9"></line>
+                <line x1="9" y1="21" x2="9" y2="9"></line>
+              </svg>
             </div>
             <div>
               <div class="stats-number" data-target="10" data-suffix="টি">১০টি</div>
@@ -433,7 +503,11 @@
 
           <div class="stats-item">
             <div class="stats-icon-box">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="7"></circle>
+                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+              </svg>
             </div>
             <div>
               <div class="stats-number" data-target="50" data-suffix="+ বছর">৫০+ বছর</div>
@@ -466,10 +540,14 @@
 
           <div class="notice-controls">
             <button class="notice-btn-arrow" id="btn-notice-prev" aria-label="পূর্ববর্তী নোটিশ">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
             </button>
             <button class="notice-btn-arrow" id="btn-notice-next" aria-label="পরবর্তী নোটিশ">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
             </button>
           </div>
         </div>
@@ -488,14 +566,44 @@
             <span class="title-line-1">ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়:</span>
             <span class="title-line-2">পাঁচ দশকেরও বেশি মেধা ও মূল্যবোধের বাতিঘর</span>
           </h2>
-          
+
           <p class="about-lead" data-i18n="about_lead">
-            ময়মনসিংহ জেলার ধোবাউড়া উপজেলার মনোরম পরিবেশে অবস্থিত ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় ১ জানুয়ারি ১৯৭৩ সালে প্রতিষ্ঠিত হয় এবং ১৯৭৫ সালের ১ জানুয়ারি সরকারি স্বীকৃতি লাভ করে। বিগত ৫০ বছরেরও অধিক সময় ধরে বিদ্যাপীঠটি স্থানীয় জনপদে গুণগত মাধ্যমিক শিক্ষার প্রধান চালিকাশক্তি হিসেবে অবদান রেখে আসছে।
+            ময়মনসিংহ জেলার ধোবাউড়া উপজেলার মনোরম পরিবেশে অবস্থিত ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় ১ জানুয়ারি ১৯৭৩ সালে
+            প্রতিষ্ঠিত হয় এবং ১৯৭৫ সালের ১ জানুয়ারি সরকারি স্বীকৃতি লাভ করে। বিগত ৫০ বছরেরও অধিক সময় ধরে বিদ্যাপীঠটি
+            স্থানীয় জনপদে গুণগত মাধ্যমিক শিক্ষার প্রধান চালিকাশক্তি হিসেবে অবদান রেখে আসছে।
           </p>
 
-          <p class="about-body" data-i18n="about_body">
-            বিদ্যালয়টি ময়মনসিংহ শিক্ষা বোর্ডের আওতাধীন একটি স্বনামধন্য এমপিওভুক্ত মাধ্যমিক শিক্ষাপ্রতিষ্ঠান (ইআইআইএন: ১১১৩৬৮, এমপিও কোড: 4002071301)। এখানে ষষ্ঠ থেকে দশম শ্রেণি পর্যন্ত উভয় লিঙ্গের (কো-এডুকেশন) শিক্ষার্থীদের জন্য ডে-শিফটে বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা বিভাগে আধুনিক ও যুগোপযোগী পাঠদান পরিচালনা করা হয়। মোট ৩৮৪ শতাংশের সুবিস্তৃত সবুজ ক্যাম্পাসে ২০০ শতাংশের সুবিশাল খেলার মাঠ এবং ১০টি কক্ষ বিশিষ্ট আধুনিক একাডেমি ভবন রয়েছে।
+          <p class="about-body desktop-only-text" data-i18n="about_body">
+            বিদ্যালয়টি ময়মনসিংহ শিক্ষা বোর্ডের আওতাধীন একটি স্বনামধন্য এমপিওভুক্ত মাধ্যমিক শিক্ষাপ্রতিষ্ঠান (ইআইআইএন:
+            ১১১৩৬৮, এমপিও কোড: 4002071301)। এখানে ষষ্ঠ থেকে দশম শ্রেণি পর্যন্ত উভয় লিঙ্গের (কো-এডুকেশন) শিক্ষার্থীদের
+            জন্য ডে-শিফটে বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা বিভাগে আধুনিক ও যুগোপযোগী পাঠদান পরিচালনা করা হয়। মোট ৩৮৪
+            শতাংশের সুবিস্তৃত সবুজ ক্যাম্পাসে ২০০ শতাংশের সুবিশাল খেলার মাঠ এবং ১০টি কক্ষ বিশিষ্ট আধুনিক একাডেমি ভবন
+            রয়েছে।
           </p>
+
+          <!-- Yearly Holiday Gov. List Option (User Requested Modal Trigger) -->
+          <div class="holiday-option-row">
+            <button type="button" class="btn-holiday-trigger" id="btn-open-holiday-modal" aria-haspopup="dialog"
+              aria-expanded="false" aria-controls="holiday-modal-overlay">
+              <span class="holiday-trigger-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </span>
+              <span class="holiday-trigger-title">বাৎসরিক সরকারি ছুটির তালিকা ২০২৬ (Govt. Holiday List)</span>
+              <span class="holiday-trigger-badge">পপআপে দেখুন 🗓️</span>
+              <span class="holiday-trigger-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </span>
+            </button>
+          </div>
         </div>
 
         <div class="about-grid">
@@ -503,18 +611,9 @@
           <div class="about-image-collage about-video-showcase-container">
             <div class="about-video-frame" id="about-video-frame">
               <!-- HTML5 Video Player: 4:5, Autoplay Loop, Sound Muted, No Controls/No Pause -->
-              <video 
-                id="about-school-video" 
-                class="about-video-player"
-                autoplay
-                loop
-                muted
-                playsinline 
-                webkit-playsinline 
-                preload="auto" 
-                poster="hero-campus.jpg"
-                aria-label="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় পরিচিতি ভিডিও"
-              >
+              <video id="about-school-video" class="about-video-player" autoplay loop muted playsinline
+                webkit-playsinline preload="auto" poster="hero-campus.jpg"
+                aria-label="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় পরিচিতি ভিডিও">
                 <source src="about-video.mp4" type="video/mp4">
                 <source src="gsbavideo_01e6f930.mp4" type="video/mp4">
                 আপনার ব্রাউজার ভিডিও প্লেব্যাক সমর্থন করে না।
@@ -545,7 +644,10 @@
             <div class="school-facts-container">
               <div class="school-facts-header">
                 <div class="school-facts-title-wrap">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                  </svg>
                   <h3 class="school-facts-title">একনজরে প্রতিষ্ঠানের সংক্ষিপ্ত তথ্য</h3>
                 </div>
                 <span class="school-facts-badge">এমপিওভুক্ত (কোড: 4002071301)</span>
@@ -553,7 +655,10 @@
               <div class="school-facts-grid">
                 <div class="fact-item">
                   <div class="fact-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
                   </div>
                   <div class="fact-content">
                     <div class="fact-label">অবস্থান ও শিক্ষা বোর্ড</div>
@@ -563,7 +668,12 @@
 
                 <div class="fact-item">
                   <div class="fact-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
                   </div>
                   <div class="fact-content">
                     <div class="fact-label">ইআইআইএন (EIIN)</div>
@@ -573,7 +683,10 @@
 
                 <div class="fact-item">
                   <div class="fact-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 14 14"></polyline>
+                    </svg>
                   </div>
                   <div class="fact-content">
                     <div class="fact-label">প্রতিষ্ঠা ও স্বীকৃতি</div>
@@ -583,7 +696,12 @@
 
                 <div class="fact-item">
                   <div class="fact-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
                   </div>
                   <div class="fact-content">
                     <div class="fact-label">শিক্ষার স্তর ও শিফট</div>
@@ -593,7 +711,11 @@
 
                 <div class="fact-item">
                   <div class="fact-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                      <polyline points="2 17 12 22 22 17"></polyline>
+                      <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
                   </div>
                   <div class="fact-content">
                     <div class="fact-label">অনুমোদিত বিভাগসমূহ</div>
@@ -603,7 +725,10 @@
 
                 <div class="fact-item">
                   <div class="fact-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
                   </div>
                   <div class="fact-content">
                     <div class="fact-label">জমি ও অবকাঠামো</div>
@@ -617,41 +742,64 @@
             <div class="about-pillars-grid">
               <div class="pillar-card">
                 <div class="pillar-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                    </path>
+                  </svg>
                 </div>
                 <h3 class="pillar-title" data-i18n="pillar_1_title">মানসম্মত পাঠদান</h3>
-                <p class="pillar-desc" data-i18n="pillar_1_desc">জাতীয় শিক্ষাক্রমের আলোকে গবেষণাধর্মী ও আনন্দদায়ক পাঠদান পদ্ধতি।</p>
+                <p class="pillar-desc" data-i18n="pillar_1_desc">জাতীয় শিক্ষাক্রমের আলোকে গবেষণাধর্মী ও আনন্দদায়ক
+                  পাঠদান পদ্ধতি।</p>
               </div>
 
               <div class="pillar-card">
                 <div class="pillar-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                      d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                    </path>
+                  </svg>
                 </div>
                 <h3 class="pillar-title" data-i18n="pillar_2_title">নৈতিকতা ও মূল্যবোধ</h3>
-                <p class="pillar-desc" data-i18n="pillar_2_desc">সততা, বিনয়, শৃঙ্খলা, সহমর্মিতা ও দেশপ্রেমের বাস্তব শিক্ষা।</p>
+                <p class="pillar-desc" data-i18n="pillar_2_desc">সততা, বিনয়, শৃঙ্খলা, সহমর্মিতা ও দেশপ্রেমের বাস্তব
+                  শিক্ষা।</p>
               </div>
 
               <div class="pillar-card">
                 <div class="pillar-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path
+                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                    </path>
+                  </svg>
                 </div>
                 <h3 class="pillar-title" data-i18n="pillar_3_title">বিজ্ঞান ও প্রযুক্তি</h3>
-                <p class="pillar-desc" data-i18n="pillar_3_desc">ব্যবহারিক বিজ্ঞানাগার, কম্পিউটার ল্যাব ও অলিম্পিয়াড প্রস্তুতি।</p>
+                <p class="pillar-desc" data-i18n="pillar_3_desc">ব্যবহারিক বিজ্ঞানাগার, কম্পিউটার ল্যাব ও অলিম্পিয়াড
+                  প্রস্তুতি।</p>
               </div>
 
               <div class="pillar-card">
                 <div class="pillar-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
                 </div>
                 <h3 class="pillar-title" data-i18n="pillar_4_title">মানবিক ও সাংস্কৃতিক বিকাশ</h3>
-                <p class="pillar-desc" data-i18n="pillar_4_desc">সংসদীয় বিতর্ক, সমাজবিজ্ঞান, সাহিত্য চর্চা ও নেতৃত্ব বিকাশ।</p>
+                <p class="pillar-desc" data-i18n="pillar_4_desc">সংসদীয় বিতর্ক, সমাজবিজ্ঞান, সাহিত্য চর্চা ও নেতৃত্ব
+                  বিকাশ।</p>
               </div>
             </div>
 
             <div style="margin-top: 1.5rem;">
               <a href="#gallery" class="btn btn-primary">
                 <span>ফটো গ্যালারি ও স্মৃতিকথা দেখুন</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
               </a>
             </div>
           </div>
@@ -683,22 +831,25 @@
 
             <div class="leader-header">
               <div class="leader-avatar-frame">
-                <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" 
-                  alt="সভাপতি অধ্যাপক ড. তরিকুল ইসলাম" 
-                  class="leader-avatar"
-                  loading="lazy"
-                >
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80"
+                  alt="সভাপতি অধ্যাপক ড. তরিকুল ইসলাম" class="leader-avatar" loading="lazy">
                 <span class="leader-seal-pin" title="বিদ্যালয় পরিচালনা পর্ষদ">★</span>
               </div>
               <div class="leader-meta">
                 <div class="leader-role-badge">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                    </path>
+                  </svg>
                   <span data-i18n="chairman_role">সভাপতি, বিদ্যালয় পরিচালনা পর্ষদ (SMC)</span>
                 </div>
                 <h3 class="leader-name">অধ্যাপক ড. তরিকুল ইসলাম</h3>
                 <div class="leader-qualification-badge">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
                   <span>পিএইচ.ডি (শিক্ষা প্রশাসন), এম.এড, বি.এ (অনার্স)</span>
                 </div>
               </div>
@@ -707,13 +858,18 @@
             <div class="leader-quote-wrapper">
               <span class="classic-quote-icon" aria-hidden="true">“</span>
               <blockquote class="leader-quote-box" data-i18n="chairman_quote">
-                "প্রকৃত শিক্ষা কেবল জীবিকা অর্জনের পথ দেখায় না; তা আত্মাকে আলোকিত করে, সহমর্মিতা জাগায় এবং নৈতিক ভিত্তিকে সুদৃঢ় করে।"
+                "প্রকৃত শিক্ষা কেবল জীবিকা অর্জনের পথ দেখায় না; তা আত্মাকে আলোকিত করে, সহমর্মিতা জাগায় এবং নৈতিক
+                ভিত্তিকে সুদৃঢ় করে।"
               </blockquote>
             </div>
 
             <div class="leader-message-body-wrap">
               <p class="leader-message-body" data-i18n="chairman_body">
-                "ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ে সকল অভিভাবক ও প্রিয় শিক্ষার্থীদের আন্তরিক শুভেচ্ছা জানাই। ১৯৭৩ সালে ধোবাউড়ার পুণ্যভূমিতে এই প্রতিষ্ঠানের যাত্রার শুরু থেকেই নৈতিক মূল্যবোধ ও মানসম্মত শিক্ষার সমন্বয় ছিল আমাদের মূল দর্শন। প্রতিটি শিক্ষার্থীর ভেতর যে অপার সম্ভাবনা লুকায়িত আছে, তা পরম মমতায় প্রস্ফুটিত করাই আমাদের অঙ্গীকার। বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা শাখায় আধুনিক পাঠদান পরিবেশ অব্যাহত রাখতে আমরা প্রতিশ্রুতিবদ্ধ।"
+                "ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ে সকল অভিভাবক ও প্রিয় শিক্ষার্থীদের আন্তরিক শুভেচ্ছা জানাই। ১৯৭৩ সালে
+                ধোবাউড়ার পুণ্যভূমিতে এই প্রতিষ্ঠানের যাত্রার শুরু থেকেই নৈতিক মূল্যবোধ ও মানসম্মত শিক্ষার সমন্বয় ছিল
+                আমাদের মূল দর্শন। প্রতিটি শিক্ষার্থীর ভেতর যে অপার সম্ভাবনা লুকায়িত আছে, তা পরম মমতায় প্রস্ফুটিত করাই
+                আমাদের অঙ্গীকার। বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা শাখায় আধুনিক পাঠদান পরিবেশ অব্যাহত রাখতে আমরা
+                প্রতিশ্রুতিবদ্ধ।"
               </p>
             </div>
 
@@ -730,7 +886,10 @@
                 <span class="sig-post">সভাপতি • বিদ্যালয় পরিচালনা পর্ষদ</span>
               </div>
               <a href="mailto:smc@ghoshgaonshs.edu.bd" class="leader-contact-link">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
                 <span data-i18n="contact_direct_office">সভাপতির কার্যালয়</span>
               </a>
             </div>
@@ -746,22 +905,25 @@
 
             <div class="leader-header">
               <div class="leader-avatar-frame">
-                <img 
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" 
-                  alt="প্রধান শিক্ষক মিসেস সুলতানা রাজিয়া" 
-                  class="leader-avatar"
-                  loading="lazy"
-                >
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80"
+                  alt="প্রধান শিক্ষক মিসেস সুলতানা রাজিয়া" class="leader-avatar" loading="lazy">
                 <span class="leader-seal-pin" title="একাডেমিক প্রধান">★</span>
               </div>
               <div class="leader-meta">
                 <div class="leader-role-badge">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                    </path>
+                  </svg>
                   <span data-i18n="principal_role">প্রধান শিক্ষক • একাডেমিক প্রশাসন</span>
                 </div>
                 <h3 class="leader-name">মিসেস সুলতানা রাজিয়া</h3>
                 <div class="leader-qualification-badge">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
                   <span>এম.এসসি (ফলিত গণিত), বি.এড (১ম শ্রেণি), সিনিয়র শিক্ষাবিদ</span>
                 </div>
               </div>
@@ -770,13 +932,17 @@
             <div class="leader-quote-wrapper">
               <span class="classic-quote-icon" aria-hidden="true">“</span>
               <blockquote class="leader-quote-box" data-i18n="principal_quote">
-                "প্রতিদিন সকালে যখন শিক্ষার্থীরা আমাদের প্রাঙ্গণে প্রবেশ করে, আমরা তাদের ভেতরের সুপ্ত প্রতিভাকে জাগ্রত করার পবিত্র দায়িত্ব গ্রহণ করি।"
+                "প্রতিদিন সকালে যখন শিক্ষার্থীরা আমাদের প্রাঙ্গণে প্রবেশ করে, আমরা তাদের ভেতরের সুপ্ত প্রতিভাকে জাগ্রত
+                করার পবিত্র দায়িত্ব গ্রহণ করি।"
               </blockquote>
             </div>
 
             <div class="leader-message-body-wrap">
               <p class="leader-message-body" data-i18n="principal_body">
-                "প্রিয় শিক্ষার্থীবৃন্দ ও সম্মানিত অভিভাবকবৃন্দ, ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় পরিবারে আপনাদের স্বাগতম। মুখস্থ বিদ্যার বাইরে গিয়ে প্রশ্ন করার সাহস, নতুন কিছু আবিষ্কার ও বাস্তব জীবনে জ্ঞানের সঠিক প্রয়োগই আমাদের শিক্ষাদানের মূল লক্ষ্য। প্রতিটি শিক্ষার্থী যেন আনন্দ ও শৃঙ্খলার সাথে বেড়ে ওঠে, আমরা তা নিশ্চিত করি।"
+                "প্রিয় শিক্ষার্থীবৃন্দ ও সম্মানিত অভিভাবকবৃন্দ, ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় পরিবারে আপনাদের
+                স্বাগতম। মুখস্থ বিদ্যার বাইরে গিয়ে প্রশ্ন করার সাহস, নতুন কিছু আবিষ্কার ও বাস্তব জীবনে জ্ঞানের সঠিক
+                প্রয়োগই আমাদের শিক্ষাদানের মূল লক্ষ্য। প্রতিটি শিক্ষার্থী যেন আনন্দ ও শৃঙ্খলার সাথে বেড়ে ওঠে, আমরা তা
+                নিশ্চিত করি।"
               </p>
             </div>
 
@@ -793,7 +959,10 @@
                 <span class="sig-post">প্রধান শিক্ষক • ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়</span>
               </div>
               <a href="mailto:headmaster@ghoshgaonshs.edu.bd" class="leader-contact-link">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
                 <span data-i18n="contact_principals_desk">প্রধান শিক্ষকের দপ্তর</span>
               </a>
             </div>
@@ -811,34 +980,55 @@
           <div class="section-tag" data-i18n="faculty_tag">শিক্ষকমণ্ডলী</div>
           <h2 class="section-title" data-i18n="faculty_title">আমাদের অভিজ্ঞ ও নিবেদিতপ্রাণ শিক্ষকবৃন্দ</h2>
           <p class="section-subtitle" data-i18n="faculty_subtitle">
-            আমাদের শিক্ষকমণ্ডলী কেবল পাঠদানই করেন না, তাঁরা শিক্ষার্থীদের সুপ্ত মেধা ও নৈতিকতা বিকাশের মমতাময় পথপ্রদর্শক।
+            আমাদের শিক্ষকমণ্ডলী কেবল পাঠদানই করেন না, তাঁরা শিক্ষার্থীদের সুপ্ত মেধা ও নৈতিকতা বিকাশের মমতাময়
+            পথপ্রদর্শক।
           </p>
 
-          <!-- Interactive Teacher Button (User Requested Option) -->
+          <!-- Interactive Faculty & Ex-Teachers Selection Tabs -->
           <div class="teacher-action-bar">
-            <button type="button" class="teacher-main-trigger-btn" id="btn-toggle-teachers" aria-expanded="false" aria-controls="teachers-roster-wrapper">
-              <span class="teacher-btn-icon">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-              </span>
-              <span class="teacher-btn-label">Teacher (শিক্ষক তালিকা ও পরিচিতি)</span>
-              <span class="teacher-btn-badge" id="teacher-btn-status">ক্লিক করে দেখুন</span>
-              <span class="teacher-btn-chevron">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              </span>
-            </button>
+            <div class="teacher-tabs-control" role="tablist">
+              <button type="button" class="teacher-main-trigger-btn" id="btn-toggle-teachers" aria-expanded="false"
+                aria-controls="teachers-roster-wrapper">
+                <span class="teacher-btn-icon">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                </span>
+                <span class="teacher-btn-label">শিক্ষক তালিকা</span>
+                <span class="teacher-btn-badge" id="teacher-btn-status">Click করুন</span>
+                <span class="teacher-btn-chevron">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </span>
+              </button>
+
+              <button type="button" class="teacher-main-trigger-btn ex-teachers-btn" id="btn-toggle-ex-teachers"
+                aria-expanded="false" aria-controls="ex-teachers-roster-wrapper">
+                <span class="teacher-btn-icon">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                  </svg>
+                </span>
+                <span class="teacher-btn-label">প্রাক্তন শিক্ষকবৃন্দ</span>
+                <span class="teacher-btn-badge gold-badge" id="ex-teacher-btn-status">স্মৃতি ও সেবাকাল</span>
+                <span class="teacher-btn-chevron">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </span>
+              </button>
+            </div>
           </div>
         </div>
 
         <!-- Teachers Roster Container (Smoothly Reveals on Teacher Button Click) -->
         <div class="teachers-roster-wrapper" id="teachers-roster-wrapper">
-          
+
           <!-- ==================================================================
                1. AT FIRST: School Head Master Showcase Card (Image, Name, Qualification)
                ================================================================== -->
@@ -847,16 +1037,12 @@
               <span class="gold-star">★</span>
               <span>বিদ্যালয়ের সর্বোচ্চ প্রশাসনিক ও একাডেমিক প্রধান</span>
             </div>
-            
+
             <div class="headmaster-card-grid">
               <!-- Head Master Photo Box -->
               <div class="headmaster-photo-box">
-                <img 
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=500&q=80" 
-                  alt="প্রধান শিক্ষক মিসেস সুলতানা রাজিয়া" 
-                  class="headmaster-photo"
-                  loading="lazy"
-                >
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=500&q=80"
+                  alt="প্রধান শিক্ষক মিসেস সুলতানা রাজিয়া" class="headmaster-photo" loading="lazy">
                 <div class="headmaster-title-pill">
                   <span class="pill-dot"></span>
                   <span>প্রধান শিক্ষক</span>
@@ -871,7 +1057,7 @@
                 </div>
 
                 <h3 class="headmaster-name">মিসেস সুলতানা রাজিয়া</h3>
-                
+
                 <!-- Qualification prominently featured -->
                 <div class="headmaster-qualification-box">
                   <div class="qual-header">
@@ -887,7 +1073,8 @@
                 </div>
 
                 <p class="headmaster-intro">
-                  বিগত দুই দশকেরও বেশি সময় ধরে প্রতিষ্ঠানের সামগ্রিক শৃঙ্খলা, মেধা বিকাশ, আধুনিক বিজ্ঞানাগার ব্যবস্থাপনা ও নৈতিক শিক্ষার অনন্য বাতিঘর হিসেবে নেতৃত্ব দিয়ে আসছেন।
+                  বিগত দুই দশকেরও বেশি সময় ধরে প্রতিষ্ঠানের সামগ্রিক শৃঙ্খলা, মেধা বিকাশ, আধুনিক বিজ্ঞানাগার
+                  ব্যবস্থাপনা ও নৈতিক শিক্ষার অনন্য বাতিঘর হিসেবে নেতৃত্ব দিয়ে আসছেন।
                 </p>
 
                 <div class="headmaster-meta-footer">
@@ -912,29 +1099,73 @@
               <div class="faculty-pill">সহকারী শিক্ষকমণ্ডলী</div>
               <h3 class="general-faculty-title">সাধারণ শিক্ষকবৃন্দ</h3>
             </div>
-            
+
             <!-- Faculty Department Filter -->
             <div class="faculty-filter-bar">
               <button class="faculty-btn active" data-filter="all" data-i18n="faculty_filter_all">সকল বিভাগ</button>
               <button class="faculty-btn" data-filter="stem" data-i18n="faculty_filter_stem">বিজ্ঞান ও গণিত</button>
-              <button class="faculty-btn" data-filter="ict" data-i18n="faculty_filter_ict">তথ্য ও যোগাযোগ প্রযুক্তি (ICT)</button>
-              <button class="faculty-btn" data-filter="humanities" data-i18n="faculty_filter_humanities">ভাষা ও মানবিক</button>
+              <button class="faculty-btn" data-filter="ict" data-i18n="faculty_filter_ict">তথ্য ও যোগাযোগ প্রযুক্তি
+                (ICT)</button>
+              <button class="faculty-btn" data-filter="humanities" data-i18n="faculty_filter_humanities">ভাষা ও
+                মানবিক</button>
               <button class="faculty-btn" data-filter="arts" data-i18n="faculty_filter_arts">চারুকলা ও ক্রীড়া</button>
             </div>
           </div>
 
           <!-- General Teachers Grid (Strict Square 1:1 Images) -->
           <div class="teachers-grid">
+            <!-- Teacher: Farida Khatoon (Assistant Teacher - Teachers Portal Verified) -->
+            <article class="teacher-card" data-category="humanities ict">
+              <div class="teacher-photo-wrap">
+                <img src="teacher-farida-khatoon.jpg" alt="ফরিদা খাতুন - সহকারী শিক্ষক" class="teacher-photo"
+                  loading="lazy">
+                <span class="teacher-subject-badge">সামাজিক বিজ্ঞান ও মানবিক</span>
+              </div>
+              <div class="teacher-details">
+                <h3 class="teacher-name">ফরিদা খাতুন</h3>
+                <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
+                  <span><strong>যোগ্যতা:</strong> এম.এ ও বি.এ (অনার্স, আনন্দ মোহন কলেজ), বি.এড (বাউবি)</span>
+                </div>
+                <div class="teacher-role">সহকারী শিক্ষক (ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়)</div>
+                <p class="teacher-bio">
+                  "শিক্ষকতা পেশায় নিজেকে সর্বদা নিয়োজিত রাখতে চাই।" দীর্ঘ ২৬ বছরেরও বেশি সময় ধরে শিক্ষার্থীদের
+                  মমতাময় পাঠদান এবং শিক্ষক বাতায়নে ডিজিটাল ভিডিও ক্লাসের মাধ্যমে মেধা বিকাশে নিবেদিতপ্রাণ।
+                </p>
+                <div class="teacher-card-footer">
+                  <span>অভিজ্ঞতা: <strong>২৬+ বছর</strong></span>
+                  <a href="https://www.teachers.gov.bd/profile/faridakhatoonat" target="_blank"
+                    rel="noopener noreferrer"
+                    style="color: var(--color-primary); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;"
+                    title="শিক্ষক বাতায়ন ভেরিফাইড প্রোফাইল দেখুন">
+                    <span>বাতায়ন প্রোফাইল</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+
             <!-- Teacher 1: Senior Mathematics -->
             <article class="teacher-card" data-category="stem">
               <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=400&q=80" alt="অধ্যাপক মাহমুদুল হাসান - গণিত বিভাগ" class="teacher-photo" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=400&q=80"
+                  alt="অধ্যাপক মাহমুদুল হাসান - গণিত বিভাগ" class="teacher-photo" loading="lazy">
                 <span class="teacher-subject-badge" data-i18n="tchr_1_subj">গণিত বিভাগ</span>
               </div>
               <div class="teacher-details">
                 <h3 class="teacher-name" data-i18n="tchr_1_name">অধ্যাপক মাহমুদুল হাসান</h3>
                 <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
                   <span><strong>যোগ্যতা:</strong> এম.এসসি (ফলিত গণিত, ঢাবি)</span>
                 </div>
                 <div class="teacher-role" data-i18n="tchr_1_role">বিভাগীয় প্রধান, গণিত বিভাগ</div>
@@ -951,18 +1182,23 @@
             <!-- Teacher: ICT & Computer Science -->
             <article class="teacher-card" data-category="stem ict">
               <div class="teacher-photo-wrap">
-                <img src="teacher-ict.jpg" alt="মো. নাজমুল হাসান - সহকারী শিক্ষক (তথ্য ও যোগাযোগ প্রযুক্তি)" class="teacher-photo" loading="lazy">
+                <img src="teacher-ict.jpg" alt="মো. নাজমুল হাসান - সহকারী শিক্ষক (তথ্য ও যোগাযোগ প্রযুক্তি)"
+                  class="teacher-photo" loading="lazy">
                 <span class="teacher-subject-badge" data-i18n="tchr_ict_subj">তথ্য ও যোগাযোগ প্রযুক্তি (ICT)</span>
               </div>
               <div class="teacher-details">
                 <h3 class="teacher-name" data-i18n="tchr_ict_name">প্রকৌশলী মো. নাজমুল হাসান</h3>
                 <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
                   <span><strong>যোগ্যতা:</strong> বি.এসসি ইন সিএসই (ইঞ্জিনিয়ারিং), বি.এড</span>
                 </div>
                 <div class="teacher-role" data-i18n="tchr_ict_role">সহকারী শিক্ষক (আইসিটি ও ডিজিটাল প্রযুক্তি)</div>
                 <p class="teacher-bio" data-i18n="tchr_ict_bio">
-                  শেখ রাসেল ডিজিটাল ল্যাব ও আধুনিক কম্পিউটার ল্যাবে কোডিং, প্রোগ্রামিং, ওয়েব প্রযুক্তি ও ব্যবহারিক আইসিটিতে শিক্ষার্থীদের দক্ষ করে তোলেন।
+                  শেখ রাসেল ডিজিটাল ল্যাব ও আধুনিক কম্পিউটার ল্যাবে কোডিং, প্রোগ্রামিং, ওয়েব প্রযুক্তি ও ব্যবহারিক
+                  আইসিটিতে শিক্ষার্থীদের দক্ষ করে তোলেন।
                 </p>
                 <div class="teacher-card-footer">
                   <span data-i18n="tchr_ict_exp">অভিজ্ঞতা: <strong>৮+ বছর</strong></span>
@@ -974,18 +1210,23 @@
             <!-- Teacher 2: Physics & STEM -->
             <article class="teacher-card" data-category="stem">
               <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80" alt="ড. ফারজানা রহমান - পদার্থবিজ্ঞান বিশেষজ্ঞ" class="teacher-photo" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80"
+                  alt="ড. ফারজানা রহমান - পদার্থবিজ্ঞান বিশেষজ্ঞ" class="teacher-photo" loading="lazy">
                 <span class="teacher-subject-badge" data-i18n="tchr_2_subj">পদার্থবিজ্ঞান ও রোবোটিক্স</span>
               </div>
               <div class="teacher-details">
                 <h3 class="teacher-name" data-i18n="tchr_2_name">ড. ফারজানা রহমান</h3>
                 <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
                   <span><strong>যোগ্যতা:</strong> পিএইচ.ডি (পদার্থবিজ্ঞান), বুয়েট ফেলো</span>
                 </div>
                 <div class="teacher-role" data-i18n="tchr_2_role">সিনিয়র বিজ্ঞান বিশেষজ্ঞ</div>
                 <p class="teacher-bio" data-i18n="tchr_2_bio">
-                  ব্যবহারিক গবেষণাগারে পরীক্ষা-নিরীক্ষা ও বিজ্ঞান প্রজেক্টের মাধ্যমে শিক্ষার্থীদের বিজ্ঞানমনস্ক করে তোলেন।
+                  ব্যবহারিক গবেষণাগারে পরীক্ষা-নিরীক্ষা ও বিজ্ঞান প্রজেক্টের মাধ্যমে শিক্ষার্থীদের বিজ্ঞানমনস্ক করে
+                  তোলেন।
                 </p>
                 <div class="teacher-card-footer">
                   <span data-i18n="tchr_2_exp">অভিজ্ঞতা: <strong>১২+ বছর</strong></span>
@@ -997,13 +1238,17 @@
             <!-- Teacher 3: English Literature -->
             <article class="teacher-card" data-category="humanities">
               <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="রেবেকা চৌধুরী - ইংরেজি বিভাগ" class="teacher-photo" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+                  alt="রেবেকা চৌধুরী - ইংরেজি বিভাগ" class="teacher-photo" loading="lazy">
                 <span class="teacher-subject-badge" data-i18n="tchr_3_subj">ইংরেজি সাহিত্য ও ভাষা</span>
               </div>
               <div class="teacher-details">
                 <h3 class="teacher-name" data-i18n="tchr_3_name">রেবেকা চৌধুরী</h3>
                 <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
                   <span><strong>যোগ্যতা:</strong> এম.এ ইন ইংলিশ (ওয়ারউইক), সেল্টা</span>
                 </div>
                 <div class="teacher-role" data-i18n="tchr_3_role">বিভাগীয় প্রধান, ইংরেজি বিভাগ</div>
@@ -1020,13 +1265,17 @@
             <!-- Teacher 4: Chemistry & Environmental -->
             <article class="teacher-card" data-category="stem">
               <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" alt="তানভীর আহমেদ - রসায়ন বিশেষজ্ঞ" class="teacher-photo" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80"
+                  alt="তানভীর আহমেদ - রসায়ন বিশেষজ্ঞ" class="teacher-photo" loading="lazy">
                 <span class="teacher-subject-badge" data-i18n="tchr_4_subj">রসায়ন বিভাগ</span>
               </div>
               <div class="teacher-details">
                 <h3 class="teacher-name" data-i18n="tchr_4_name">তানভীর আহমেদ</h3>
                 <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
                   <span><strong>যোগ্যতা:</strong> এম.এসসি (জৈব রসায়ন), বি.এড</span>
                 </div>
                 <div class="teacher-role" data-i18n="tchr_4_role">প্রধান রসায়ন বিশেষজ্ঞ</div>
@@ -1043,13 +1292,17 @@
             <!-- Teacher 5: Social Science & History -->
             <article class="teacher-card" data-category="humanities">
               <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" alt="আমিনুল হক - সামাজিক বিজ্ঞান ও ইতিহাস" class="teacher-photo" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80"
+                  alt="আমিনুল হক - সামাজিক বিজ্ঞান ও ইতিহাস" class="teacher-photo" loading="lazy">
                 <span class="teacher-subject-badge" data-i18n="tchr_5_subj">সামাজিক বিজ্ঞান ও ইতিহাস</span>
               </div>
               <div class="teacher-details">
                 <h3 class="teacher-name" data-i18n="tchr_5_name">আমিনুল হক</h3>
                 <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
                   <span><strong>যোগ্যতা:</strong> এম.এ (ইতিহাস ও আন্তর্জাতিক সম্পর্ক)</span>
                 </div>
                 <div class="teacher-role" data-i18n="tchr_5_role">সিনিয়র মানবিক বিভাগ শিক্ষক</div>
@@ -1066,13 +1319,17 @@
             <!-- Teacher 6: Bangla Language & Culture -->
             <article class="teacher-card" data-category="humanities">
               <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=400&q=80" alt="নুসরাত জাহান - বাংলা বিভাগীয় প্রধান" class="teacher-photo" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=400&q=80"
+                  alt="নুসরাত জাহান - বাংলা বিভাগীয় প্রধান" class="teacher-photo" loading="lazy">
                 <span class="teacher-subject-badge" data-i18n="tchr_6_subj">বাংলা সাহিত্য ও সংস্কৃতি</span>
               </div>
               <div class="teacher-details">
                 <h3 class="teacher-name" data-i18n="tchr_6_name">নুসরাত জাহান</h3>
                 <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
                   <span><strong>যোগ্যতা:</strong> এম.এ (বাংলা সাহিত্য, ঢাবি)</span>
                 </div>
                 <div class="teacher-role" data-i18n="tchr_6_role">বিভাগীয় প্রধান, বাংলা বিভাগ</div>
@@ -1089,18 +1346,23 @@
             <!-- Teacher 7: Fine Arts & Visual Design -->
             <article class="teacher-card" data-category="arts">
               <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?auto=format&fit=crop&w=400&q=80" alt="শারমিন আক্তার - চারুকলা প্রশিক্ষক" class="teacher-photo" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?auto=format&fit=crop&w=400&q=80"
+                  alt="শারমিন আক্তার - চারুকলা প্রশিক্ষক" class="teacher-photo" loading="lazy">
                 <span class="teacher-subject-badge" data-i18n="tchr_7_subj">চারুকলা ও ডিজাইন</span>
               </div>
               <div class="teacher-details">
                 <h3 class="teacher-name" data-i18n="tchr_7_name">শারমিন আক্তার</h3>
                 <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
                   <span><strong>যোগ্যতা:</strong> এম.এফ.এ (চিত্রকলা ও ভাস্কর্য)</span>
                 </div>
                 <div class="teacher-role" data-i18n="tchr_7_role">চারুকলা ও সৃজনশীল প্রশিক্ষক</div>
                 <p class="teacher-bio" data-i18n="tchr_7_bio">
-                  ক্যানভাসে তেলরং, মৃৎশিল্প ও আধুনিক গ্রাফিক ডিজাইনের মাধ্যমে শিক্ষার্থীদের নান্দনিক দৃষ্টিভঙ্গি সমৃদ্ধ করেন।
+                  ক্যানভাসে তেলরং, মৃৎশিল্প ও আধুনিক গ্রাফিক ডিজাইনের মাধ্যমে শিক্ষার্থীদের নান্দনিক দৃষ্টিভঙ্গি সমৃদ্ধ
+                  করেন।
                 </p>
                 <div class="teacher-card-footer">
                   <span data-i18n="tchr_7_exp">অভিজ্ঞতা: <strong>৯+ বছর</strong></span>
@@ -1112,13 +1374,17 @@
             <!-- Teacher 8: Physical Education & Sports -->
             <article class="teacher-card" data-category="arts">
               <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80" alt="কোচ জহিরুল ইসলাম - ক্রীড়া পরিচালক" class="teacher-photo" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80"
+                  alt="কোচ জহিরুল ইসলাম - ক্রীড়া পরিচালক" class="teacher-photo" loading="lazy">
                 <span class="teacher-subject-badge" data-i18n="tchr_8_subj">শারীরিক শিক্ষা ও ক্রীড়া</span>
               </div>
               <div class="teacher-details">
                 <h3 class="teacher-name" data-i18n="tchr_8_name">কোচ জহিরুল ইসলাম</h3>
                 <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
                   <span><strong>যোগ্যতা:</strong> বি.পি.এড, এএফসি সি-লাইসেন্স</span>
                 </div>
                 <div class="teacher-role" data-i18n="tchr_8_role">ক্রীড়া পরিচালক</div>
@@ -1129,6 +1395,344 @@
                   <span data-i18n="tchr_8_exp">অভিজ্ঞতা: <strong>১১+ বছর</strong></span>
                   <span data-i18n="tchr_8_tag">চ্যাম্পিয়নশিপ কোচ</span>
                 </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             EX-TEACHERS / RETIRED FACULTY HONOR SHOWCASE (প্রাক্তন শিক্ষকবৃন্দ)
+             ================================================================== -->
+        <div class="ex-teachers-roster-wrapper" id="ex-teachers-roster-wrapper">
+          <!-- Ex-Teachers Header & Add Action Bar -->
+          <div class="ex-teachers-header-row">
+            <div class="ex-teachers-intro-wrap">
+              <div class="ex-faculty-pill">
+                <span class="gold-star">★</span>
+                <span>চিরস্মরণীয় শ্রদ্ধা ও কৃতজ্ঞতা | ১৯৭৩ – বর্তমান</span>
+              </div>
+              <h3 class="ex-faculty-main-title">বিদ্যালয়ের প্রাক্তন ও অবসরপ্রাপ্ত শিক্ষকবৃন্দ</h3>
+              <p class="ex-faculty-subtitle">
+                যাঁদের অক্লান্ত ত্যাগ, মেধা ও মমতাময় পাঠদানে ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় সুদীর্ঘ পাঁচ দশক ধরে
+                জ্ঞানের দ্যুতি ছড়িয়ে চলেছে।
+              </p>
+            </div>
+
+            <div class="ex-teachers-action-buttons">
+              <button type="button" class="btn-add-ex-teacher" id="btn-open-ex-teacher-modal">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>প্রাক্তন শিক্ষকের তথ্য যোগ করুন</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Ex-Teachers Cards Grid -->
+          <div class="ex-teachers-grid" id="ex-teachers-grid">
+            <!-- Ex-Teacher 1: Founding Headmaster -->
+            <article class="ex-teacher-card">
+              <div class="ex-teacher-card-badge">
+                <span class="badge-icon">🎖️</span>
+                <span>প্রতিষ্ঠাতা প্রধান শিক্ষক</span>
+              </div>
+              <div class="ex-teacher-header">
+                <div class="ex-teacher-photo-wrap">
+                  <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=400&q=80"
+                    alt="মরহুম মো. আব্দুল করিম স্যার" class="ex-teacher-photo" loading="lazy">
+                  <span class="ex-teacher-status-tag status-late">মরহুম (স্মৃতিতে অম্লান)</span>
+                </div>
+                <div class="ex-teacher-bio-top">
+                  <h4 class="ex-teacher-name">মরহুম মো. আব্দুল করিম স্যার</h4>
+                  <div class="ex-teacher-designation">প্রাক্তন প্রধান শিক্ষক ও প্রতিষ্ঠাতা সংগঠক</div>
+                  <div class="ex-teacher-subject-tag">ইংরেজি ও প্রাতিষ্ঠানিক প্রশাসন</div>
+                </div>
+              </div>
+
+              <!-- Service Info Prominently Highlighted (Year & Duration) -->
+              <div class="ex-teacher-service-box">
+                <div class="service-pill-row">
+                  <div class="service-stat">
+                    <span class="service-label">সেবাকাল:</span>
+                    <strong class="service-period">১৯৭৪ – ২০০২</strong>
+                  </div>
+                  <div class="service-tenure-badge">
+                    <span class="tenure-clock">⏳</span>
+                    <strong>২৮ বছর নিবেদিত সেবা</strong>
+                  </div>
+                </div>
+                <div class="ex-teacher-qual">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
+                  <span><strong>যোগ্যতা:</strong> এম.এ (ইংরেজি, ঢাবি), বি.এড (১ম শ্রেণি)</span>
+                </div>
+              </div>
+
+              <p class="ex-teacher-tribute">
+                বিদ্যালয় প্রতিষ্ঠার কঠিনতম দিনগুলোতে নিরলস শ্রম, শৃঙ্খলা ও দূরদর্শী নেতৃত্বে প্রতিষ্ঠানকে ধোবাউড়ার
+                শ্রেষ্ঠ শিক্ষাপ্রতিষ্ঠানে রূপান্তর করেছিলেন।
+              </p>
+
+              <div class="ex-teacher-card-footer">
+                <span class="honor-tag">★ আজীবন স্মারক সম্মাননা</span>
+                <span class="service-years-count">মোট সেবা: <strong>২৮ বছর</strong></span>
+              </div>
+            </article>
+
+            <!-- Ex-Teacher 2: Math & Science Legend -->
+            <article class="ex-teacher-card">
+              <div class="ex-teacher-card-badge">
+                <span class="badge-icon">📐</span>
+                <span>প্রাক্তন সহকারী প্রধান শিক্ষক</span>
+              </div>
+              <div class="ex-teacher-header">
+                <div class="ex-teacher-photo-wrap">
+                  <img
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"
+                    alt="বাবু নিখিল চন্দ্র দাস" class="ex-teacher-photo" loading="lazy">
+                  <span class="ex-teacher-status-tag status-retired">অবসরপ্রাপ্ত গুণী শিক্ষক</span>
+                </div>
+                <div class="ex-teacher-bio-top">
+                  <h4 class="ex-teacher-name">বাবু নিখিল চন্দ্র দাস</h4>
+                  <div class="ex-teacher-designation">সহকারী প্রধান শিক্ষক (গণিত ও পদার্থবিজ্ঞান)</div>
+                  <div class="ex-teacher-subject-tag">উচ্চতর গণিত ও বিজ্ঞান</div>
+                </div>
+              </div>
+
+              <div class="ex-teacher-service-box">
+                <div class="service-pill-row">
+                  <div class="service-stat">
+                    <span class="service-label">সেবাকাল:</span>
+                    <strong class="service-period">১৯৭৫ – ২০০৮</strong>
+                  </div>
+                  <div class="service-tenure-badge">
+                    <span class="tenure-clock">⏳</span>
+                    <strong>৩৩ বছর নিবেদিত সেবা</strong>
+                  </div>
+                </div>
+                <div class="ex-teacher-qual">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
+                  <span><strong>যোগ্যতা:</strong> বি.এসসি (সম্মান), এম.এসসি (গণিত), বি.এড</span>
+                </div>
+              </div>
+
+              <p class="ex-teacher-tribute">
+                কঠিন গাণিতিক ধারণাকে পরম স্নেহে শিক্ষার্থীদের মনের গভীরে গেঁথে দিতেন। তাঁর হাতে তৈরি হাজারো শিক্ষার্থী
+                আজ দেশ-বিদেশে প্রতিষ্ঠিত।
+              </p>
+
+              <div class="ex-teacher-card-footer">
+                <span class="honor-tag">★ আদর্শ শিক্ষক পদক</span>
+                <span class="service-years-count">মোট সেবা: <strong>৩৩ বছর</strong></span>
+              </div>
+            </article>
+
+            <!-- Ex-Teacher 3: Science & Chemistry Pioneer -->
+            <article class="ex-teacher-card">
+              <div class="ex-teacher-card-badge">
+                <span class="badge-icon">🧪</span>
+                <span>সিনিয়র শিক্ষক (বিজ্ঞান)</span>
+              </div>
+              <div class="ex-teacher-header">
+                <div class="ex-teacher-photo-wrap">
+                  <img
+                    src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80"
+                    alt="মরহুম মোজাম্মেল হক বি.এসসি" class="ex-teacher-photo" loading="lazy">
+                  <span class="ex-teacher-status-tag status-late">মরহুম (স্মৃতিতে অম্লান)</span>
+                </div>
+                <div class="ex-teacher-bio-top">
+                  <h4 class="ex-teacher-name">মরহুম মোজাম্মেল হক বি.এসসি</h4>
+                  <div class="ex-teacher-designation">সিনিয়র সহকারী শিক্ষক (রসায়ন ও জীববিজ্ঞান)</div>
+                  <div class="ex-teacher-subject-tag">বিজ্ঞান ও ব্যবহারিক ল্যাব</div>
+                </div>
+              </div>
+
+              <div class="ex-teacher-service-box">
+                <div class="service-pill-row">
+                  <div class="service-stat">
+                    <span class="service-label">সেবাকাল:</span>
+                    <strong class="service-period">১৯৭৮ – ২০১১</strong>
+                  </div>
+                  <div class="service-tenure-badge">
+                    <span class="tenure-clock">⏳</span>
+                    <strong>৩৩ বছর নিবেদিত সেবা</strong>
+                  </div>
+                </div>
+                <div class="ex-teacher-qual">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
+                  <span><strong>যোগ্যতা:</strong> বি.এসসি (রসায়ন), ডিপ্লোমা ইন এডুকেশন</span>
+                </div>
+              </div>
+
+              <p class="ex-teacher-tribute">
+                বিদ্যালয়ে প্রথম বিজ্ঞানাগার তৈরিতে ব্যক্তিগত উদ্যোগে যন্ত্রপাতি ও রিএজেন্ট সংগ্রহ করেছিলেন। বিজ্ঞান
+                শিক্ষায় শিক্ষার্থীদের প্রেরণার প্রতীক।
+              </p>
+
+              <div class="ex-teacher-card-footer">
+                <span class="honor-tag">★ বিজ্ঞানাগার স্বপ্নদ্রষ্টা</span>
+                <span class="service-years-count">মোট সেবা: <strong>৩৩ বছর</strong></span>
+              </div>
+            </article>
+
+            <!-- Ex-Teacher 4: Language & Literary Guide -->
+            <article class="ex-teacher-card">
+              <div class="ex-teacher-card-badge">
+                <span class="badge-icon">📖</span>
+                <span>সিনিয়র শিক্ষিকা (বাংলা)</span>
+              </div>
+              <div class="ex-teacher-header">
+                <div class="ex-teacher-photo-wrap">
+                  <img
+                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80"
+                    alt="বেগম নূরজাহান আক্তার" class="ex-teacher-photo" loading="lazy">
+                  <span class="ex-teacher-status-tag status-retired">অবসরপ্রাপ্ত গুণী শিক্ষক</span>
+                </div>
+                <div class="ex-teacher-bio-top">
+                  <h4 class="ex-teacher-name">বেগম নূরজাহান আক্তার</h4>
+                  <div class="ex-teacher-designation">সিনিয়র সহকারী শিক্ষিকা (বাংলা ও সমাজবিদ্যা)</div>
+                  <div class="ex-teacher-subject-tag">বাংলা সাহিত্য ও সংস্কৃতি চর্চা</div>
+                </div>
+              </div>
+
+              <div class="ex-teacher-service-box">
+                <div class="service-pill-row">
+                  <div class="service-stat">
+                    <span class="service-label">সেবাকাল:</span>
+                    <strong class="service-period">১৯৮২ – ২০১৮</strong>
+                  </div>
+                  <div class="service-tenure-badge">
+                    <span class="tenure-clock">⏳</span>
+                    <strong>৩৬ বছর নিবেদিত সেবা</strong>
+                  </div>
+                </div>
+                <div class="ex-teacher-qual">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
+                  <span><strong>যোগ্যতা:</strong> এম.এ (বাংলা), বি.এড (১ম শ্রেণি)</span>
+                </div>
+              </div>
+
+              <p class="ex-teacher-tribute">
+                অঞ্চলজুড়ে নারী শিক্ষার প্রসার ও মেয়েদের বিদ্যালয়মুখী করতে বাড়ি বাড়ি গিয়ে অভিভাবকদের উদ্বুদ্ধ
+                করেছেন। সাংস্কৃতিক ব্যক্তিত্ব হিসেবে সমাদৃত।
+              </p>
+
+              <div class="ex-teacher-card-footer">
+                <span class="honor-tag">★ নারী শিক্ষা প্রসার স্মারক</span>
+                <span class="service-years-count">মোট সেবা: <strong>৩৬ বছর</strong></span>
+              </div>
+            </article>
+
+            <!-- Ex-Teacher 5: Religious Studies & Character Mentor -->
+            <article class="ex-teacher-card">
+              <div class="ex-teacher-card-badge">
+                <span class="badge-icon">🕌</span>
+                <span>সিনিয়র শিক্ষক (ইসলাম শিক্ষা)</span>
+              </div>
+              <div class="ex-teacher-header">
+                <div class="ex-teacher-photo-wrap">
+                  <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80"
+                    alt="মাওলানা মো. শামসুল হুদা" class="ex-teacher-photo" loading="lazy">
+                  <span class="ex-teacher-status-tag status-retired">অবসরপ্রাপ্ত গুণী শিক্ষক</span>
+                </div>
+                <div class="ex-teacher-bio-top">
+                  <h4 class="ex-teacher-name">মাওলানা মো. শামসুল হুদা</h4>
+                  <div class="ex-teacher-designation">সিনিয়র শিক্ষক (ধর্ম ও আরবি শিক্ষা)</div>
+                  <div class="ex-teacher-subject-tag">ইসলাম শিক্ষা ও নৈতিক চরিত্র গঠন</div>
+                </div>
+              </div>
+
+              <div class="ex-teacher-service-box">
+                <div class="service-pill-row">
+                  <div class="service-stat">
+                    <span class="service-label">সেবাকাল:</span>
+                    <strong class="service-period">১৯৭৬ – ২০১০</strong>
+                  </div>
+                  <div class="service-tenure-badge">
+                    <span class="tenure-clock">⏳</span>
+                    <strong>৩৪ বছর নিবেদিত সেবা</strong>
+                  </div>
+                </div>
+                <div class="ex-teacher-qual">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
+                  <span><strong>যোগ্যতা:</strong> কামিল (হাদিস ও তাফসির), বি.এড</span>
+                </div>
+              </div>
+
+              <p class="ex-teacher-tribute">
+                অত্যন্ত নিরহংকার ও সদালাপী এই শিক্ষক শিক্ষার্থীদের সততা, সত্যবাদিতা এবং জীবনের সর্বক্ষেত্রে নীতি ও
+                শৃঙ্খলার পাঠ দিয়ে গেছেন।
+              </p>
+
+              <div class="ex-teacher-card-footer">
+                <span class="honor-tag">★ নৈতিক শিক্ষা সম্মাননা</span>
+                <span class="service-years-count">মোট সেবা: <strong>৩৪ বছর</strong></span>
+              </div>
+            </article>
+
+            <!-- Ex-Teacher 6: Arts & Sports Veteran -->
+            <article class="ex-teacher-card">
+              <div class="ex-teacher-card-badge">
+                <span class="badge-icon">🏆</span>
+                <span>ক্রীড়া ও শরীরচর্চা শিক্ষক</span>
+              </div>
+              <div class="ex-teacher-header">
+                <div class="ex-teacher-photo-wrap">
+                  <img
+                    src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80"
+                    alt="ওস্তাদ রফিকুল ইসলাম" class="ex-teacher-photo" loading="lazy">
+                  <span class="ex-teacher-status-tag status-retired">অবসরপ্রাপ্ত গুণী শিক্ষক</span>
+                </div>
+                <div class="ex-teacher-bio-top">
+                  <h4 class="ex-teacher-name">ওস্তাদ রফিকুল ইসলাম</h4>
+                  <div class="ex-teacher-designation">শারীরিক শিক্ষা শিক্ষক ও প্রধান ক্রীড়া প্রশিক্ষক</div>
+                  <div class="ex-teacher-subject-tag">ক্রীড়া, শরীরচর্চা ও স্কাউটিং</div>
+                </div>
+              </div>
+
+              <div class="ex-teacher-service-box">
+                <div class="service-pill-row">
+                  <div class="service-stat">
+                    <span class="service-label">সেবাকাল:</span>
+                    <strong class="service-period">১৯৮০ – ২০১৩</strong>
+                  </div>
+                  <div class="service-tenure-badge">
+                    <span class="tenure-clock">⏳</span>
+                    <strong>৩৩ বছর নিবেদিত সেবা</strong>
+                  </div>
+                </div>
+                <div class="ex-teacher-qual">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
+                  <span><strong>যোগ্যতা:</strong> বি.পি.এড, জাতীয় অ্যাথলেটিক্স কোচিং সনদ</span>
+                </div>
+              </div>
+
+              <p class="ex-teacher-tribute">
+                বিদ্যালয়ের সুবিশাল ২০০ শতক খেলার মাঠে অসংখ্য ফুটবল ও অ্যাথলেটিক্স চ্যাম্পিয়ন তৈরি করেছেন। আন্তঃস্কুল
+                টুর্নামেন্টে বিদ্যালয়ের সুনাম শীর্ষস্থানে নিয়েছেন।
+              </p>
+
+              <div class="ex-teacher-card-footer">
+                <span class="honor-tag">★ আজীবন ক্রীড়া সংগঠক</span>
+                <span class="service-years-count">মোট সেবা: <strong>৩৩ বছর</strong></span>
               </div>
             </article>
           </div>
@@ -1147,9 +1751,11 @@
         <!-- Section Header -->
         <div class="section-header text-center">
           <div class="section-tag gold" data-i18n="gallery_tag">সোনালী স্মৃতি ও মুহূর্ত</div>
-          <h2 class="section-title" data-i18n="gallery_title">ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় স্মৃতি অ্যালবাম ও গ্যালারি</h2>
+          <h2 class="section-title" data-i18n="gallery_title">ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় স্মৃতি অ্যালবাম ও
+            গ্যালারি</h2>
           <p class="section-subtitle" data-i18n="gallery_subtitle">
-            ১৯৭৩ সাল থেকে আজ পর্যন্ত—আমাদের প্রিয় বিদ্যাপীঠের প্রাঙ্গণজুড়ে ছড়িয়ে থাকা শিক্ষার্থীদের আবেগ, স্মৃতিবিজড়িত মুহূর্ত এবং প্রিয় শিক্ষকদের সাথে কাটানো সোনালী দিনগুলোর জীবন্ত চিত্রশালা।
+            ১৯৭৩ সাল থেকে আজ পর্যন্ত—আমাদের প্রিয় বিদ্যাপীঠের প্রাঙ্গণজুড়ে ছড়িয়ে থাকা শিক্ষার্থীদের আবেগ,
+            স্মৃতিবিজড়িত মুহূর্ত এবং প্রিয় শিক্ষকদের সাথে কাটানো সোনালী দিনগুলোর জীবন্ত চিত্রশালা।
           </p>
         </div>
 
@@ -1166,13 +1772,19 @@
               </div>
               <h3 class="memory-cta-title">আপনার স্কুল জীবনের ছবি ও স্মৃতি শেয়ার করুন</h3>
               <p class="memory-cta-desc">
-                স্কুল জীবনের পুরনো কোনো ছবি, প্রিয় শিক্ষক-শিক্ষিকার স্মৃতি এবং বন্ধুদের সাথে কাটানো সোনালী দিনগুলোর কথা আমাদের জানান। কোনো অ্যাকাউন্ট বা রেজিস্ট্রেশন ছাড়াই আপনার স্মৃতি সরাসরি এই অ্যালবামে চিরকাল সংরক্ষিত থাকবে।
+                স্কুল জীবনের পুরনো কোনো ছবি, প্রিয় শিক্ষক-শিক্ষিকার স্মৃতি এবং বন্ধুদের সাথে কাটানো সোনালী দিনগুলোর কথা
+                আমাদের জানান। কোনো অ্যাকাউন্ট বা রেজিস্ট্রেশন ছাড়াই আপনার স্মৃতি সরাসরি এই অ্যালবামে চিরকাল সংরক্ষিত
+                থাকবে।
               </p>
             </div>
           </div>
           <div class="memory-cta-action-area">
-            <button class="btn btn-gold btn-lg memory-cta-btn" id="btn-open-memory-modal" type="button" onclick="openMemoryModal()">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <button class="btn btn-gold btn-lg memory-cta-btn" id="btn-open-memory-modal" type="button"
+              onclick="openMemoryModal()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+              </svg>
               <span>নিজের স্মৃতি শেয়ার করুন 📸</span>
             </button>
             <span class="memory-cta-hint">✨ মাত্র ১ মিনিটে তাৎক্ষণিক যুক্ত করুন</span>
@@ -1220,21 +1832,27 @@
       <div class="container">
         <div class="section-header">
           <div class="section-tag gold" data-i18n="testimonials_tag">অভিভাবকদের আস্থা</div>
-          <h2 class="section-title" data-i18n="testimonials_title">ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় সম্পর্কে অভিভাবকদের অনুভূতি</h2>
+          <h2 class="section-title" data-i18n="testimonials_title">ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় সম্পর্কে অভিভাবকদের
+            অনুভূতি</h2>
           <p class="section-subtitle" data-i18n="testimonials_subtitle">
-            যেসব অভিভাবকের সন্তান আমাদের সুশৃঙ্খল পাঠদান ও ভালোবাসা নিয়ে আত্মবিশ্বাসী ব্যক্তিত্ব হিসেবে গড়ে উঠছে, তাদের অকপট অনুভূতি।
+            যেসব অভিভাবকের সন্তান আমাদের সুশৃঙ্খল পাঠদান ও ভালোবাসা নিয়ে আত্মবিশ্বাসী ব্যক্তিত্ব হিসেবে গড়ে উঠছে,
+            তাদের অকপট অনুভূতি।
           </p>
         </div>
 
         <div class="testimonials-slider-wrapper">
-          <div class="testimonials-grid" id="testimonials-grid" role="region" aria-label="অভিভাবকদের মূল্যায়ন স্লাইডার">
+          <div class="testimonials-grid" id="testimonials-grid" role="region"
+            aria-label="অভিভাবকদের মূল্যায়ন স্লাইডার">
             <div class="testimonial-card" data-index="0">
               <div class="testimonial-rating">★★★★★</div>
               <p class="testimonial-text" data-i18n="testi_1_text">
-                "ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ে আমাদের দুই মেয়েকে ভর্তি করানো ছিল অভিভাবক হিসেবে আমাদের নেওয়া সেরা সিদ্ধান্ত। শিক্ষকদের অকৃত্রিম স্নেহ, নিয়মনিষ্ঠা এবং চমৎকার সহশিক্ষা কার্যক্রম ওদের অত্যন্ত আত্মপ্রত্যয়ী ও অনুসন্ধিৎসু করে তুলেছে।"
+                "ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ে আমাদের দুই মেয়েকে ভর্তি করানো ছিল অভিভাবক হিসেবে আমাদের নেওয়া সেরা
+                সিদ্ধান্ত। শিক্ষকদের অকৃত্রিম স্নেহ, নিয়মনিষ্ঠা এবং চমৎকার সহশিক্ষা কার্যক্রম ওদের অত্যন্ত
+                আত্মপ্রত্যয়ী ও অনুসন্ধিৎসু করে তুলেছে।"
               </p>
               <div class="testimonial-author-wrap">
-                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80" alt="ডা. নাসরিন জাহান" class="testimonial-author-avatar">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80"
+                  alt="ডা. নাসরিন জাহান" class="testimonial-author-avatar">
                 <div>
                   <div class="author-name" data-i18n="testi_1_author">ডা. নাসরিন জাহান</div>
                   <div class="author-role" data-i18n="testi_1_role">৮ম ও ১০ম শ্রেণির শিক্ষার্থীর মা</div>
@@ -1245,10 +1863,13 @@
             <div class="testimonial-card" data-index="1">
               <div class="testimonial-rating">★★★★★</div>
               <p class="testimonial-text" data-i18n="testi_2_text">
-                "উন্নত বিজ্ঞান ও আইসিটি ল্যাব, গণিত অলিম্পিয়াড এবং ২০০ শতাংশের বিশাল খেলার মাঠে নিয়মিত খেলাধুলার সুযোগ সত্যিই অতুলনীয়। শিক্ষকদের আন্তরিক দিকনির্দেশনায় আমার ছেলে পরীক্ষায় সেরা ফলাফল অর্জন করেছে। আমরা অত্যন্ত আনন্দিত!"
+                "উন্নত বিজ্ঞান ও আইসিটি ল্যাব, গণিত অলিম্পিয়াড এবং ২০০ শতাংশের বিশাল খেলার মাঠে নিয়মিত খেলাধুলার সুযোগ
+                সত্যিই অতুলনীয়। শিক্ষকদের আন্তরিক দিকনির্দেশনায় আমার ছেলে পরীক্ষায় সেরা ফলাফল অর্জন করেছে। আমরা
+                অত্যন্ত আনন্দিত!"
               </p>
               <div class="testimonial-author-wrap">
-                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80" alt="প্রকৌশলী কামরুল হাসান" class="testimonial-author-avatar">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80"
+                  alt="প্রকৌশলী কামরুল হাসান" class="testimonial-author-avatar">
                 <div>
                   <div class="author-name" data-i18n="testi_2_author">প্রকৌশলী কামরুল হাসান</div>
                   <div class="author-role" data-i18n="testi_2_role">ধোবাউড়া, ময়মনসিংহ • অভিভাবক</div>
@@ -1259,10 +1880,13 @@
             <div class="testimonial-card" data-index="2">
               <div class="testimonial-rating">★★★★★</div>
               <p class="testimonial-text" data-i18n="testi_3_text">
-                "সবুজ প্রাকৃতিক প্রাঙ্গণ, ২০০ শতাংশের সুবিশাল খেলার মাঠ ও নিবেদিতপ্রাণ শিক্ষকদের পিতৃ-মাতৃসুলভ স্নেহ—প্রতিদিন সকালে সন্তানকে স্কুলে পাঠিয়ে নিশ্চিন্ত থাকি। ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় শিক্ষার্থীদের জন্য সত্যিকার অর্থেই একটি মমতাময়ী আদর্শ শিক্ষালয়।"
+                "সবুজ প্রাকৃতিক প্রাঙ্গণ, ২০০ শতাংশের সুবিশাল খেলার মাঠ ও নিবেদিতপ্রাণ শিক্ষকদের পিতৃ-মাতৃসুলভ
+                স্নেহ—প্রতিদিন সকালে সন্তানকে স্কুলে পাঠিয়ে নিশ্চিন্ত থাকি। ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়
+                শিক্ষার্থীদের জন্য সত্যিকার অর্থেই একটি মমতাময়ী আদর্শ শিক্ষালয়।"
               </p>
               <div class="testimonial-author-wrap">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="ফারজানা কবির" class="testimonial-author-avatar">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"
+                  alt="ফারজানা কবির" class="testimonial-author-avatar">
                 <div>
                   <div class="author-name" data-i18n="testi_3_author">ফারজানা কবির</div>
                   <div class="author-role" data-i18n="testi_3_role">৯ম শ্রেণি (বিজ্ঞান বিভাগ) শিক্ষার্থীর মা</div>
@@ -1272,9 +1896,14 @@
           </div>
 
           <!-- Mobile Slider Navigation & Dots (Manual Control Only) -->
-          <div class="testimonials-slider-controls" id="testimonials-slider-controls" aria-label="মতামত স্লাইডার নেভিগেশন">
-            <button type="button" class="testimonial-nav-btn prev" id="testimonial-prev-btn" aria-label="পূর্ববর্তী মতামত">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <div class="testimonials-slider-controls" id="testimonials-slider-controls"
+            aria-label="মতামত স্লাইডার নেভিগেশন">
+            <button type="button" class="testimonial-nav-btn prev" id="testimonial-prev-btn"
+              aria-label="পূর্ববর্তী মতামত">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
             </button>
             <div class="testimonial-slider-dots" id="testimonial-slider-dots">
               <button type="button" class="testimonial-dot active" data-index="0" aria-label="মতামত ১"></button>
@@ -1282,7 +1911,10 @@
               <button type="button" class="testimonial-dot" data-index="2" aria-label="মতামত ৩"></button>
             </div>
             <button type="button" class="testimonial-nav-btn next" id="testimonial-next-btn" aria-label="পরবর্তী মতামত">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
             </button>
           </div>
         </div>
@@ -1298,25 +1930,35 @@
           <!-- Information Column -->
           <div class="contact-info-col">
             <div class="section-tag" data-i18n="contact_tag">ক্যাম্পাস যোগাযোগ</div>
-            <h2 class="section-title" style="text-align: left;" data-i18n="contact_title">ক্যাম্পাসে আসুন অথবা যোগাযোগ করুন</h2>
+            <h2 class="section-title" style="text-align: left;" data-i18n="contact_title">ক্যাম্পাসে আসুন অথবা যোগাযোগ
+              করুন</h2>
             <p class="section-subtitle" style="text-align: left;" data-i18n="contact_subtitle">
-              যেকোনো একাডেমিক পরামর্শের জন্য আমাদের ফটক সর্বদা উন্মুক্ত। ক্যাম্পাস ঘুরে দেখুন অথবা সরাসরি আমাদের ভর্তি উপদেষ্টাদের সাথে কথা বলুন।
+              যেকোনো একাডেমিক পরামর্শের জন্য আমাদের ফটক সর্বদা উন্মুক্ত। ক্যাম্পাস ঘুরে দেখুন অথবা সরাসরি আমাদের ভর্তি
+              উপদেষ্টাদের সাথে কথা বলুন।
             </p>
 
             <div class="contact-cards-list">
               <div class="contact-card-item">
                 <div class="contact-item-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
                 </div>
                 <div>
                   <h3 class="contact-item-title" data-i18n="contact_loc_title">ক্যাম্পাসের ঠিকানা</h3>
-                  <div class="contact-item-detail" data-i18n="contact_loc_detail">ঘোষগাঁও, ডাকঘর: ঘোষগাঁও, উপজেলা: ধোবাউড়া, জেলা: ময়মনসিংহ-২২৫০ (ময়মনসিংহ শিক্ষা বোর্ড)</div>
+                  <div class="contact-item-detail" data-i18n="contact_loc_detail">ঘোষগাঁও, ডাকঘর: ঘোষগাঁও, উপজেলা:
+                    ধোবাউড়া, জেলা: ময়মনসিংহ-২২৫০ (ময়মনসিংহ শিক্ষা বোর্ড)</div>
                 </div>
               </div>
 
               <div class="contact-card-item">
                 <div class="contact-item-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                    </path>
+                  </svg>
                 </div>
                 <div>
                   <h3 class="contact-item-title" data-i18n="contact_phone_title">টেলিফোন ও হেল্পডেস্ক</h3>
@@ -1326,7 +1968,10 @@
 
               <div class="contact-card-item">
                 <div class="contact-item-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
                 </div>
                 <div>
                   <h3 class="contact-item-title" data-i18n="contact_email_title">অফিসিয়াল ইমেইল</h3>
@@ -1336,57 +1981,49 @@
             </div>
 
             <div class="office-hours-banner" data-i18n="contact_hours_text">
-              <strong>স্কুল ও অফিস সময়সূচি:</strong> রবিবার – বৃহস্পতিবার: সকাল ৯:০০ – বিকাল ৪:০০ (দিন শিফট) | সরকারি ছুটির দিন ব্যতীত
+              <strong>স্কুল ও অফিস সময়সূচি:</strong> রবিবার – বৃহস্পতিবার: সকাল ৯:০০ – বিকাল ৪:০০ (দিন শিফট) | সরকারি
+              ছুটির দিন ব্যতীত
             </div>
           </div>
 
-          <!-- Quick Inquiry Message Form -->
+          <!-- Quick Inquiry / Complaint / Admission Note Form -->
           <div class="contact-form-card">
-            <h3 data-i18n="inq_form_title">দ্রুত বার্তা পাঠান</h3>
-            <p data-i18n="inq_form_desc">ভর্তি পরীক্ষা, বেতন কাঠামো, বাস সুবিধা বা পাঠ্যক্রম সংক্রান্ত যেকোনো তথ্যের জন্য নিচের ফরমটি পূরণ করুন। আমাদের ভর্তি শাখা ২৪ ঘণ্টার মধ্যে যোগাযোগ করবে।</p>
+            <div class="contact-card-badge">
+              <span class="gold-star">★</span>
+              <span>অভিযোগ বা ভর্তি সংক্রান্ত যোগাযোগ</span>
+            </div>
+            <h3 data-i18n="inq_form_title">অভিযোগ বা ভর্তি নোট পাঠান</h3>
+            <p data-i18n="inq_form_desc">ভর্তি তথ্য, যেকোনো পরামর্শ বা সুনির্দিষ্ট অভিযোগ থাকলে নিচের ফরমটিতে আপনার নাম,
+              নম্বর ও নোট লিখে জমা দিন। আমাদের প্রশাসন দ্রুত যোগাযোগ করবে।</p>
 
             <form id="contact-inquiry-form">
               <div class="form-group-row">
                 <div class="form-group">
-                  <label class="form-label" for="inq-parent-name" data-i18n="inq_parent_name_label">অভিভাবকের পূর্ণ নাম *</label>
-                  <input type="text" id="inq-parent-name" class="form-input" placeholder="উদাঃ মোহাম্মদ কবির হোসেন" required>
+                  <label class="form-label" for="inq-parent-name" data-i18n="inq_parent_name_label">অভিভাবকের নাম <span
+                      class="required-star">*</span></label>
+                  <input type="text" id="inq-parent-name" class="form-input" placeholder="আপনার পূর্ণ নাম লিখুন"
+                    required>
                 </div>
                 <div class="form-group">
-                  <label class="form-label" for="inq-phone" data-i18n="inq_phone_label">মোবাইল ফোন নম্বর *</label>
+                  <label class="form-label" for="inq-phone" data-i18n="inq_phone_label">মোবাইল ফোন নম্বর <span
+                      class="required-star">*</span></label>
                   <input type="tel" id="inq-phone" class="form-input" placeholder="উদাঃ ০১৭১২-৩৪৫৬৭৮" required>
                 </div>
               </div>
 
-              <div class="form-group-row">
-                <div class="form-group">
-                  <label class="form-label" for="inq-email" data-i18n="inq_email_label">ইমেইল ঠিকানা *</label>
-                  <input type="email" id="inq-email" class="form-input" placeholder="উদাঃ parent@example.com" required>
-                </div>
-                <div class="form-group">
-                  <label class="form-label" for="inq-grade" data-i18n="inq_grade_label">কাঙ্ক্ষিত শ্রেণি *</label>
-                  <select id="inq-grade" class="form-select" required>
-                    <option value="" disabled selected data-i18n="inq_opt_select">শ্রেণি নির্বাচন করুন (৬ষ্ঠ – ১০ম শ্রেণি)</option>
-                    <option value="Class 6" data-i18n="inq_opt_6">৬ষ্ঠ শ্রেণি (নিম্ন মাধ্যমিক)</option>
-                    <option value="Class 7" data-i18n="inq_opt_7">৭ম শ্রেণি (নিম্ন মাধ্যমিক)</option>
-                    <option value="Class 8" data-i18n="inq_opt_8">৮ম শ্রেণি (নিম্ন মাধ্যমিক)</option>
-                    <option value="Class 9 (Science)" data-i18n="inq_opt_9_sci">৯ম শ্রেণি (বিজ্ঞান বিভাগ)</option>
-                    <option value="Class 9 (Humanities)" data-i18n="inq_opt_9_arts">৯ম শ্রেণি (মানবিক বিভাগ)</option>
-                    <option value="Class 9 (Business)">৯ম শ্রেণি (ব্যবসায় শিক্ষা বিভাগ)</option>
-                    <option value="Class 10 (Science)" data-i18n="inq_opt_10_sci">১০ম শ্রেণি (বিজ্ঞান বিভাগ)</option>
-                    <option value="Class 10 (Humanities)" data-i18n="inq_opt_10_arts">১০ম শ্রেণি (মানবিক বিভাগ)</option>
-                    <option value="Class 10 (Business)">১০ম শ্রেণি (ব্যবসায় শিক্ষা বিভাগ)</option>
-                  </select>
-                </div>
-              </div>
-
               <div class="form-group">
-                <label class="form-label" for="inq-message" data-i18n="inq_msg_label">আপনার বার্তা বা জিজ্ঞাসা</label>
-                <textarea id="inq-message" class="form-textarea" placeholder="ভর্তি পরীক্ষার তারিখ, ফি কাঠামো, পরিবহন রুট বা নির্দিষ্ট বিষয় সম্পর্কে কোনো জিজ্ঞাসা থাকলে লিখুন..."></textarea>
+                <label class="form-label" for="inq-message" data-i18n="inq_msg_label">অভিযোগ বা ভর্তির বিস্তারিত (নোট)
+                  <span class="required-star">*</span></label>
+                <textarea id="inq-message" class="form-textarea" rows="3"
+                  placeholder="ভর্তি সংক্রান্ত প্রশ্ন, পরামর্শ বা অভিযোগ সংক্ষেপে লিখুন..." required></textarea>
               </div>
 
               <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
-                <span data-i18n="inq_btn">বার্তা জমা দিন</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                <span data-i18n="inq_btn">নোট / বার্তা জমা দিন</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
               </button>
             </form>
           </div>
@@ -1402,60 +2039,82 @@
     <div class="container">
       <div class="footer-top-grid">
         <!-- Col 1: Brand & Bio -->
-        <div>
+        <div class="footer-brand-col">
           <div class="footer-brand-crest">
             <div class="brand-crest footer-crest">
               <img src="school-logo.jpg" alt="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় লোগো" class="brand-logo-img">
             </div>
             <div>
               <div class="footer-brand-title" data-i18n="brand_name">ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়</div>
-              <div class="footer-brand-sub" data-i18n="brand_tagline">স্থাপিত: ১৯৭৩ খ্রিঃ (স্বীকৃতি: ১৯৭৫) • EIIN: ১১১৩৬৮ • ধোবাউড়া, ময়মনসিংহ</div>
+              <div class="footer-brand-sub" data-i18n="brand_tagline">স্থাপিত: ১৯৭৩ খ্রিঃ (স্বীকৃতি: ১৯৭৫) • EIIN:
+                ১১১৩৬৮ • ধোবাউড়া, ময়মনসিংহ</div>
             </div>
           </div>
           <p class="footer-desc" data-i18n="footer_desc">
-            ময়মনসিংহ জেলার ধোবাউড়া উপজেলার ঐতিহ্যবাহী ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় (স্থাপিত ১৯৭৩ খ্রিঃ)। বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা বিভাগে ৬ষ্ঠ থেকে ১০ম শ্রেণি পর্যন্ত শিক্ষার্থীদের আদর্শ মানবিক মূল্যবোধ ও গুণগত শিক্ষার নির্ভরযোগ্য বিদ্যাপীঠ।
+            ময়মনসিংহ জেলার ধোবাউড়া উপজেলার ঐতিহ্যবাহী ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় (স্থাপিত ১৯৭৩ খ্রিঃ)। বিজ্ঞান,
+            মানবিক ও ব্যবসায় শিক্ষা বিভাগে ৬ষ্ঠ থেকে ১০ম শ্রেণি পর্যন্ত শিক্ষার্থীদের আদর্শ মানবিক মূল্যবোধ ও গুণগত
+            শিক্ষার নির্ভরযোগ্য বিদ্যাপীঠ।
           </p>
           <div class="footer-social-links">
-            <a href="https://www.facebook.com/GHODHOMY/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="ফেসবুক"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-            <a href="#" class="social-btn" aria-label="ইউটিউব"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#2b1d06"></polygon></svg></a>
-            <a href="#" class="social-btn" aria-label="ইনস্টাগ্রাম"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-            <a href="#" class="social-btn" aria-label="লিংকডইন"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+            <a href="https://www.facebook.com/GHODHOMY/" target="_blank" rel="noopener noreferrer"
+              class="social-btn footer-fb-btn" aria-label="অফিসিয়াল ফেসবুক পেজ">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+              <span>অফিসিয়াল ফেসবুক পেজ</span>
+            </a>
           </div>
         </div>
 
-        <!-- Col 2: Quick Links -->
-        <div>
-          <h3 class="footer-col-title" data-i18n="footer_col_1_title">ন্যাভিগেশন</h3>
-          <ul class="footer-links-list">
-            <li><a href="#about" class="footer-link" data-i18n="nav_about">আমাদের পরিচিতি</a></li>
-            <li><a href="#leadership" class="footer-link" data-i18n="nav_leadership">পরিচালনা পর্ষদ</a></li>
-            <li><a href="#teachers" class="footer-link" data-i18n="nav_faculty">শিক্ষকমণ্ডলী</a></li>
-            <li><a href="#gallery" class="footer-link" data-i18n="nav_gallery">ফটো গ্যালারি</a></li>
-          </ul>
+        <!-- 3 Footer Navigation Columns (1 Row with 3 Columns on Mobile) -->
+        <div class="footer-nav-cols-group">
+          <!-- Col 2: Quick Links -->
+          <div class="footer-nav-col">
+            <h3 class="footer-col-title" data-i18n="footer_col_1_title">ন্যাভিগেশন</h3>
+            <ul class="footer-links-list">
+              <li><a href="#about" class="footer-link" data-i18n="nav_about">আমাদের পরিচিতি</a></li>
+              <li><a href="#leadership" class="footer-link" data-i18n="nav_leadership">পরিচালনা পর্ষদ</a></li>
+              <li><a href="#teachers" class="footer-link" data-i18n="nav_faculty">শিক্ষকমণ্ডলী</a></li>
+              <li><a href="#gallery" class="footer-link" data-i18n="nav_gallery">ফটো গ্যালারি</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Admissions & Portals -->
+          <div class="footer-nav-col">
+            <h3 class="footer-col-title" data-i18n="footer_col_2_title">ভর্তি ও তথ্য</h3>
+            <ul class="footer-links-list">
+              <li><a href="#about" class="footer-link" data-i18n="nav_about">বিদ্যালয় পরিচিতি</a></li>
+              <li><a href="#notice" class="footer-link" data-i18n="notice_board_btn">নোটিশ বোর্ড</a></li>
+              <li><a href="#contact" class="footer-link" data-i18n="nav_contact">যোগাযোগ</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 4: Stay Connected -->
+          <div class="footer-nav-col">
+            <h3 class="footer-col-title" data-i18n="footer_col_3_title">সংযুক্ত থাকুন</h3>
+            <ul class="footer-links-list">
+              <li><a href="https://www.facebook.com/GHODHOMY/" target="_blank" rel="noopener noreferrer"
+                  class="footer-link">ফেসবুক পেজ</a></li>
+              <li><a href="#contact" class="footer-link">যোগাযোগ ফরম</a></li>
+              <li><a href="tel:01712000000" class="footer-link">হটলাইন কল</a></li>
+              <li><a href="#hero" class="footer-link">মূল ক্যাম্পাসে</a></li>
+            </ul>
+          </div>
         </div>
 
-        <!-- Col 3: Admissions & Portals -->
-        <div>
-          <h3 class="footer-col-title" data-i18n="footer_col_2_title">ভর্তি ও তথ্য</h3>
-          <ul class="footer-links-list">
-            <li><a href="#about" class="footer-link" data-i18n="nav_about">বিদ্যালয় পরিচিতি</a></li>
-            <li><a href="#notice" class="footer-link" data-i18n="notice_board_btn">নোটিশ বোর্ড</a></li>
-            <li><a href="#contact" class="footer-link" data-i18n="nav_contact">যোগাযোগ</a></li>
-          </ul>
-        </div>
-
-        <!-- Col 4: Newsletter -->
-        <div>
-          <h3 class="footer-col-title" data-i18n="footer_col_3_title">সংযুক্ত থাকুন</h3>
+        <!-- Col 5: Newsletter -->
+        <div class="footer-newsletter-col">
           <div class="footer-newsletter-box">
-            <p data-i18n="footer_newsletter_desc">বিদ্যালয়ের অগ্রগতি, বার্ষিক অর্জন, অনুষ্ঠান ও ভর্তি সম্পর্কিত তথ্য জানতে সাবস্ক্রাইব করুন।</p>
+            <p data-i18n="footer_newsletter_desc">বিদ্যালয়ের অগ্রগতি, বার্ষিক অর্জন, অনুষ্ঠান ও ভর্তি সম্পর্কিত তথ্য
+              জানতে সাবস্ক্রাইব করুন।</p>
             <form id="footer-newsletter-form" class="footer-newsletter-form">
               <input type="email" placeholder="অভিভাবকের ইমেইল লিখুন" class="footer-newsletter-input" required>
               <button type="submit" class="btn btn-gold btn-sm" data-i18n="footer_newsletter_btn">যুক্ত হোন</button>
             </form>
           </div>
-          <div style="margin-top: 1.5rem; font-size: 0.8rem; color: #bfa5aa; line-height: 1.6;" data-i18n="footer_affiliation">
-            ইআইআইএন (EIIN): <strong>১১১৩৬৮</strong> | এমপিও কোড: <strong>4002071301</strong><br>
+          <div style="margin-top: 1.5rem; font-size: 0.8rem; color: #bfa5aa; line-height: 1.6;"
+            data-i18n="footer_affiliation">
+            (EIIN): <strong>১১১৩৬৮</strong> | এমপিও কোড: <strong>4002071301</strong><br>
             শিক্ষা বোর্ড: <strong>ময়মনসিংহ শিক্ষা বোর্ড</strong> | স্বীকৃতি লাভ: <strong>১ জানুয়ারি ১৯৭৫</strong><br>
             ক্যাম্পাস: <strong>৩৮৪ শতাংশ মোট জমি (২০০ শতাংশ খেলার মাঠ)</strong>
           </div>
@@ -1468,7 +2127,8 @@
       <div class="developer-credit-showcase">
         <div class="developer-credit-card">
           <div class="developer-avatar-container">
-            <img src="mamun-mia.jpg" alt="Mamun Mia - Senior Front End Developer" class="developer-avatar-img" loading="lazy">
+            <img src="mamun-mia.jpg" alt="Mamun Mia - Senior Front End Developer" class="developer-avatar-img"
+              loading="lazy">
             <span class="developer-verified-pin" title="Lead Front-End Architect">✓</span>
           </div>
           <div class="developer-credit-details">
@@ -1478,7 +2138,9 @@
               <span class="developer-role-tag">Senior Front End Developer</span>
             </div>
             <p class="developer-bio-text">
-              With extensive experience in Shopify Liquid, custom theme architecture, responsive design, and advanced front-end development, this school landing page was thoughtfully designed and engineered for both elegance and performance.
+              With extensive experience in Shopify Liquid, custom theme architecture, responsive design, and advanced
+              front-end development, this school landing page was thoughtfully designed and engineered for both elegance
+              and performance.
             </p>
           </div>
         </div>
@@ -1504,10 +2166,15 @@
   <!-- ========================================================================
        MODAL: STUDENT / ALUMNI MEMORY SUBMISSION
        ======================================================================== -->
-  <div class="modal-overlay" id="memory-submit-modal" aria-hidden="true" role="dialog" aria-labelledby="memory-modal-title">
+  <div class="modal-overlay" id="memory-submit-modal" aria-hidden="true" role="dialog"
+    aria-labelledby="memory-modal-title">
     <div class="modal-container memory-modal-container">
-      <button class="modal-close-btn" id="btn-close-memory-modal" aria-label="স্মৃতি ফরম বন্ধ করুন" onclick="closeMemoryModal()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      <button class="modal-close-btn" id="btn-close-memory-modal" aria-label="স্মৃতি ফরম বন্ধ করুন"
+        onclick="closeMemoryModal()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
       </button>
       <div class="modal-header-content">
         <div class="memory-modal-header-badge">
@@ -1533,12 +2200,15 @@
 
           <div class="form-group">
             <label class="form-label" for="mem-fav-teacher">প্রিয় শিক্ষক বা শিক্ষিকা (কে ছিলেন?) *</label>
-            <input type="text" id="mem-fav-teacher" class="form-input" placeholder="উদাঃ মো. আব্দুল করিম স্যার (প্রধান শিক্ষক ও গণিত) / রুকসানা পারভীন ম্যাডাম" required>
+            <input type="text" id="mem-fav-teacher" class="form-input"
+              placeholder="উদাঃ মো. আব্দুল করিম স্যার (প্রধান শিক্ষক ও গণিত) / রুকসানা পারভীন ম্যাডাম" required>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="mem-school-note">কেমন ছিল স্কুল জীবন? (স্মৃতিকথা ও অনুভূতি) *</label>
-            <textarea id="mem-school-note" class="form-textarea" rows="4" placeholder="স্কুল জীবনের কোনো মধুর স্মৃতি, বন্ধুদের সাথে আড্ডা, সমাবেশ, খেলাধুলা, প্রিয় শিক্ষক-শিক্ষিকাদের শাসন ও স্নেহের কোনো স্মরণীয় মুহূর্ত লিখুন..." required></textarea>
+            <textarea id="mem-school-note" class="form-textarea" rows="4"
+              placeholder="স্কুল জীবনের কোনো মধুর স্মৃতি, বন্ধুদের সাথে আড্ডা, সমাবেশ, খেলাধুলা, প্রিয় শিক্ষক-শিক্ষিকাদের শাসন ও স্নেহের কোনো স্মরণীয় মুহূর্ত লিখুন..."
+              required></textarea>
           </div>
 
           <div class="form-group">
@@ -1547,7 +2217,11 @@
               <input type="file" id="mem-photo-file" accept="image/*" class="memory-file-input">
               <div class="upload-zone-prompt" id="upload-zone-prompt">
                 <div class="upload-icon-circle">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
                 </div>
                 <span class="upload-zone-title">আপনার ডিভাইস থেকে ছবি নির্বাচন করতে এখানে ক্লিক করুন</span>
                 <span class="upload-zone-hint">JPG, PNG বা WEBP ফরম্যাট (ক্লিক বা ড্র্যাগ করুন)</span>
@@ -1556,7 +2230,8 @@
                 <img src="" id="upload-preview-img" alt="স্মৃতির ছবি প্রিভিউ">
                 <div class="preview-actions">
                   <span class="preview-filename" id="preview-filename">ছবি নির্বাচিত হয়েছে</span>
-                  <button type="button" class="btn btn-secondary btn-sm" id="btn-change-photo">অন্য ছবি বাছাই করুন</button>
+                  <button type="button" class="btn btn-secondary btn-sm" id="btn-change-photo">অন্য ছবি বাছাই
+                    করুন</button>
                 </div>
               </div>
             </div>
@@ -1583,7 +2258,9 @@
 
           <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 1rem;">
             <span>স্মৃতি অ্যালবামে প্রকাশ করুন</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
           </button>
         </form>
       </div>
@@ -1593,10 +2270,15 @@
   <!-- ========================================================================
        MODAL: ALUMNI MEMORY STORY DETAIL (STUDENT LIFE, BATCH & MEMORIES)
        ======================================================================== -->
-  <div class="modal-overlay memory-detail-modal" id="memory-detail-modal" aria-hidden="true" role="dialog" aria-label="শিক্ষার্থী স্মৃতিকথা বিস্তারিত">
+  <div class="modal-overlay memory-detail-modal" id="memory-detail-modal" aria-hidden="true" role="dialog"
+    aria-label="শিক্ষার্থী স্মৃতিকথা বিস্তারিত">
     <div class="modal-container memory-detail-container">
-      <button class="modal-close-btn" id="btn-close-memory-detail" aria-label="বন্ধ করুন" onclick="closeMemoryDetailModal()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      <button class="modal-close-btn" id="btn-close-memory-detail" aria-label="বন্ধ করুন"
+        onclick="closeMemoryDetailModal()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
       </button>
 
       <div class="memory-detail-layout">
@@ -1636,7 +2318,8 @@
 
           <!-- Modal Footer: Like Button & School Brand -->
           <div class="memory-detail-footer">
-            <button type="button" class="memory-like-btn" id="mem-detail-like-btn" onclick="toggleMemoryLikeFromModal()" aria-label="পছন্দ করুন">
+            <button type="button" class="memory-like-btn" id="mem-detail-like-btn" onclick="toggleMemoryLikeFromModal()"
+              aria-label="পছন্দ করুন">
               <span class="like-heart" id="mem-detail-like-icon">🤍</span>
               <span class="like-count" id="mem-detail-like-count">০</span>
               <span>পছন্দ</span>
@@ -1651,19 +2334,27 @@
   <!-- ========================================================================
        MODAL: PHOTO GALLERY LIGHTBOX
        ======================================================================== -->
-  <div class="modal-overlay lightbox-modal" id="lightbox-modal" aria-hidden="true" role="dialog" aria-label="ছবি প্রদর্শন">
+  <div class="modal-overlay lightbox-modal" id="lightbox-modal" aria-hidden="true" role="dialog"
+    aria-label="ছবি প্রদর্শন">
     <div class="modal-container">
       <button class="modal-close-btn" id="btn-close-lightbox" aria-label="ছবি বন্ধ করুন">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
       </button>
 
       <div class="lightbox-image-wrap">
         <img src="" alt="" id="lightbox-main-img" class="lightbox-img">
         <button class="lightbox-nav-btn lightbox-nav-prev" id="btn-lightbox-prev" aria-label="পূর্ববর্তী ছবি">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
         </button>
         <button class="lightbox-nav-btn lightbox-nav-next" id="btn-lightbox-next" aria-label="পরবর্তী ছবি">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
         </button>
       </div>
 
@@ -1677,18 +2368,554 @@
     </div>
   </div>
 
+  <!-- ========================================================================
+       MODAL: ADD EX-TEACHER INFORMATION (প্রাক্তন শিক্ষক সংযোজন ফর্ম)
+       ======================================================================== -->
+  <div class="modal-overlay ex-teacher-modal-overlay" id="ex-teacher-modal-overlay" aria-hidden="true" role="dialog"
+    aria-labelledby="modal-ex-title">
+    <div class="modal-container ex-teacher-modal-container">
+      <button class="modal-close-btn" id="btn-close-ex-modal" aria-label="বন্ধ করুন" type="button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-header-content">
+        <div class="ex-modal-header-badge">
+          <span>🏛️ চিরস্মরণীয় সম্মাননা ও স্মৃতি সংরক্ষণ</span>
+        </div>
+        <h3 id="modal-ex-title">প্রাক্তন শিক্ষকের তথ্য ও সেবাকাল সংযোজন</h3>
+        <p>বিদ্যালয়ের অবসরপ্রাপ্ত বা প্রাক্তন শিক্ষকের নাম, পদবি, কত বছর শিক্ষকতা করেছেন ও তাঁর অবদান সুন্দরভাবে
+          তালিকায় অন্তর্ভুক্ত করুন।</p>
+      </div>
+
+      <div class="modal-body-content">
+        <form id="form-add-ex-teacher" class="ex-teacher-form">
+          <div class="form-group-row">
+            <div class="form-group">
+              <label class="form-label" for="ex-name">প্রাক্তন শিক্ষকের পূর্ণ নাম <span
+                  class="req-star">*</span></label>
+              <input type="text" id="ex-name" class="form-input"
+                placeholder="উদাঃ মরহুম মো. আব্দুল কাদের স্যার / নিখিল চন্দ্র দাস" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="ex-designation">পদবি ও বিষয় <span class="req-star">*</span></label>
+              <input type="text" id="ex-designation" class="form-input"
+                placeholder="উদাঃ সহকারী প্রধান শিক্ষক (গণিত ও বিজ্ঞান)" required>
+            </div>
+          </div>
+
+          <div class="form-group-row">
+            <div class="form-group">
+              <label class="form-label" for="ex-period">সেবাকাল / কার্যকাল (সাল থেকে সাল) <span
+                  class="req-star">*</span></label>
+              <input type="text" id="ex-period" class="form-input" placeholder="উদাঃ ১৯৮০ – ২০১১" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="ex-years">কত বছর সার্ভিস দিয়েছেন (মোট সেবাকাল) <span
+                  class="req-star">*</span></label>
+              <input type="text" id="ex-years" class="form-input" placeholder="উদাঃ ৩১ বছর বা ৩১+ বছর নিবেদিত সেবা"
+                required>
+            </div>
+          </div>
+
+          <div class="form-group-row">
+            <div class="form-group">
+              <label class="form-label" for="ex-qual">শিক্ষাগত যোগ্যতা</label>
+              <input type="text" id="ex-qual" class="form-input" placeholder="উদাঃ এম.এ (ইংরেজি), বি.এড (১ম শ্রেণি)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="ex-status">মর্যাদা / বর্তমান অবস্থা</label>
+              <select id="ex-status" class="form-select">
+                <option value="অবসরপ্রাপ্ত গুণী শিক্ষক">অবসরপ্রাপ্ত গুণী শিক্ষক</option>
+                <option value="মরহুম (স্মৃতিতে অম্লান)">মরহুম (স্মৃতিতে অম্লান)</option>
+                <option value="সম্মানিত সাবেক শিক্ষক">সম্মানিত সাবেক শিক্ষক</option>
+                <option value="প্রতিষ্ঠাকালীন শিক্ষক">প্রতিষ্ঠাকালীন শিক্ষক</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="ex-photo">প্রাক্তন শিক্ষকের ছবি লিংক (ঐচ্ছিক)</label>
+            <input type="url" id="ex-photo" class="form-input"
+              placeholder="https://example.com/photo.jpg (খালি রাখলে সম্মানজনক ডিফল্ট পোর্ট্রেট থাকবে)">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="ex-tribute">শিক্ষকতার বিশেষ স্মৃতি ও অবদান (স্মৃতিকথা / Tribute Note) <span
+                class="req-star">*</span></label>
+            <textarea id="ex-tribute" class="form-textarea" rows="3"
+              placeholder="বিদ্যালয়ে তাঁর পাঠদান, মেধা বিকাশ, স্নেহ ও শৃঙ্খলার কোনো মধুর স্মৃতি বা বিশেষ ভূমিকা লিখুন..."
+              required></textarea>
+          </div>
+
+          <div class="modal-btn-row">
+            <button type="button" class="btn btn-secondary" id="btn-cancel-ex-modal">বাতিল</button>
+            <button type="submit" class="btn btn-gold btn-lg">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>তালিকায় সংরক্ষণ করুন</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: YEARLY GOV. HOLIDAY LIST 2026 (বাৎসরিক সরকারি ছুটির তালিকা পপআপ)
+       ======================================================================== -->
+  <div class="modal-overlay holiday-modal-overlay" id="holiday-modal-overlay" aria-hidden="true" role="dialog"
+    aria-labelledby="holiday-modal-title">
+    <div class="modal-container holiday-modal-container">
+      <!-- Cross (X) Close Button at Top Right -->
+      <button class="modal-close-btn holiday-modal-close-btn" id="btn-close-holiday-modal" aria-label="ছুটির তালিকা বন্ধ করুন"
+        type="button" title="বন্ধ করুন (Esc)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="holiday-modal-header">
+        <div class="holiday-box-badge">
+          <span>🏛️ গণপ্রজাতন্ত্রী বাংলাদেশ সরকার ও শিক্ষা মন্ত্রণালয় অনুমোদিত শিক্ষাপঞ্জি</span>
+        </div>
+        <div class="holiday-modal-heading-row">
+          <div>
+            <h3 class="holiday-modal-title" id="holiday-modal-title">
+              বাৎসরিক সরকারি ছুটির তালিকা ২০২৬
+            </h3>
+            <p class="holiday-modal-subtitle">
+              ময়মনসিংহ শিক্ষা বোর্ডের অধীনে ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ের একাডেমিক ক্যালেন্ডার ও অনুমোদিত সর্বমোট ৭৬ দিনের ছুটির পূর্ণাঙ্গ তালিকা।
+            </p>
+          </div>
+          <button type="button" class="holiday-download-btn" id="btn-download-holiday-pdf" title="বাৎসরিক ছুটির তালিকা PDF ফাইল ডাউনলোড করুন">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span class="btn-holiday-download-text">PDF ডাউনলোড</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body: 16 Holiday Cards List View + Detailed Educational View -->
+      <div class="holiday-modal-body">
+        <!-- List View (Default) -->
+        <div class="holiday-modal-list-view" id="holiday-modal-list-view">
+          <div class="holiday-list-intro-hint">
+            <span class="hint-icon">💡</span>
+            <span class="hint-text">শিক্ষার্থীদের জন্য: যেকোনো ছুটির কার্ডে ক্লিক করে সেই দিবসের ঐতিহাসিক পটভূমি, কী ঘটেছিল এবং কেন পালন করা হয় তা সহজে জানুন।</span>
+          </div>
+
+          <div class="holiday-cards-grid">
+            <!-- 1. Shab-e-Meraj -->
+            <div class="holiday-card" data-holiday-id="shab-e-meraj" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">🕌</span>
+                <span class="holiday-duration-badge">১ দিন</span>
+              </div>
+              <h4 class="holiday-name">পবিত্র শবে মেরাজ</h4>
+              <div class="holiday-date">📅 ২৯ জানুয়ারি ২০২৬ (বৃহস্পতিবার)</div>
+              <span class="holiday-type-tag">মুসলিম ধর্মীয় পর্ব</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 2. Saraswati Puja -->
+            <div class="holiday-card" data-holiday-id="saraswati-puja" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">🕉️</span>
+                <span class="holiday-duration-badge">১ দিন</span>
+              </div>
+              <h4 class="holiday-name">শ্রী শ্রী সরস্বতী পূজা</h4>
+              <div class="holiday-date">📅 ০৩ ফেব্রুয়ারি ২০২৬ (মঙ্গলবার)</div>
+              <span class="holiday-type-tag">সনাতন ধর্মীয় পর্ব</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 3. Shab-e-Barat -->
+            <div class="holiday-card" data-holiday-id="shab-e-barat" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">🌙</span>
+                <span class="holiday-duration-badge">১ দিন</span>
+              </div>
+              <h4 class="holiday-name">পবিত্র শবে বরাত</h4>
+              <div class="holiday-date">📅 ১৫ ফেব্রুয়ারি ২০২৬ (রবিবার)</div>
+              <span class="holiday-type-tag">মুসলিম ধর্মীয় পর্ব</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 4. Mother Language Day (Requested User Example) -->
+            <div class="holiday-card featured-holiday-card" data-holiday-id="mother-language-day" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">🇧🇩</span>
+                <span class="holiday-duration-badge">১ দিন</span>
+              </div>
+              <h4 class="holiday-name">শহীদ দিবস ও আন্তর্জাতিক মাতৃভাষা দিবস</h4>
+              <div class="holiday-date">📅 ২১ ফেব্রুয়ারি ২০২৬ (শনিবার)</div>
+              <span class="holiday-type-tag">জাতীয় দিবস</span>
+              <div class="holiday-card-cta highlighted-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">কী ঘটেছিল ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 5. Doljatra -->
+            <div class="holiday-card" data-holiday-id="doljatra" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">🌸</span>
+                <span class="holiday-duration-badge">১ দিন</span>
+              </div>
+              <h4 class="holiday-name">শুভ দোলযাত্রা</h4>
+              <div class="holiday-date">📅 ০৪ মার্চ ২০২৬ (বুধবার)</div>
+              <span class="holiday-type-tag">সনাতন ধর্মীয় পর্ব</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 6. Ramadan & Eid-ul-Fitr -->
+            <div class="holiday-card" data-holiday-id="ramadan-eid" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">🕌</span>
+                <span class="holiday-duration-badge vacation">২৬ দিন</span>
+              </div>
+              <h4 class="holiday-name">পবিত্র রমজান, শবে কদর ও ঈদুল ফিতর</h4>
+              <div class="holiday-date">📅 ০১ মার্চ – ০১ এপ্রিল ২০২৬</div>
+              <span class="holiday-type-tag">দীর্ঘ অবকাশ ও উৎসব</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 7. Independence Day -->
+            <div class="holiday-card" data-holiday-id="independence-day" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">🇧🇩</span>
+                <span class="holiday-duration-badge">১ দিন</span>
+              </div>
+              <h4 class="holiday-name">স্বাধীনতা ও জাতীয় দিবস</h4>
+              <div class="holiday-date">📅 ২৬ মার্চ ২০২৬ (বৃহস্পতিবার)</div>
+              <span class="holiday-type-tag">জাতীয় দিবস</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 8. Pahela Baishakh -->
+            <div class="holiday-card" data-holiday-id="pahela-baishakh" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">🌾</span>
+                <span class="holiday-duration-badge">১ দিন</span>
+              </div>
+              <h4 class="holiday-name">বাংলা নববর্ষ (পহেলা বৈশাখ)</h4>
+              <div class="holiday-date">📅 ১৪ এপ্রিল ২০২৬ (মঙ্গলবার)</div>
+              <span class="holiday-type-tag">জাতীয় উৎসব</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 9. May Day & Buddha Purnima -->
+            <div class="holiday-card" data-holiday-id="buddha-purnima" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">☸️</span>
+                <span class="holiday-duration-badge">১ দিন</span>
+              </div>
+              <h4 class="holiday-name">বুদ্ধ পূর্ণিমা (বৈশাখী পূর্ণিমা)</h4>
+              <div class="holiday-date">📅 ১২ মে ২০২৬ (মঙ্গলবার)</div>
+              <span class="holiday-type-tag">বৌদ্ধ ধর্মীয় উৎসব</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 10. Eid-ul-Adha & Summer Vacation -->
+            <div class="holiday-card" data-holiday-id="eid-ul-adha" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">☀️</span>
+                <span class="holiday-duration-badge vacation">১৪ দিন</span>
+              </div>
+              <h4 class="holiday-name">পবিত্র ঈদুল আজহা ও গ্রীষ্মকালীন অবকাশ</h4>
+              <div class="holiday-date">📅 ২৬ মে – ১১ জুন ২০২৬</div>
+              <span class="holiday-type-tag">দীর্ঘ অবকাশ ও উৎসব</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 11. Ashura -->
+            <div class="holiday-card" data-holiday-id="ashura" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">🕊️</span>
+                <span class="holiday-duration-badge">১ দিন</span>
+              </div>
+              <h4 class="holiday-name">পবিত্র আশুরা (মুহাররম)</h4>
+              <div class="holiday-date">📅 ২৬ জুন ২০২৬ (শুক্রবার)</div>
+              <span class="holiday-type-tag">মুসলিম ধর্মীয় পর্ব</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 12. Janmashtami -->
+            <div class="holiday-card" data-holiday-id="janmashtami" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">🕉️</span>
+                <span class="holiday-duration-badge">১ দিন</span>
+              </div>
+              <h4 class="holiday-name">শুভ জন্মাষ্টমী</h4>
+              <div class="holiday-date">📅 ০৪ সেপ্টেম্বর ২০২৬ (শুক্রবার)</div>
+              <span class="holiday-type-tag">সনাতন ধর্মীয় উৎসব</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 13. Eid-e-Miladunnabi -->
+            <div class="holiday-card" data-holiday-id="eid-e-miladunnabi" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">🕌</span>
+                <span class="holiday-duration-badge">১ দিন</span>
+              </div>
+              <h4 class="holiday-name">পবিত্র ঈদে মিলাদুন্নবী (সা.)</h4>
+              <div class="holiday-date">📅 ০৫ সেপ্টেম্বর ২০২৬ (শনিবার)</div>
+              <span class="holiday-type-tag">মুসলিম ধর্মীয় পর্ব</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 14. Durga Puja -->
+            <div class="holiday-card" data-holiday-id="durga-puja" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">🕉️</span>
+                <span class="holiday-duration-badge vacation">৬ দিন</span>
+              </div>
+              <h4 class="holiday-name">শ্রী শ্রী দুর্গাপূজা ও বিজয়া দশমী</h4>
+              <div class="holiday-date">📅 ১৯ অক্টোবর – ২৪ অক্টোবর ২০২৬</div>
+              <span class="holiday-type-tag">সনাতন প্রধান উৎসব</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 15. Martyred Intellectuals Day -->
+            <div class="holiday-card" data-holiday-id="intellectuals-day" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">🇧🇩</span>
+                <span class="holiday-duration-badge">১ দিন</span>
+              </div>
+              <h4 class="holiday-name">শহীদ বুদ্ধিজীবী দিবস</h4>
+              <div class="holiday-date">📅 ১৪ ডিসেম্বর ২০২৬ (সোমবার)</div>
+              <span class="holiday-type-tag">জাতীয় শোক দিবস</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+
+            <!-- 16. Victory Day & Winter Vacation -->
+            <div class="holiday-card" data-holiday-id="victory-day" role="button" tabindex="0" title="ক্লিক করে পটভূমি ও তাৎপর্য জানুন">
+              <div class="holiday-card-top">
+                <span class="holiday-icon">❄️</span>
+                <span class="holiday-duration-badge vacation">১৩ দিন</span>
+              </div>
+              <h4 class="holiday-name">বিজয় দিবস, বড়দিন ও শীতকালীন অবকাশ</h4>
+              <div class="holiday-date">📅 ১৬ ডিসেম্বর – ৩১ ডিসেম্বর ২০২৬</div>
+              <span class="holiday-type-tag">জাতীয় দিবস ও দীর্ঘ অবকাশ</span>
+              <div class="holiday-card-cta">
+                <span class="cta-sparkle">📖</span>
+                <span class="cta-text">ইতিহাস ও তাৎপর্য জানুন</span>
+                <span class="cta-arrow">→</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail View: Shown when a holiday card is clicked -->
+        <div class="holiday-modal-detail-view" id="holiday-modal-detail-view" style="display: none;" aria-live="polite">
+          <!-- Back button and Breadcrumb Header -->
+          <div class="holiday-detail-top-nav">
+            <button type="button" class="btn-holiday-back" id="btn-holiday-back" title="ছুটির তালিকায় ফিরে যান">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              <span>ছুটির তালিকায় ফিরুন</span>
+            </button>
+            <span class="holiday-detail-badge">
+              <span>📖 ঐতিহাসিক পটভূমি ও তাৎপর্য তথ্যকোষ</span>
+            </span>
+          </div>
+
+          <!-- Hero Banner for Selected Holiday -->
+          <div class="holiday-detail-hero">
+            <div class="holiday-detail-hero-icon" id="holiday-detail-icon">🇧🇩</div>
+            <div class="holiday-detail-hero-info">
+              <div class="holiday-detail-meta-row">
+                <span class="holiday-duration-badge" id="holiday-detail-duration">১ দিন</span>
+                <span class="holiday-type-tag" id="holiday-detail-type">জাতীয় দিবস</span>
+              </div>
+              <h3 class="holiday-detail-name" id="holiday-detail-name">শহীদ দিবস ও আন্তর্জাতিক মাতৃভাষা দিবস</h3>
+              <div class="holiday-detail-date" id="holiday-detail-date">📅 ২১ ফেব্রুয়ারি ২০২৬ (শনিবার)</div>
+            </div>
+          </div>
+
+          <!-- Educational Content Cards -->
+          <div class="holiday-detail-content-grid">
+            <!-- Box 1: What Happened (ঐতিহাসিক পটভূমি ও ঘটনা) -->
+            <div class="holiday-story-card what-happened-card">
+              <div class="story-card-header">
+                <span class="story-card-icon">🏛️</span>
+                <h4>কী ঘটেছিল? (ঐতিহাসিক ঘটনা ও পটভূমি)</h4>
+              </div>
+              <div class="story-card-body" id="holiday-detail-what">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- Box 2: Why Celebrated (কেন এই দিবস পালন করা হয়?) -->
+            <div class="holiday-story-card why-celebrated-card">
+              <div class="story-card-header">
+                <span class="story-card-icon">🎯</span>
+                <h4>কেন এই দিবসটি পালন করা হয়? (তাৎপর্য ও গুরুত্ব)</h4>
+              </div>
+              <div class="story-card-body" id="holiday-detail-why">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- Box 3: Student Takeaway (শিক্ষার্থীদের জন্য শিক্ষা ও করণীয়) -->
+            <div class="holiday-story-card student-takeaway-card">
+              <div class="story-card-header">
+                <span class="story-card-icon">💡</span>
+                <h4>শিক্ষার্থীদের জন্য শিক্ষা ও বার্তা</h4>
+              </div>
+              <div class="story-card-body" id="holiday-detail-message">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Navigation Between Holidays -->
+          <div class="holiday-detail-pager">
+            <button type="button" class="btn-pager-nav" id="btn-holiday-prev">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              <span>পূর্ববর্তী ছুটি</span>
+            </button>
+            <button type="button" class="btn-pager-list-return" id="btn-holiday-return-list">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <span>সব ছুটির তালিকা</span>
+            </button>
+            <button type="button" class="btn-pager-nav" id="btn-holiday-next">
+              <span>পরবর্তী ছুটি</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="holiday-modal-footer">
+        <div class="holiday-footer-badge">
+          <span>📌 সর্বমোট বাৎসরিক সরকারি ও প্রাতিষ্ঠানিক ছুটি: <strong>৭৬ দিন</strong> (চাঁদ দেখার ওপর নির্ভরশীল ছুটি প্রযোজ্য ক্ষেত্রে পরিবর্তনযোগ্য)</span>
+        </div>
+        <div class="holiday-footer-actions">
+          <button type="button" class="holiday-download-btn holiday-footer-dl-btn" id="btn-footer-download-pdf" title="বাৎসরিক ছুটির তালিকা PDF ফাইল ডাউনলোড করুন">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>PDF ডাউনলোড</span>
+          </button>
+          <button type="button" class="btn btn-secondary holiday-footer-close-btn" id="btn-footer-close-holiday">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            <span>বন্ধ করুন</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Floating Back to Top Button -->
   <button class="back-to-top" id="back-to-top" aria-label="উপরে যান">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="12" y1="19" x2="12" y2="5"></line>
+      <polyline points="5 12 12 5 19 12"></polyline>
+    </svg>
   </button>
 
   <!-- Interactive Toast Notification -->
   <div class="toast-notice" id="toast-notice" role="alert" aria-live="polite">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+    </svg>
     <span id="toast-text">কার্যক্রম সফলভাবে সম্পন্ন হয়েছে!</span>
   </div>
+
+  <!-- Client-side PDF Generation Engine -->
+  <script src="html2pdf.bundle.min.js"></script>
 
   <!-- JavaScript Interactions -->
   <script src="script.js"></script>
 </body>
+
 </html>
