@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 1. NATIVE BENGALI NOTICES & NUMERAL UTILITIES
   // =========================================================================
   const activeNotices = [
-    { date: "১৪ অক্টোবর, ২০২৬", title: "২০২৬ শিক্ষাবর্ষে ৬ষ্ঠ থেকে ১০ম শ্রেণিতে ভর্তি বিজ্ঞপ্তি: বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা বিভাগ", link: "#notice" },
+    { date: "১৪ অক্টোবর, ২০২৬", title: "২০২৬ শিক্ষাবর্ষে ৬ষ্ঠ থেকে ১০ম শ্রেণিতে ভর্তি বিজ্ঞপ্তি: বিজ্ঞান ও মানবিক (আর্টস) বিভাগ", link: "#notice" },
     { date: "১৮ অক্টোবর, ২০২৬", title: "ময়মনসিংহ শিক্ষা বোর্ডের অধীনে বার্ষিক মূল্যায়ন ও অভিভাবক-শিক্ষক মতবিনিময় সভা", link: "#notice" },
     { date: "২২ অক্টোবর, ২০২৬", title: "ধোবাউড়া উপজেলা আন্তঃস্কুল ক্রীড়া ও বিজ্ঞান অলিম্পিয়াড প্রস্তুতি সভা", link: "#teachers" },
     { date: "০২ নভেম্বর, ২০২৬", title: "বিদ্যালয়ের সুবিশাল ২০০ শতাংশ খেলার মাঠে বার্ষিক ক্রীড়া প্রতিযোগিতা ও সাংস্কৃতিক উৎসব", link: "#gallery" }
@@ -550,96 +550,617 @@ document.addEventListener("DOMContentLoaded", () => {
   const exTeacherBtnStatus = document.getElementById("ex-teacher-btn-status");
   const headmasterCard = document.getElementById("headmaster-showcase-card");
 
-  // Open / Close Current Faculty Roster
-  const openTeachersRoster = (shouldScroll = true) => {
-    if (exTeachersRosterWrapper?.classList.contains("is-open")) {
-      closeExTeachersRoster();
-    }
-    teachersRosterWrapper?.classList.add("is-open");
-    btnToggleTeachers?.classList.add("active");
-    btnToggleTeachers?.setAttribute("aria-expanded", "true");
-    if (teacherBtnStatus) {
-      teacherBtnStatus.textContent = "তালিকা প্রদর্শিত";
-    }
-    if (shouldScroll && headmasterCard) {
+  // =========================================================================
+  // 6a. MAIN ADMIN AUTHENTICATION (Mamun190a - PIN: 112292)
+  // =========================================================================
+  const MAIN_ADMIN_CREDENTIALS = {
+    username: "Mamun190a",
+    pin: "112292",
+    displayName: "মামুন মিয়া (Mamun Mia)"
+  };
+
+  const adminAuthModal = document.getElementById("admin-auth-modal-overlay");
+  const btnCloseAdminAuth = document.getElementById("btn-close-admin-auth-modal");
+  const btnCancelAdminAuth = document.getElementById("btn-cancel-admin-auth");
+  const formAdminAuth = document.getElementById("form-admin-auth");
+  const adminInputUser = document.getElementById("admin-input-user");
+  const adminInputPin = document.getElementById("admin-input-pin");
+  const adminAuthErrorMsg = document.getElementById("admin-auth-error-msg");
+  const btnTogglePinVisibility = document.getElementById("btn-toggle-pin-visibility");
+
+  const btnAdminLoginNav = document.getElementById("btn-admin-login-nav");
+  const btnMobileAdminLogin = document.getElementById("btn-mobile-admin-login");
+  const btnMobileAdminDashboard = document.getElementById("btn-mobile-admin-dashboard");
+  const btnNavAdminDashboard = document.getElementById("btn-nav-admin-dashboard");
+  const adminSessionBadge = document.getElementById("admin-session-badge");
+  const btnAdminLogout = document.getElementById("btn-admin-logout");
+  const footerAdminLink = document.getElementById("footer-admin-link");
+
+  let pendingAdminAction = null; // Callback to run right after successful login
+
+  const isAdminLoggedIn = () => {
+    return sessionStorage.getItem("ghoshgaon_main_admin_session") === "Mamun190a";
+  };
+
+  const openAdminAuthModal = (onSuccessAction = null) => {
+    pendingAdminAction = onSuccessAction;
+    if (adminAuthModal) {
+      if (adminAuthErrorMsg) {
+        adminAuthErrorMsg.style.display = "none";
+        adminAuthErrorMsg.textContent = "";
+      }
+      formAdminAuth?.reset();
+      adminAuthModal.classList.add("active");
+      adminAuthModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
       setTimeout(() => {
-        headmasterCard.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 120);
+        adminInputUser?.focus();
+      }, 100);
     }
   };
 
-  const closeTeachersRoster = () => {
-    teachersRosterWrapper?.classList.remove("is-open");
-    btnToggleTeachers?.classList.remove("active");
-    btnToggleTeachers?.setAttribute("aria-expanded", "false");
-    if (teacherBtnStatus) {
-      teacherBtnStatus.textContent = "Click করুন";
+  const closeAdminAuthModal = () => {
+    if (adminAuthModal) {
+      adminAuthModal.classList.remove("active");
+      adminAuthModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
     }
   };
 
-  btnToggleTeachers?.addEventListener("click", () => {
-    if (teachersRosterWrapper?.classList.contains("is-open")) {
-      closeTeachersRoster();
+  btnTogglePinVisibility?.addEventListener("click", () => {
+    if (!adminInputPin) return;
+    if (adminInputPin.type === "password") {
+      adminInputPin.type = "text";
+      btnTogglePinVisibility.textContent = "🙈";
     } else {
-      openTeachersRoster(true);
+      adminInputPin.type = "password";
+      btnTogglePinVisibility.textContent = "👁️";
     }
   });
 
-  // Open / Close Ex-Teachers Roster
-  const openExTeachersRoster = (shouldScroll = true) => {
-    if (teachersRosterWrapper?.classList.contains("is-open")) {
-      closeTeachersRoster();
-    }
-    exTeachersRosterWrapper?.classList.add("is-open");
-    btnToggleExTeachers?.classList.add("active");
-    btnToggleExTeachers?.setAttribute("aria-expanded", "true");
-    if (exTeacherBtnStatus) {
-      exTeacherBtnStatus.textContent = "তালিকা প্রদর্শিত";
-    }
-    if (shouldScroll && exTeachersRosterWrapper) {
-      setTimeout(() => {
-        exTeachersRosterWrapper.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 120);
-    }
-  };
+  const updateAdminUI = () => {
+    const loggedIn = isAdminLoggedIn();
+    if (loggedIn) {
+      document.body.classList.add("is-admin-active");
+      if (btnAdminLoginNav) btnAdminLoginNav.style.display = "none";
+      if (adminSessionBadge) adminSessionBadge.style.display = "inline-flex";
+      if (btnMobileAdminDashboard) btnMobileAdminDashboard.style.display = "block";
 
-  const closeExTeachersRoster = () => {
-    exTeachersRosterWrapper?.classList.remove("is-open");
-    btnToggleExTeachers?.classList.remove("active");
-    btnToggleExTeachers?.setAttribute("aria-expanded", "false");
-    if (exTeacherBtnStatus) {
-      exTeacherBtnStatus.textContent = "স্মৃতি ও সেবাকাল";
-    }
-  };
+      // Floating indicator
+      let floatingBar = document.getElementById("admin-floating-status-bar");
+      if (!floatingBar) {
+        floatingBar = document.createElement("div");
+        floatingBar.id = "admin-floating-status-bar";
+        floatingBar.className = "admin-floating-status-bar";
+        floatingBar.innerHTML = `
+          <span>🛡️ মেইন এডমিন:</span>
+          <span class="admin-name-tag">Mamun190a</span>
+          <button type="button" class="btn-dash-floating" id="floating-btn-admin-dash" title="ভিজিটর অ্যানালিটিক্স ড্যাশবোর্ড">📊 ড্যাশবোর্ড</button>
+          <button type="button" class="btn-admin-logout" id="floating-btn-admin-logout" title="লগআউট">লগআউট</button>
+        `;
+        document.body.appendChild(floatingBar);
+        document.getElementById("floating-btn-admin-logout")?.addEventListener("click", logoutAdmin);
+        document.getElementById("floating-btn-admin-dash")?.addEventListener("click", () => openAdminDashboardModal());
+      } else {
+        floatingBar.style.display = "flex";
+      }
 
-  btnToggleExTeachers?.addEventListener("click", () => {
-    if (exTeachersRosterWrapper?.classList.contains("is-open")) {
-      closeExTeachersRoster();
+      // Update faculty bar status
+      const statusPill = document.querySelector(".faculty-status-pill span:not(.pulse-dot)");
+      if (statusPill) {
+        statusPill.textContent = "👑 মেইন এডমিন মোড সক্রিয় (Mamun190a)";
+      }
+      const addTeacherBtnText = document.querySelector("#btn-open-teacher-modal span");
+      if (addTeacherBtnText) {
+        addTeacherBtnText.textContent = "নতুন শিক্ষকের তথ্য যুক্ত করুন";
+      }
     } else {
-      openExTeachersRoster(true);
+      document.body.classList.remove("is-admin-active");
+      if (btnAdminLoginNav) btnAdminLoginNav.style.display = "inline-flex";
+      if (adminSessionBadge) adminSessionBadge.style.display = "none";
+      if (btnMobileAdminDashboard) btnMobileAdminDashboard.style.display = "none";
+
+      const floatingBar = document.getElementById("admin-floating-status-bar");
+      if (floatingBar) {
+        floatingBar.style.display = "none";
+      }
+
+      const statusPill = document.querySelector(".faculty-status-pill span:not(.pulse-dot)");
+      if (statusPill) {
+        statusPill.textContent = "সহকারী ও প্রাক্তন শিক্ষকমণ্ডলীর তথ্য ব্যবস্থাপনা";
+      }
+    }
+  };
+
+  const logoutAdmin = () => {
+    sessionStorage.removeItem("ghoshgaon_main_admin_session");
+    updateAdminUI();
+    showToast("🔒 মেইন এডমিন সেশন সমাপ্ত হয়েছে। সাধারণ ভিজিটর মোডে ফিরে এসেছে।");
+  };
+
+  formAdminAuth?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const userVal = adminInputUser?.value.trim() || "";
+    const pinVal = adminInputPin?.value.trim() || "";
+
+    if (userVal.toLowerCase() === MAIN_ADMIN_CREDENTIALS.username.toLowerCase() && pinVal === MAIN_ADMIN_CREDENTIALS.pin) {
+      sessionStorage.setItem("ghoshgaon_main_admin_session", "Mamun190a");
+      closeAdminAuthModal();
+      updateAdminUI();
+      showToast(`🎉 স্বাগতম মামুন মিয়া (Mamun190a)! মেইন এডমিন মোড সক্রিয় হয়েছে।`);
+
+      if (typeof pendingAdminAction === "function") {
+        const action = pendingAdminAction;
+        pendingAdminAction = null;
+        setTimeout(action, 250);
+      }
+    } else {
+      if (adminAuthErrorMsg) {
+        adminAuthErrorMsg.style.display = "block";
+        adminAuthErrorMsg.textContent = "❌ ভুল ইউজারনেম অথবা পিন কোড! শুধুমাত্র অনুমোদিত মেইন এডমিন প্রবেশ করতে পারবেন।";
+      }
+      if (adminInputPin) adminInputPin.value = "";
     }
   });
 
-  // Auto-open if navigating via navbar link #teachers
-  document.querySelectorAll('a[href="#teachers"]').forEach((navLink) => {
-    navLink.addEventListener("click", () => {
-      openTeachersRoster(false);
-    });
+  btnAdminLoginNav?.addEventListener("click", () => openAdminAuthModal());
+  btnMobileAdminLogin?.addEventListener("click", () => {
+    closeDrawer();
+    openAdminAuthModal();
+  });
+  footerAdminLink?.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (isAdminLoggedIn()) {
+      showToast("আপনি ইতিমধ্যে মেইন এডমিন হিসেবে লগইন আছেন।");
+    } else {
+      openAdminAuthModal();
+    }
+  });
+  btnAdminLogout?.addEventListener("click", logoutAdmin);
+  btnCloseAdminAuth?.addEventListener("click", closeAdminAuthModal);
+  btnCancelAdminAuth?.addEventListener("click", closeAdminAuthModal);
+
+  adminAuthModal?.addEventListener("click", (e) => {
+    if (e.target === adminAuthModal) closeAdminAuthModal();
   });
 
-  if (window.location.hash === "#teachers") {
-    openTeachersRoster(false);
-  }
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && adminAuthModal?.classList.contains("active")) {
+      closeAdminAuthModal();
+    }
+  });
+
+  // Initial Admin UI update
+  updateAdminUI();
 
   // =========================================================================
-  // 6b. Add Ex-Teacher Modal & LocalStorage Persistence System
+  // 6b. VISITOR ENTRY GATEWAY & ADMIN ANALYTICS DASHBOARD
+  // নাম ও এসএসসি পাশের বছর সংগ্রহ এবং এডমিন ড্যাশবোর্ডে ভিউ ও ভিজিটর ট্র্যাকিং
+  // =========================================================================
+  const visitorEntryModal = document.getElementById("visitor-entry-modal");
+  const formVisitorEntry = document.getElementById("form-visitor-entry");
+  const visitorNameInput = document.getElementById("visitor-name");
+  const visitorSscYearSelect = document.getElementById("visitor-ssc-year");
+
+  const adminDashboardModal = document.getElementById("admin-dashboard-modal");
+  const btnCloseAdminDashboard = document.getElementById("btn-close-admin-dashboard");
+  const btnCloseDashboardBottom = document.getElementById("btn-close-dashboard-bottom");
+  const btnExportVisitorsCsv = document.getElementById("btn-export-visitors-csv");
+  const btnDashTestEntry = document.getElementById("btn-dash-test-entry");
+  const btnDashSeedSamples = document.getElementById("btn-dash-seed-samples");
+  const btnDashClearData = document.getElementById("btn-dash-clear-data");
+  const dashSearchInput = document.getElementById("dash-search-input");
+  const dashCategoryFilter = document.getElementById("dash-category-filter");
+  const adminDashTableBody = document.getElementById("admin-dash-table-body");
+  const adminDashEmptyState = document.getElementById("admin-dash-empty-state");
+
+  const dashStatTotalViews = document.getElementById("dash-stat-total-views");
+  const dashStatRegisteredCount = document.getElementById("dash-stat-registered-count");
+  const dashStatAlumniCount = document.getElementById("dash-stat-alumni-count");
+  const dashStatOthersCount = document.getElementById("dash-stat-others-count");
+
+  // Bengali numerals converter
+  const toBnNum = (n) => {
+    if (n === null || n === undefined) return "০";
+    return n.toString().replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[d]);
+  };
+
+  // Safe HTML string sanitization
+  const sanitizeHtml = (str) => {
+    if (!str) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  };
+
+  // 1. Populate SSC Passing Years (1974 - 2026) + Categories
+  const populateVisitorSscYears = () => {
+    if (!visitorSscYearSelect) return;
+    visitorSscYearSelect.innerHTML = '<option value="" disabled selected>এসএসসি পাশের সাল / আপনার পরিচয় নির্বাচন করুন...</option>';
+
+    const optGroupAlumni = document.createElement("optgroup");
+    optGroupAlumni.label = "🎓 এসএসসি পাশের সাল (১৯৭৪ - ২০২৬)";
+
+    for (let y = 2026; y >= 1974; y--) {
+      const opt = document.createElement("option");
+      opt.value = y.toString();
+      opt.textContent = `${toBnNum(y)} সাল (SSC ${y})`;
+      optGroupAlumni.appendChild(opt);
+    }
+    visitorSscYearSelect.appendChild(optGroupAlumni);
+
+    const optGroupOthers = document.createElement("optgroup");
+    optGroupOthers.label = "🎒 শিক্ষার্থী / অভিভাবক / অন্যান্য";
+
+    const othersList = [
+      { val: "current_student", text: "বর্তমান অধ্যয়নরত শিক্ষার্থী (Current Student)" },
+      { val: "guardian", text: "সম্মানিত অভিভাবকবৃন্দ (Guardian)" },
+      { val: "teacher_staff", text: "শিক্ষক / কর্মকর্তা / শুভাকাঙ্ক্ষী" },
+      { val: "guest_visitor", text: "সম্মানিত শুভানুধ্যায়ী / অতিথি" }
+    ];
+
+    othersList.forEach(item => {
+      const opt = document.createElement("option");
+      opt.value = item.val;
+      opt.textContent = item.text;
+      optGroupOthers.appendChild(opt);
+    });
+    visitorSscYearSelect.appendChild(optGroupOthers);
+  };
+
+  populateVisitorSscYears();
+
+  // 2. Increment Total Page Views (Global counter)
+  const incrementTotalPageViews = () => {
+    try {
+      let views = parseInt(localStorage.getItem("ghoshgaon_site_total_views") || "0", 10);
+      views += 1;
+      localStorage.setItem("ghoshgaon_site_total_views", views.toString());
+      return views;
+    } catch (e) {
+      return 1;
+    }
+  };
+
+  incrementTotalPageViews();
+
+  // 3. Visitor Storage Helpers
+  const getAllVisitorsLog = () => {
+    try {
+      return JSON.parse(localStorage.getItem("ghoshgaon_all_visitors_log") || "[]");
+    } catch (e) {
+      return [];
+    }
+  };
+
+  const saveVisitorsLog = (logArray) => {
+    try {
+      localStorage.setItem("ghoshgaon_all_visitors_log", JSON.stringify(logArray));
+    } catch (e) {
+      console.error("Error saving visitors log", e);
+    }
+  };
+
+  // 4. Modal Open/Close Controls
+  const openVisitorGatewayModal = () => {
+    if (visitorEntryModal) {
+      visitorEntryModal.classList.add("active");
+      visitorEntryModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      setTimeout(() => {
+        visitorNameInput?.focus();
+      }, 150);
+    }
+  };
+
+  const closeVisitorGatewayModal = () => {
+    if (visitorEntryModal) {
+      visitorEntryModal.classList.remove("active");
+      visitorEntryModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+  };
+
+  const openAdminDashboardModal = () => {
+    if (!isAdminLoggedIn()) {
+      openAdminAuthModal(() => {
+        openAdminDashboardModal();
+      });
+      return;
+    }
+    if (adminDashboardModal) {
+      adminDashboardModal.classList.add("active");
+      adminDashboardModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      renderAdminDashboard();
+    }
+  };
+
+  const closeAdminDashboardModal = () => {
+    if (adminDashboardModal) {
+      adminDashboardModal.classList.remove("active");
+      adminDashboardModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+  };
+
+  // 5. Render Admin Dashboard Data & Analytics
+  const renderAdminDashboard = () => {
+    const totalViews = parseInt(localStorage.getItem("ghoshgaon_site_total_views") || "0", 10);
+    const logs = getAllVisitorsLog();
+
+    const alumniCount = logs.filter(item => item.isAlumni).length;
+    const othersCount = logs.length - alumniCount;
+
+    if (dashStatTotalViews) dashStatTotalViews.textContent = toBnNum(totalViews);
+    if (dashStatRegisteredCount) dashStatRegisteredCount.textContent = toBnNum(logs.length);
+    if (dashStatAlumniCount) dashStatAlumniCount.textContent = toBnNum(alumniCount);
+    if (dashStatOthersCount) dashStatOthersCount.textContent = toBnNum(othersCount);
+
+    const searchQuery = (dashSearchInput?.value || "").trim().toLowerCase();
+    const categoryFilter = dashCategoryFilter?.value || "all";
+
+    const filteredLogs = logs.filter(item => {
+      const matchesSearch = !searchQuery || 
+        (item.name && item.name.toLowerCase().includes(searchQuery)) ||
+        (item.sscYearLabel && item.sscYearLabel.toLowerCase().includes(searchQuery)) ||
+        (item.device && item.device.toLowerCase().includes(searchQuery));
+
+      let matchesCategory = true;
+      if (categoryFilter === "alumni") {
+        matchesCategory = item.isAlumni;
+      } else if (categoryFilter === "current") {
+        matchesCategory = !item.isAlumni;
+      }
+
+      return matchesSearch && matchesCategory;
+    });
+
+    if (!adminDashTableBody) return;
+
+    if (filteredLogs.length === 0) {
+      adminDashTableBody.innerHTML = "";
+      if (adminDashEmptyState) adminDashEmptyState.style.display = "block";
+      return;
+    }
+
+    if (adminDashEmptyState) adminDashEmptyState.style.display = "none";
+
+    adminDashTableBody.innerHTML = filteredLogs.map((log, index) => {
+      const badgeClass = log.isAlumni ? "badge-ssc-alumni" : "badge-visitor-other";
+      const badgeIcon = log.isAlumni ? "🎓" : "🎒";
+      return `
+        <tr data-id="${log.id}">
+          <td class="visitor-row-num">${toBnNum(index + 1)}</td>
+          <td class="visitor-cell-name">
+            <span>👤 ${sanitizeHtml(log.name)}</span>
+          </td>
+          <td>
+            <span class="${badgeClass}">
+              ${badgeIcon} ${sanitizeHtml(log.sscYearLabel)}
+            </span>
+          </td>
+          <td class="visitor-cell-time">
+            <span>📅 ${sanitizeHtml(log.dateFormatted)}</span>
+          </td>
+          <td class="visitor-cell-device">
+            <span>${sanitizeHtml(log.device || "💻 কম্পিউটার")}</span>
+          </td>
+          <td style="text-align: center;">
+            <button type="button" class="btn-delete-visitor-row" data-id="${log.id}" title="মুছে ফেলুন">
+              🗑️
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+    // Attach row delete listener
+    adminDashTableBody.querySelectorAll(".btn-delete-visitor-row").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-id");
+        if (confirm("আপনি কি নিশ্চিতভাবে এই ভিজিটর রেকর্ডটি মুছে ফেলতে চান?")) {
+          const updated = getAllVisitorsLog().filter(item => item.id !== id);
+          saveVisitorsLog(updated);
+          renderAdminDashboard();
+          showToast("ভিজিটর রেকর্ডটি সফলভাবে মুছে ফেলা হয়েছে।");
+        }
+      });
+    });
+  };
+
+  // 6. CSV / Excel Export with UTF-8 BOM for Bengali Support
+  const exportVisitorsToCSV = () => {
+    const logs = getAllVisitorsLog();
+    if (logs.length === 0) {
+      showToast("ডাউনলোড করার মতো কোনো ভিজিটর রেকর্ড নেই।");
+      return;
+    }
+
+    let csvContent = "\uFEFFক্রমিক নং,ভিজিটরের পূর্ণ নাম,এসএসসি সাল / পরিচয়,প্রবেশের তারিখ ও সময়,ডিভাইস\r\n";
+
+    logs.forEach((item, index) => {
+      const row = [
+        index + 1,
+        `"${(item.name || '').replace(/"/g, '""')}"`,
+        `"${(item.sscYearLabel || '').replace(/"/g, '""')}"`,
+        `"${(item.dateFormatted || '').replace(/"/g, '""')}"`,
+        `"${(item.device || '').replace(/"/g, '""')}"`
+      ];
+      csvContent += row.join(",") + "\r\n";
+    });
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `Ghoshgaon_High_School_Visitors_Log_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    showToast("📥 এক্সেল (CSV) ফাইল সফলভাবে ডাউনলোড হয়েছে!");
+  };
+
+  // 7. Seed Sample Data for Demo Testing
+  const seedSampleVisitors = () => {
+    const currentLogs = getAllVisitorsLog();
+    const samples = [
+      { id: "vis_sample_1", name: "মাহবুবুর রহমান", sscYear: "1994", sscYearLabel: "১৯৯৪ সাল (SSC 1994)", isAlumni: true, timestamp: Date.now() - 3600000 * 24 * 3, dateFormatted: "২৪ অক্টোবর ২০২৬, ১০:১৫ পূর্বাহ্ন", device: "📱 মোবাইল" },
+      { id: "vis_sample_2", name: "মোঃ রফিকুল ইসলাম", sscYear: "2005", sscYearLabel: "২০০৫ সাল (SSC 2005)", isAlumni: true, timestamp: Date.now() - 3600000 * 24 * 2, dateFormatted: "২৫ অক্টোবর ২০২৬, ০৩:৪০ অপরাহ্ন", device: "💻 কম্পিউটার/ল্যাপটপ" },
+      { id: "vis_sample_3", name: "তানজিলা আক্তার", sscYear: "2016", sscYearLabel: "২০১৬ সাল (SSC 2016)", isAlumni: true, timestamp: Date.now() - 3600000 * 24, dateFormatted: "২৬ অক্টোবর ২০২৬, ১১:২০ পূর্বাহ্ন", device: "📱 মোবাইল" },
+      { id: "vis_sample_4", name: "আরিফুল হাসান শাকিল", sscYear: "2021", sscYearLabel: "২০২১ সাল (SSC 2021)", isAlumni: true, timestamp: Date.now() - 3600000 * 5, dateFormatted: "২৭ অক্টোবর ২০২৬, ০১:১৫ অপরাহ্ন", device: "📱 মোবাইল" },
+      { id: "vis_sample_5", name: "ডাঃ এ. কে. এম. সামসুল হক", sscYear: "1985", sscYearLabel: "১৯৮৫ সাল (SSC 1985)", isAlumni: true, timestamp: Date.now() - 3600000 * 2, dateFormatted: "২৭ অক্টোবর ২০২৬, ০৪:০৫ অপরাহ্ন", device: "💻 কম্পিউটার/ল্যাপটপ" },
+      { id: "vis_sample_6", name: "মোঃ জহিরুল ইসলাম", sscYear: "guardian", sscYearLabel: "সম্মানিত অভিভাবকবৃন্দ", isAlumni: false, timestamp: Date.now() - 3600000, dateFormatted: "২৭ অক্টোবর ২০২৬, ০৫:০০ অপরাহ্ন", device: "📱 মোবাইল" }
+    ];
+
+    const merged = [...samples, ...currentLogs.filter(c => !c.id.startsWith("vis_sample_"))];
+    saveVisitorsLog(merged);
+    renderAdminDashboard();
+    showToast("✨ ডেমো প্রাক্তন শিক্ষার্থী ও অভিভাবক ডাটা সফলভাবে যুক্ত হয়েছে!");
+  };
+
+  // 8. Visitor Entry Form Submission
+  formVisitorEntry?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = visitorNameInput?.value.trim();
+    const sscVal = visitorSscYearSelect?.value;
+    const sscOption = visitorSscYearSelect?.options[visitorSscYearSelect?.selectedIndex];
+    const sscLabel = sscOption ? sscOption.textContent : sscVal;
+
+    if (!name || !sscVal) {
+      alert("অনুগ্রহ করে আপনার নাম এবং এসএসসি পাশের সাল নির্বাচন করুন।");
+      return;
+    }
+
+    const isMobile = /Mobile|Android|iP(hone|od|ad)/i.test(navigator.userAgent);
+    const isAlumni = !isNaN(parseInt(sscVal, 10));
+
+    const now = new Date();
+    const monthsBn = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+    const dateFormatted = `${toBnNum(now.getDate())} ${monthsBn[now.getMonth()]} ${toBnNum(now.getFullYear())}, ${now.toLocaleTimeString("bn-BD", { hour: "2-digit", minute: "2-digit" })}`;
+
+    const visitorRecord = {
+      id: "vis_" + Date.now(),
+      name: name,
+      sscYear: sscVal,
+      sscYearLabel: sscLabel,
+      isAlumni: isAlumni,
+      timestamp: Date.now(),
+      dateFormatted: dateFormatted,
+      device: isMobile ? "📱 মোবাইল" : "💻 কম্পিউটার/ল্যাপটপ"
+    };
+
+    localStorage.setItem("ghoshgaon_visitor_profile", JSON.stringify(visitorRecord));
+
+    const currentLogs = getAllVisitorsLog();
+    currentLogs.unshift(visitorRecord);
+    saveVisitorsLog(currentLogs);
+
+    closeVisitorGatewayModal();
+    showToast(`🎉 স্বাগতম ${name}! ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ে আপনাকে স্বাগতম।`);
+
+    if (adminDashboardModal?.classList.contains("active")) {
+      renderAdminDashboard();
+    }
+  });
+
+  // 9. Dashboard Event Handlers
+  btnNavAdminDashboard?.addEventListener("click", () => openAdminDashboardModal());
+  btnMobileAdminDashboard?.addEventListener("click", () => {
+    closeDrawer();
+    openAdminDashboardModal();
+  });
+  btnCloseAdminDashboard?.addEventListener("click", closeAdminDashboardModal);
+  btnCloseDashboardBottom?.addEventListener("click", closeAdminDashboardModal);
+
+  btnExportVisitorsCsv?.addEventListener("click", exportVisitorsToCSV);
+  btnDashSeedSamples?.addEventListener("click", seedSampleVisitors);
+  btnDashTestEntry?.addEventListener("click", () => {
+    closeAdminDashboardModal();
+    openVisitorGatewayModal();
+  });
+
+  btnDashClearData?.addEventListener("click", () => {
+    if (confirm("⚠️ আপনি কি নিশ্চিতভাবে সকল ভিজিটর লগ মুছে ফেলতে চান? এটি পুনরায় ফিরিয়ে আনা যাবে না।")) {
+      saveVisitorsLog([]);
+      renderAdminDashboard();
+      showToast("সব ভিজিটর রেকর্ড সফলভাবে মুছে ফেলা হয়েছে।");
+    }
+  });
+
+  dashSearchInput?.addEventListener("input", renderAdminDashboard);
+  dashCategoryFilter?.addEventListener("change", renderAdminDashboard);
+
+  adminDashboardModal?.addEventListener("click", (e) => {
+    if (e.target === adminDashboardModal) closeAdminDashboardModal();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      if (adminDashboardModal?.classList.contains("active")) closeAdminDashboardModal();
+    }
+  });
+
+  // 10. Automatically trigger Entry Gateway for First-Time Normal Visitors
+  if (!localStorage.getItem("ghoshgaon_visitor_profile") && !isAdminLoggedIn()) {
+    setTimeout(() => {
+      openVisitorGatewayModal();
+    }, 700);
+  }
+
+  // Open / Close Hidden Faculty & Ex-Teachers Archive on Demand
+  const btnOpenTeacherModal = document.getElementById("btn-open-teacher-modal");
+  const btnToggleHiddenRoster = document.getElementById("btn-toggle-hidden-roster");
+  const archivedFacultyWrapper = document.getElementById("archived-faculty-wrapper");
+  const btnToggleHiddenRosterText = document.getElementById("btn-toggle-hidden-roster-text");
+
+  btnOpenTeacherModal?.addEventListener("click", () => {
+    if (isAdminLoggedIn()) {
+      openExTeacherModal();
+    } else {
+      openAdminAuthModal(() => {
+        openExTeacherModal();
+      });
+    }
+  });
+
+  btnToggleHiddenRoster?.addEventListener("click", () => {
+    if (!archivedFacultyWrapper) return;
+    const isHidden = archivedFacultyWrapper.style.display === "none";
+    if (isHidden) {
+      archivedFacultyWrapper.style.display = "block";
+      btnToggleHiddenRoster.classList.add("active");
+      btnToggleHiddenRoster.setAttribute("aria-expanded", "true");
+      if (btnToggleHiddenRosterText) {
+        btnToggleHiddenRosterText.textContent = "সংরক্ষিত তালিকা লুকান";
+      }
+      setTimeout(() => {
+        archivedFacultyWrapper.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    } else {
+      archivedFacultyWrapper.style.display = "none";
+      btnToggleHiddenRoster.classList.remove("active");
+      btnToggleHiddenRoster.setAttribute("aria-expanded", "false");
+      if (btnToggleHiddenRosterText) {
+        btnToggleHiddenRosterText.textContent = "সংরক্ষিত শিক্ষক তালিকা দেখুন";
+      }
+    }
+  });
+
+  // =========================================================================
+  // 6b. Unified Teacher Addition Modal & LocalStorage Persistence System
   // =========================================================================
   const exTeacherModal = document.getElementById("ex-teacher-modal-overlay");
   const btnOpenExModal = document.getElementById("btn-open-ex-teacher-modal");
   const btnCloseExModal = document.getElementById("btn-close-ex-modal");
   const btnCancelExModal = document.getElementById("btn-cancel-ex-modal");
   const formAddExTeacher = document.getElementById("form-add-ex-teacher");
-  const exTeachersGrid = document.getElementById("ex-teachers-grid");
+  const customFacultySection = document.getElementById("custom-faculty-section");
+  const dynamicCustomFacultyGrid = document.getElementById("dynamic-custom-faculty-grid");
 
   const openExTeacherModal = () => {
     if (exTeacherModal) {
@@ -660,7 +1181,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  btnOpenExModal?.addEventListener("click", openExTeacherModal);
+  btnOpenExModal?.addEventListener("click", () => {
+    if (isAdminLoggedIn()) {
+      openExTeacherModal();
+    } else {
+      openAdminAuthModal(() => {
+        openExTeacherModal();
+      });
+    }
+  });
   btnCloseExModal?.addEventListener("click", closeExTeacherModal);
   btnCancelExModal?.addEventListener("click", closeExTeacherModal);
 
@@ -676,55 +1205,73 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Helper to build Card HTML for Ex-Teacher
-  const createExTeacherCardElement = (item, isCustom = false) => {
+  // LocalStorage handling for custom faculty list
+  const getSavedFaculty = () => {
+    try {
+      const data = localStorage.getItem("ghoshgaon_custom_faculty_list");
+      if (data) return JSON.parse(data);
+      // Fallback check for old key
+      const legacyData = localStorage.getItem("ghoshgaon_custom_ex_teachers");
+      return legacyData ? JSON.parse(legacyData) : [];
+    } catch (e) {
+      return [];
+    }
+  };
+
+  const saveCustomTeacher = (item) => {
+    const list = getSavedFaculty();
+    list.unshift(item);
+    localStorage.setItem("ghoshgaon_custom_faculty_list", JSON.stringify(list));
+  };
+
+  const removeCustomTeacher = (id, cardElement, name) => {
+    if (!isAdminLoggedIn()) {
+      openAdminAuthModal(() => removeCustomTeacher(id, cardElement, name));
+      return;
+    }
+    if (confirm(`আপনি কি সত্যিই "${name}" শিক্ষকের তথ্য তালিকা থেকে মুছে ফেলতে চান?`)) {
+      const list = getSavedFaculty().filter((i) => i.id !== id);
+      localStorage.setItem("ghoshgaon_custom_faculty_list", JSON.stringify(list));
+      cardElement.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+      cardElement.style.opacity = "0";
+      cardElement.style.transform = "scale(0.9)";
+      setTimeout(() => {
+        cardElement.remove();
+        if (list.length === 0 && customFacultySection) {
+          customFacultySection.style.display = "none";
+        }
+      }, 300);
+      showToast(`শিক্ষক ${name}-এর তথ্য তালিকা থেকে সফলভাবে অপসারিত হয়েছে।`);
+    }
+  };
+
+  // Helper to build Card HTML for Custom Teacher
+  const createCustomTeacherCardElement = (item) => {
     const card = document.createElement("article");
-    card.className = "ex-teacher-card";
-    if (isCustom && item.id) {
+    card.className = "custom-teacher-card teacher-card";
+    if (item.id) {
       card.setAttribute("data-id", item.id);
     }
+    const teacherDept = item.dept || (item.designation && (item.designation.includes("বিজ্ঞান") || item.designation.includes("গণিত") || item.designation.includes("আইসিটি")) ? "science" : "arts");
+    card.setAttribute("data-category", teacherDept);
 
     const photoSrc = item.photo && item.photo.trim() !== ""
       ? item.photo
       : "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=400&q=80";
 
-    const isLate = (item.status || "").includes("মরহুম");
-    const statusClass = isLate ? "status-late" : "status-retired";
-    const statusText = item.status || "অবসরপ্রাপ্ত গুণী শিক্ষক";
-
-    const badgeIcon = isLate ? "🕊️" : "🎖️";
-    const badgeTitle = isLate ? "চিরস্মরণীয় শিক্ষক" : "সম্মানিত শিক্ষক";
+    const deptText = teacherDept === "science" ? "বিজ্ঞান বিভাগ" : "মানবিক বিভাগ";
+    const badgeText = item.type ? `${item.type} • ${deptText}` : deptText;
 
     card.innerHTML = `
-      <div class="ex-teacher-card-badge">
-        <span class="badge-icon">${badgeIcon}</span>
-        <span>${badgeTitle}</span>
+      <div class="custom-teacher-photo-wrap">
+        <img src="${photoSrc}" alt="${item.name}" class="custom-teacher-photo" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=400&q=80'">
+        <span class="custom-teacher-badge">${badgeText}</span>
       </div>
-      <div class="ex-teacher-header">
-        <div class="ex-teacher-photo-wrap">
-          <img src="${photoSrc}" alt="${item.name}" class="ex-teacher-photo" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=400&q=80'">
-          <span class="ex-teacher-status-tag ${statusClass}">${statusText}</span>
-        </div>
-        <div class="ex-teacher-bio-top">
-          <h4 class="ex-teacher-name">${item.name}</h4>
-          <div class="ex-teacher-designation">${item.designation}</div>
-          <div class="ex-teacher-subject-tag">${item.period}</div>
-        </div>
-      </div>
-
-      <div class="ex-teacher-service-box">
-        <div class="service-pill-row">
-          <div class="service-stat">
-            <span class="service-label">সেবাকাল:</span>
-            <strong class="service-period">${item.period}</strong>
-          </div>
-          <div class="service-tenure-badge">
-            <span class="tenure-clock">⏳</span>
-            <strong>${item.years}</strong>
-          </div>
-        </div>
+      <div class="custom-teacher-details">
+        <h4 class="custom-teacher-name">${item.name}</h4>
+        <div class="custom-teacher-role">${item.designation}</div>
         ${item.qualification ? `
-          <div class="ex-teacher-qual">
+          <div class="custom-teacher-qual">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
               <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
@@ -732,115 +1279,104 @@ document.addEventListener("DOMContentLoaded", () => {
             <span><strong>যোগ্যতা:</strong> ${item.qualification}</span>
           </div>
         ` : ''}
-      </div>
-
-      <p class="ex-teacher-tribute">
-        ${item.tribute}
-      </p>
-
-      <div class="ex-teacher-card-footer">
-        <span class="honor-tag">★ শ্রদ্ধা ও সম্মাননা</span>
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span class="service-years-count">মোট সেবা: <strong>${item.years}</strong></span>
-          ${isCustom ? `<button type="button" class="btn-remove-custom-ex" title="তালিকায় থেকে সরান">মুছে ফেলুন</button>` : ''}
+        ${item.tribute ? `<p class="custom-teacher-bio">${item.tribute}</p>` : ''}
+        <div class="custom-teacher-footer">
+          <span>${item.years || item.period ? `কার্যকাল: <strong>${item.years || item.period}</strong>` : 'ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়'}</span>
+          <button type="button" class="btn-remove-teacher" title="তালিকায় থেকে সরান">মুছে ফেলুন</button>
         </div>
       </div>
     `;
 
-    if (isCustom && item.id) {
-      const removeBtn = card.querySelector(".btn-remove-custom-ex");
-      removeBtn?.addEventListener("click", () => {
-        removeCustomExTeacher(item.id, card, item.name);
-      });
-    }
+    const removeBtn = card.querySelector(".btn-remove-teacher");
+    removeBtn?.addEventListener("click", () => {
+      removeCustomTeacher(item.id, card, item.name);
+    });
 
     return card;
   };
 
-  // LocalStorage handling for custom ex-teachers
-  const getSavedExTeachers = () => {
-    try {
-      const data = localStorage.getItem("ghoshgaon_custom_ex_teachers");
-      return data ? JSON.parse(data) : [];
-    } catch (e) {
-      return [];
+  // Load custom teachers into grid on page start
+  const loadCustomFaculty = () => {
+    if (!dynamicCustomFacultyGrid) return;
+    const list = getSavedFaculty();
+    if (list.length > 0) {
+      if (customFacultySection) {
+        customFacultySection.style.display = "block";
+      }
+      dynamicCustomFacultyGrid.innerHTML = "";
+      list.forEach((item) => {
+        const cardEl = createCustomTeacherCardElement(item);
+        dynamicCustomFacultyGrid.appendChild(cardEl);
+      });
     }
   };
 
-  const saveCustomExTeacher = (item) => {
-    const list = getSavedExTeachers();
-    list.unshift(item);
-    localStorage.setItem("ghoshgaon_custom_ex_teachers", JSON.stringify(list));
-  };
-
-  const removeCustomExTeacher = (id, cardElement, name) => {
-    if (confirm(`আপনি কি সত্যিই "${name}" শিক্ষকের তথ্য তালিকা থেকে মুছে ফেলতে চান?`)) {
-      const list = getSavedExTeachers().filter((i) => i.id !== id);
-      localStorage.setItem("ghoshgaon_custom_ex_teachers", JSON.stringify(list));
-      cardElement.style.transition = "opacity 0.3s ease, transform 0.3s ease";
-      cardElement.style.opacity = "0";
-      cardElement.style.transform = "scale(0.9)";
-      setTimeout(() => cardElement.remove(), 300);
-      showToast(`প্রাক্তন শিক্ষক ${name}-এর তথ্য তালিকা থেকে অপসারিত হয়েছে।`);
-    }
-  };
-
-  // Load custom ex-teachers into grid on page start
-  const loadCustomExTeachers = () => {
-    if (!exTeachersGrid) return;
-    const list = getSavedExTeachers();
-    list.forEach((item) => {
-      const cardEl = createExTeacherCardElement(item, true);
-      exTeachersGrid.prepend(cardEl);
-    });
-  };
-
-  loadCustomExTeachers();
+  loadCustomFaculty();
 
   // Form Submit Handler
   formAddExTeacher?.addEventListener("submit", (e) => {
     e.preventDefault();
+    const deptVal = document.getElementById("ex-dept")?.value || "science";
+    const typeVal = document.getElementById("ex-type")?.value || "সহকারী শিক্ষক (বর্তমান)";
     const nameVal = document.getElementById("ex-name")?.value.trim() || "";
     const designationVal = document.getElementById("ex-designation")?.value.trim() || "";
-    const periodVal = document.getElementById("ex-period")?.value.trim() || "";
-    const yearsVal = document.getElementById("ex-years")?.value.trim() || "";
     const qualVal = document.getElementById("ex-qual")?.value.trim() || "";
-    const statusVal = document.getElementById("ex-status")?.value || "অবসরপ্রাপ্ত গুণী শিক্ষক";
-    const photoVal = document.getElementById("ex-photo")?.value.trim() || "";
+    const yearsVal = document.getElementById("ex-years")?.value.trim() || "";
     const tributeVal = document.getElementById("ex-tribute")?.value.trim() || "";
+    const photoUrlVal = document.getElementById("ex-photo")?.value.trim() || "";
+    const photoFileInput = document.getElementById("teacher-photo-file");
 
-    if (!nameVal || !designationVal || !periodVal || !yearsVal || !tributeVal) {
-      showToast("অনুগ্রহ করে শিক্ষকের নাম, পদবি, সেবাকাল ও অবদান পূরণ করুন।");
+    if (!nameVal || !designationVal) {
+      showToast("অনুগ্রহ করে শিক্ষকের পূর্ণ নাম ও পদবি প্রদান করুন।");
       return;
     }
 
-    const newExTeacher = {
-      id: "ex_" + Date.now(),
-      name: nameVal,
-      designation: designationVal,
-      period: periodVal,
-      years: yearsVal,
-      qualification: qualVal,
-      status: statusVal,
-      photo: photoVal,
-      tribute: tributeVal
+    const finalizeAndSave = (photoData) => {
+      const newTeacher = {
+        id: "tchr_" + Date.now(),
+        type: typeVal,
+        dept: deptVal,
+        name: nameVal,
+        designation: designationVal,
+        qualification: qualVal,
+        years: yearsVal,
+        tribute: tributeVal,
+        photo: photoData || "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=400&q=80"
+      };
+
+      saveCustomTeacher(newTeacher);
+
+      if (customFacultySection) {
+        customFacultySection.style.display = "block";
+      }
+
+      if (dynamicCustomFacultyGrid) {
+        const newCard = createCustomTeacherCardElement(newTeacher);
+        newCard.style.animation = "fadeIn 0.5s ease forwards";
+        dynamicCustomFacultyGrid.prepend(newCard);
+      }
+
+      showToast(`ধন্যবাদ! শিক্ষক ${nameVal}-এর তথ্য সফলভাবে তালিকায় যুক্ত হয়েছে।`);
+      formAddExTeacher.reset();
+      closeExTeacherModal();
+
+      setTimeout(() => {
+        customFacultySection?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 150);
     };
 
-    saveCustomExTeacher(newExTeacher);
-    const newCard = createExTeacherCardElement(newExTeacher, true);
-    newCard.style.animation = "fadeIn 0.5s ease forwards";
-    exTeachersGrid?.prepend(newCard);
-
-    // Make sure ex-teachers roster is open so the user sees their new addition!
-    openExTeachersRoster(true);
-
-    showToast(`ধন্যবাদ! প্রাক্তন শিক্ষক ${nameVal}-এর তথ্য ও সেবাকাল সফলভাবে সংরক্ষিত হয়েছে।`);
-    formAddExTeacher.reset();
-    closeExTeacherModal();
+    if (photoFileInput?.files && photoFileInput.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (uploadEvent) => {
+        finalizeAndSave(uploadEvent.target.result);
+      };
+      reader.readAsDataURL(photoFileInput.files[0]);
+    } else {
+      finalizeAndSave(photoUrlVal);
+    }
   });
 
   const facultyBtns = document.querySelectorAll(".faculty-btn");
-  const teacherCards = document.querySelectorAll(".teacher-card");
 
   facultyBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -848,7 +1384,8 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.classList.add("active");
 
       const filterVal = btn.getAttribute("data-filter");
-      teacherCards.forEach((card) => {
+      const allTeacherCards = document.querySelectorAll(".teacher-card");
+      allTeacherCards.forEach((card) => {
         const category = card.getAttribute("data-category") || "";
         const categories = category.split(/\s+/);
         if (filterVal === "all" || categories.includes(filterVal)) {
@@ -2599,7 +3136,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const statusTitle = upcoming.isOngoing ? "চলমান ছুটি:" : "আসন্ন ছুটি:";
 
     if (marqueeTextEl) {
-      const announcementHtml = `📢 <strong>${statusTitle}</strong> <span style="color: var(--color-accent-gold); font-weight: 700;">${upcoming.name}</span> — ${upcoming.date} (${upcoming.duration}) ★ বাৎসরিক সরকারি মোট ছুটি ৭৬ দিন • ইআইআইএন: ১১১৩৬৮ • এমপিও কোড: 4002071301 • স্থাপিত: ১৯৭৩ খ্রিঃ • ময়মনসিংহ শিক্ষা বোর্ড • বিভাগ: বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা • ঘোষগাঁও, ধোবাউড়া, ময়মনসিংহ ★`;
+      const announcementHtml = `📢 <strong>${statusTitle}</strong> <span style="color: var(--color-accent-gold); font-weight: 700;">${upcoming.name}</span> — ${upcoming.date} (${upcoming.duration}) ★ বাৎসরিক সরকারি মোট ছুটি ৭৬ দিন • ইআইআইএন: ১১১৩৬৮ • এমপিও কোড: 4002071301 • স্থাপিত: ১৯৭৩ খ্রিঃ • ময়মনসিংহ শিক্ষা বোর্ড • বিভাগ: বিজ্ঞান ও মানবিক (Science & Arts) • ঘোষগাঁও, ধোবাউড়া, ময়মনসিংহ ★`;
       marqueeTextEl.innerHTML = announcementHtml;
       const cloneEl = document.getElementById("topbar-marquee-text-clone");
       if (cloneEl) {
