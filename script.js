@@ -1022,10 +1022,76 @@ document.addEventListener("DOMContentLoaded", () => {
       postDate: "০৫ অক্টোবর, ২০২৬",
       likes: 27,
       likedByUser: false
+    },
+    {
+      id: "mem-5",
+      name: "ডা. মাহমুদুল হাসান সৌরভ",
+      batch: 1991,
+      favoriteTeacher: "মরহুম আব্দুল কাদের স্যার (সহকারী প্রধান শিক্ষক ও বিজ্ঞান)",
+      note: "আজ চিকিৎসক হয়ে মানুষের সেবা করার পেছনে কাদের স্যারের বিজ্ঞান ক্লাসের অবদান চিরস্মরণীয়। বিদ্যালয়ের লাল মাটির মাঠ, বৃষ্টিভেজা দিনে বারান্দা দিয়ে বাড়ি ফেরা আর শিক্ষকদের স্নেহমাখা শাসনের স্মৃতি আজও চোখে জল এনে দেয়।",
+      image: "hero-campus.jpg",
+      postDate: "০৩ অক্টোবর, ২০২৬",
+      likes: 45,
+      likedByUser: false
+    },
+    {
+      id: "mem-6",
+      name: "সাজিদা সুলতানা নিঝুম",
+      batch: 2003,
+      favoriteTeacher: "মো. আবুল কালাম স্যার (বাংলা ও সাহিত্য)",
+      note: "কালাম স্যারের বাংলা সাহিত্যের ক্লাস আমাদের কবিতার প্রেমে ফেলেছিল। প্রতি বছর একুশে ফেব্রুয়ারির দেয়াল পত্রিকা বের করার জন্য রাতের পর রাত জেগে কাজ করার স্মৃতি আজও মনে পড়ে। প্রিয় শিক্ষাপ্রতিষ্ঠানের জয়গান চিরকাল গাইবো।",
+      image: "hero-books.jpg",
+      postDate: "২৮ সেপ্টেম্বর, ২০২৬",
+      likes: 36,
+      likedByUser: false
+    },
+    {
+      id: "mem-7",
+      name: "মেহেদী হাসান রাব্বি",
+      batch: 2014,
+      favoriteTeacher: "মোছা. ফরিদা খাতুন ম্যাডাম (আইসিটি ও সহকারী শিক্ষক)",
+      note: "আইসিটি ল্যাবে ফরিদা ম্যাডামের হাত ধরেই আমাদের প্রথম কম্পিউটার মাউস ধরা এবং ইন্টারনেট সম্পর্কে শেখা। শিক্ষায় প্রযুক্তির এই মেলবন্ধন আজ আমাদের টেক ও ফ্রিল্যান্সিং ক্যারিয়ার গড়তে প্রধান ভিত হয়ে দাঁড়িয়েছে।",
+      image: "hero-students.jpg",
+      postDate: "২২ সেপ্টেম্বর, ২০২৬",
+      likes: 42,
+      likedByUser: false
+    },
+    {
+      id: "mem-8",
+      name: "ফাহমিদা আক্তার প্রিয়া",
+      batch: 2020,
+      favoriteTeacher: "শামীমা নাসরিন ম্যাডাম (ভূগোল ও পরিবেশ)",
+      note: "করোনাকালের ঠিক আগে আমাদের এসএসসি পরীক্ষা ও বিদায় অনুষ্ঠানটি ছিল অত্যন্ত আবেগঘন। স্কুলের সবুজ বাগান, প্রাত্যহিক সমাবেশ আর বন্ধুদের সাথে জাতীয় সংগীত গাওয়ার অপূর্ব অনুভূতি পৃথিবীর আর কোথাও পাওয়া যাবে না।",
+      image: "hero-campus.jpg",
+      postDate: "১৭ সেপ্টেম্বর, ২০২৬",
+      likes: 29,
+      likedByUser: false
+    },
+    {
+      id: "mem-9",
+      name: "কামরুল আহসান তুহিন",
+      batch: 1988,
+      favoriteTeacher: "মরহুম শামসুল হুদা স্যার (প্রধান শিক্ষক)",
+      note: "বিদ্যালয়ের প্রতিষ্ঠালগ্নের সেই টিনশেড ঘর থেকে আজকের আধুনিক বহুতল ভবন—এই রূপান্তর দেখে বুক গর্বে ভরে ওঠে। স্যারদের নৈতিক শিক্ষার আলোই আমার দীর্ঘ জীবনের প্রতিটি পদে সঠিক পথ দেখিয়েছে।",
+      image: "hero-books.jpg",
+      postDate: "১২ সেপ্টেম্বর, ২০২৬",
+      likes: 53,
+      likedByUser: false
+    },
+    {
+      id: "mem-10",
+      name: "তাসনিম জাহান তানহা",
+      batch: 2025,
+      favoriteTeacher: "মো. নজরুল ইসলাম স্যার (গণিত)",
+      note: "গণিতের জটিল সূত্রগুলোকে নজরুল স্যার এতো সহজ করে বুঝিয়ে দিতেন যে অংক নিয়ে আমাদের ভীতি কেটে আনন্দের বিষয় হয়ে উঠেছিল। বন্ধুদের সাথে টিফিনে আড্ডা আর বার্ষিক সাংস্কৃতিক অনুষ্ঠানের স্মৃতি চিরকাল অমূল্য হয়ে থাকবে।",
+      image: "hero-students.jpg",
+      postDate: "০৮ সেপ্টেম্বর, ২০২৬",
+      likes: 24,
+      likedByUser: false
     }
   ];
 
-  const MEMORIES_STORAGE_KEY = "ghoshgaon_shere_bangla_memories_v2";
+  const MEMORIES_STORAGE_KEY = "ghoshgaon_shere_bangla_memories_v3";
 
   const getStoredMemories = () => {
     try {
@@ -1155,6 +1221,13 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
       })
       .join("");
+
+    memoriesGrid.scrollLeft = 0;
+    setTimeout(() => {
+      if (typeof updateMemorySliderControls === "function") {
+        updateMemorySliderControls();
+      }
+    }, 50);
   };
 
   // Active Memory detail ID
@@ -1295,6 +1368,115 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
+
+  // Memory Slider Navigation Functions (Desktop: 5 cards per view, smooth slide)
+  const slideMemories = (direction) => {
+    if (!memoriesGrid) return;
+    const firstCard = memoriesGrid.querySelector(".memory-card");
+    const gap = parseFloat(window.getComputedStyle(memoriesGrid).gap) || 16;
+    const cardWidth = firstCard ? firstCard.offsetWidth : 220;
+    // Slide by 2 cards on desktop, 1 on tablet/mobile
+    const stepCount = window.innerWidth >= 1200 ? 2 : 1;
+    const scrollStep = (cardWidth + gap) * stepCount;
+    memoriesGrid.scrollBy({
+      left: direction === "next" ? scrollStep : -scrollStep,
+      behavior: "smooth"
+    });
+  };
+
+  const updateMemorySliderControls = () => {
+    if (!memoriesGrid) return;
+    const prevBtn = document.getElementById("btn-memory-slider-prev");
+    const nextBtn = document.getElementById("btn-memory-slider-next");
+    const bottomPrev = document.getElementById("btn-memory-bottom-prev");
+    const bottomNext = document.getElementById("btn-memory-bottom-next");
+    const indicatorText = document.getElementById("memory-indicator-text");
+
+    const cards = memoriesGrid.querySelectorAll(".memory-card");
+    const total = cards.length;
+    if (total === 0) {
+      if (prevBtn) prevBtn.disabled = true;
+      if (nextBtn) nextBtn.disabled = true;
+      if (bottomPrev) bottomPrev.disabled = true;
+      if (bottomNext) bottomNext.disabled = true;
+      if (indicatorText) indicatorText.textContent = "কোনো স্মৃতি পাওয়া যায়নি";
+      return;
+    }
+
+    const sl = memoriesGrid.scrollLeft;
+    const maxScroll = Math.max(0, memoriesGrid.scrollWidth - memoriesGrid.clientWidth);
+    const atStart = sl <= 6;
+    const atEnd = sl >= maxScroll - 6;
+
+    if (prevBtn) prevBtn.disabled = atStart;
+    if (bottomPrev) bottomPrev.disabled = atStart;
+    if (nextBtn) nextBtn.disabled = atEnd;
+    if (bottomNext) bottomNext.disabled = atEnd;
+
+    if (indicatorText) {
+      const cardWidth = cards[0] ? cards[0].offsetWidth : 220;
+      const gap = parseFloat(window.getComputedStyle(memoriesGrid).gap) || 16;
+      const step = cardWidth + gap;
+      const visibleCount = Math.max(1, Math.round(memoriesGrid.clientWidth / step));
+      const startIdx = Math.min(total, Math.max(1, Math.round(sl / step) + 1));
+      const endIdx = Math.min(total, startIdx + visibleCount - 1);
+      indicatorText.textContent = `স্মৃতি ${toBanglaNum(startIdx)}–${toBanglaNum(endIdx)} / মোট ${toBanglaNum(total)}টি (স্লাইড করুন)`;
+    }
+  };
+
+  // Wire up slider arrow & bottom buttons
+  document.getElementById("btn-memory-slider-prev")?.addEventListener("click", () => slideMemories("prev"));
+  document.getElementById("btn-memory-slider-next")?.addEventListener("click", () => slideMemories("next"));
+  document.getElementById("btn-memory-bottom-prev")?.addEventListener("click", () => slideMemories("prev"));
+  document.getElementById("btn-memory-bottom-next")?.addEventListener("click", () => slideMemories("next"));
+
+  memoriesGrid?.addEventListener("scroll", updateMemorySliderControls, { passive: true });
+  window.addEventListener("resize", updateMemorySliderControls);
+
+  // Setup Mouse Drag-to-Scroll on Alumni Memories Grid
+  const setupMemoryDragToScroll = () => {
+    if (!memoriesGrid) return;
+    let isDown = false;
+    let startX = 0;
+    let scrollStart = 0;
+    let dragMoved = false;
+
+    memoriesGrid.addEventListener("mousedown", (e) => {
+      if (e.target.closest("button") || e.target.closest("a")) return;
+      isDown = true;
+      dragMoved = false;
+      memoriesGrid.classList.add("is-dragging");
+      startX = e.pageX - memoriesGrid.offsetLeft;
+      scrollStart = memoriesGrid.scrollLeft;
+    });
+
+    window.addEventListener("mouseup", () => {
+      if (!isDown) return;
+      isDown = false;
+      memoriesGrid.classList.remove("is-dragging");
+    });
+
+    memoriesGrid.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - memoriesGrid.offsetLeft;
+      const walk = (x - startX) * 1.35;
+      if (Math.abs(walk) > 6) {
+        dragMoved = true;
+      }
+      memoriesGrid.scrollLeft = scrollStart - walk;
+    });
+
+    memoriesGrid.addEventListener("click", (e) => {
+      if (dragMoved) {
+        e.preventDefault();
+        e.stopPropagation();
+        dragMoved = false;
+      }
+    }, true);
+  };
+
+  setupMemoryDragToScroll();
 
   // Initial Memory Render
   renderMemories("all");
