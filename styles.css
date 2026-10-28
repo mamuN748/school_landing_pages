@@ -130,6 +130,52 @@
   --container-wide: 1360px;
 }
 
+/* ==========================================================================
+   DARK THEME PALETTE - PRESTIGE MIDNIGHT WINE & RADIANT GOLD
+   ========================================================================== */
+[data-theme="dark"] {
+  /* Rich Velvet Crimson & Burgundy for Dark Mode */
+  --color-primary: #b82241;
+  --color-primary-dark: #8f122d;
+  --color-primary-deep: #25060f;
+  --color-primary-light: #d8385a;
+  --color-primary-soft: rgba(216, 56, 90, 0.16);
+  --color-primary-glow: rgba(216, 56, 90, 0.42);
+
+  /* Deep Luxury Midnight Obsidian / Warm Charcoal Backgrounds */
+  --color-bg: #110b0f;
+  --color-bg-card: #191217;
+  --color-bg-card-alt: #221820;
+  --color-bg-soft: #150e13;
+
+  /* Radiant Amber Gold Accents for Dark Mode */
+  --color-accent-gold: #e2b44f;
+  --color-accent-gold-dark: #c89d3d;
+  --color-accent-gold-light: #ffebaa;
+  --color-accent-gold-subtle: rgba(226, 180, 79, 0.18);
+
+  /* High Legibility Bengali Typography for Dark Mode */
+  --color-text-main: #f5edef;
+  --color-text-muted: #b5a4a7;
+  --color-text-light: #8e7c80;
+  --color-text-inverse: #110b0f;
+  --color-text-gold: #f5c767;
+
+  /* Borders & Dividers */
+  --border-color: rgba(255, 255, 255, 0.11);
+  --border-color-light: rgba(255, 255, 255, 0.06);
+  --border-color-gold: rgba(226, 180, 79, 0.38);
+
+  /* Shadows (Deeper in dark mode for layered elevations) */
+  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.45);
+  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.65);
+  --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.75);
+  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.85);
+
+  color-scheme: dark;
+}
+
 /* Base Reset & Box Sizing */
 *,
 *::before,
@@ -145,6 +191,7 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color-scheme: light;
 }
 
 section[id],
@@ -861,6 +908,751 @@ h6 {
   display: flex;
   align-items: center;
   gap: 0.65rem;
+}
+
+/* ==========================================================================
+   THEME TOGGLE BUTTON (LIGHT / DARK SWITCHER)
+   ========================================================================== */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  background-color: #ffffff;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-full);
+  color: var(--color-text-main);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-xs);
+  user-select: none;
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--color-accent-gold);
+  color: var(--color-primary);
+  background-color: var(--color-primary-soft);
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 14px rgba(200, 157, 61, 0.28);
+}
+
+.theme-icon-slot {
+  position: relative;
+  width: 17px;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.theme-svg {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, color 0.3s ease;
+}
+
+/* Light mode state: show crescent moon icon */
+html:not([data-theme="dark"]) .theme-svg-sun {
+  opacity: 0;
+  transform: rotate(-100deg) scale(0.4);
+  pointer-events: none;
+}
+
+html:not([data-theme="dark"]) .theme-svg-moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+  color: var(--color-primary);
+}
+
+/* Dark mode state: show warm golden radiant sun icon */
+[data-theme="dark"] .theme-svg-sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+  color: var(--color-accent-gold);
+}
+
+[data-theme="dark"] .theme-svg-moon {
+  opacity: 0;
+  transform: rotate(100deg) scale(0.4);
+  pointer-events: none;
+}
+
+[data-theme="dark"] .theme-toggle-btn {
+  background-color: #1f171d;
+  border-color: rgba(226, 180, 79, 0.4);
+  color: #f5edef;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .theme-toggle-btn:hover {
+  background-color: #2b1f28;
+  border-color: var(--color-accent-gold);
+  color: var(--color-accent-gold-light);
+  box-shadow: 0 4px 16px rgba(226, 180, 79, 0.35);
+}
+
+.theme-toggle-text {
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+}
+
+/* Mobile Drawer Theme Switcher Row */
+.drawer-theme-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  background: rgba(200, 157, 61, 0.08);
+  border: 1px solid rgba(200, 157, 61, 0.3);
+  border-radius: var(--radius-md);
+  margin-bottom: 0.75rem;
+}
+
+.drawer-theme-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.drawer-theme-icon {
+  font-size: 1rem;
+}
+
+.drawer-theme-switch-group {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.07);
+  padding: 3px;
+  border-radius: var(--radius-full);
+  gap: 3px;
+}
+
+.drawer-theme-opt-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.drawer-theme-opt-btn.active {
+  background: #ffffff;
+  color: var(--color-primary);
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] .drawer-theme-toggle-row {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .drawer-theme-title {
+  color: #ffdca3;
+}
+
+[data-theme="dark"] .drawer-theme-switch-group {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .drawer-theme-opt-btn.active {
+  background: var(--color-primary);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   COMPREHENSIVE DARK THEME COMPONENT STYLES
+   ========================================================================== */
+[data-theme="dark"] body {
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+}
+
+[data-theme="dark"] body::before {
+  background-image: radial-gradient(circle at 10% 20%, rgba(184, 34, 65, 0.07) 0%, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(226, 180, 79, 0.06) 0%, transparent 45%);
+}
+
+/* Header & Navigation */
+[data-theme="dark"] .topbar {
+  background-color: #0b0508;
+  border-bottom-color: rgba(226, 180, 79, 0.22);
+}
+
+[data-theme="dark"] .topbar-marquee-text {
+  color: #f7e6e9;
+}
+
+[data-theme="dark"] .site-header {
+  background-color: rgba(17, 11, 15, 0.94);
+  border-bottom-color: rgba(255, 255, 255, 0.09);
+}
+
+[data-theme="dark"] .site-header.scrolled {
+  background-color: rgba(22, 15, 20, 0.98);
+  box-shadow: 0 4px 22px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="dark"] .brand-word {
+  color: #f8eef0;
+}
+
+[data-theme="dark"] .ham-btn span {
+  background: #f8eef0;
+}
+
+[data-theme="dark"] .mobile-drawer-header {
+  background: #1b1218;
+  border-bottom-color: rgba(255, 255, 255, 0.09);
+}
+
+[data-theme="dark"] .drawer-title {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .drawer-subtitle {
+  color: #ffdca3;
+}
+
+[data-theme="dark"] .drawer-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .nav-menu {
+  background-color: #150e13;
+}
+
+[data-theme="dark"] .nav-link {
+  color: #e8dcdf;
+}
+
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link.active {
+  color: var(--color-accent-gold-light);
+  background-color: rgba(216, 56, 90, 0.18);
+}
+
+/* Buttons */
+[data-theme="dark"] .btn-secondary {
+  background-color: #1f171d;
+  color: #f5edef;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background-color: #2b1f28;
+  border-color: var(--color-accent-gold);
+  color: var(--color-accent-gold-light);
+}
+
+/* Hero Section */
+[data-theme="dark"] .hero {
+  background: linear-gradient(180deg, #110b0f 0%, #170f15 100%);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .hero-title {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .hero-title .highlight::after {
+  background-color: rgba(226, 180, 79, 0.35);
+}
+
+[data-theme="dark"] .hero-badge {
+  background: #1c141a;
+  border-color: rgba(226, 180, 79, 0.38);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .hero-badge-text {
+  color: #ffdca3;
+}
+
+[data-theme="dark"] .hero-description {
+  color: #c4b5b8;
+}
+
+[data-theme="dark"] .hero-image-frame {
+  border-color: #241b22;
+  background-color: #241b22;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .hero-slider-arrow {
+  background: rgba(28, 20, 26, 0.88);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .hero-slider-arrow:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Stats Section */
+[data-theme="dark"] .stats-card-container {
+  background: #191217;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .stats-item:not(:last-child)::after {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .stats-number {
+  color: var(--color-accent-gold);
+}
+
+[data-theme="dark"] .stats-label {
+  color: #c4b5b8;
+}
+
+[data-theme="dark"] .stats-icon-box {
+  background-color: rgba(216, 56, 90, 0.18);
+  color: var(--color-accent-gold);
+  border-color: rgba(226, 180, 79, 0.25);
+}
+
+/* Notice Section */
+[data-theme="dark"] .notice-section {
+  background-color: var(--color-bg);
+}
+
+[data-theme="dark"] .notice-banner {
+  background: #191217;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .notice-title-link {
+  color: #f5edef;
+}
+
+[data-theme="dark"] .notice-title-link:hover {
+  color: var(--color-accent-gold-light);
+}
+
+[data-theme="dark"] .notice-btn-arrow {
+  background: #241a22;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #f5edef;
+}
+
+[data-theme="dark"] .notice-btn-arrow:hover {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+/* About Section */
+[data-theme="dark"] .section-title {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .section-subtitle {
+  color: #b5a4a7;
+}
+
+[data-theme="dark"] .about-lead {
+  color: #f0e4e7;
+}
+
+[data-theme="dark"] .about-body {
+  color: #b5a4a7;
+}
+
+[data-theme="dark"] .btn-holiday-trigger {
+  background: linear-gradient(135deg, #22161f 0%, #191016 100%);
+  border-color: rgba(226, 180, 79, 0.4);
+  color: #ffdca3;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .btn-holiday-trigger:hover {
+  background: linear-gradient(135deg, #2e1e2b 0%, #22161f 100%);
+  border-color: var(--color-accent-gold);
+}
+
+[data-theme="dark"] .school-facts-container {
+  background: #191217;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .school-facts-title {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .fact-item {
+  background: #21171f;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .fact-value {
+  color: #f5edef;
+}
+
+[data-theme="dark"] .fact-label {
+  color: #aa989b;
+}
+
+[data-theme="dark"] .fact-icon-box {
+  background: rgba(226, 180, 79, 0.15);
+  color: var(--color-accent-gold);
+}
+
+/* Head Master & Faculty Showcase */
+[data-theme="dark"] .headmaster-showcase-card {
+  background: linear-gradient(145deg, #1d141b, #150e13);
+  border-color: rgba(226, 180, 79, 0.6);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.65);
+}
+
+[data-theme="dark"] .headmaster-name {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .headmaster-quote-bubble {
+  background: #241922;
+  border-color: rgba(226, 180, 79, 0.3);
+  color: #e8dcdf;
+}
+
+[data-theme="dark"] .headmaster-stat-item {
+  background: #241922;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .faculty-status-bar {
+  background: #191217;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .faculty-status-pill {
+  color: #ffdca3;
+}
+
+[data-theme="dark"] .btn-toggle-hidden-roster {
+  background: #21171f;
+  color: #e8dcdf;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .teacher-card,
+[data-theme="dark"] .custom-teacher-card,
+[data-theme="dark"] .ex-teacher-card {
+  background: #191217;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .teacher-name,
+[data-theme="dark"] .custom-teacher-name,
+[data-theme="dark"] .ex-teacher-name {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .teacher-designation,
+[data-theme="dark"] .custom-teacher-designation,
+[data-theme="dark"] .ex-teacher-designation {
+  color: #c4b5b8;
+}
+
+[data-theme="dark"] .ex-teacher-service-box {
+  background: rgba(226, 180, 79, 0.08);
+  border-color: rgba(226, 180, 79, 0.35);
+}
+
+[data-theme="dark"] .service-period {
+  color: var(--color-accent-gold-light);
+}
+
+[data-theme="dark"] .custom-faculty-section {
+  background: linear-gradient(135deg, #1c141a 0%, #150e13 100%);
+  border-color: rgba(226, 180, 79, 0.35);
+}
+
+/* Governing Body / Leadership */
+[data-theme="dark"] .leader-card {
+  background: #191217;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 5px #150e13,
+    inset 0 0 0 6.5px rgba(226, 180, 79, 0.4);
+}
+
+[data-theme="dark"] .leader-name {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .leader-quote-box {
+  background: #21171f;
+  border-color: rgba(226, 180, 79, 0.25);
+  color: #ded4d6;
+}
+
+[data-theme="dark"] .leader-role-badge {
+  background: rgba(216, 56, 90, 0.15);
+  border-color: rgba(216, 56, 90, 0.3);
+  color: #ff8ca6;
+}
+
+[data-theme="dark"] .leader-qualification-badge {
+  background: rgba(226, 180, 79, 0.1);
+  border-left-color: var(--color-accent-gold);
+  color: #e8dcdf;
+}
+
+/* Curriculum Tabs */
+[data-theme="dark"] .tab-btn {
+  background: #1f171d;
+  color: #b5a4a7;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .tab-btn.active {
+  background: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary-light);
+}
+
+[data-theme="dark"] .curriculum-card {
+  background: #191217;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Gallery & Alumni Memories */
+[data-theme="dark"] .memory-share-cta-banner {
+  background: linear-gradient(135deg, #251721 0%, #170e14 100%);
+  border-color: rgba(226, 180, 79, 0.45);
+}
+
+[data-theme="dark"] .memory-cta-title {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .memory-cta-desc {
+  color: #d1c4c7;
+}
+
+[data-theme="dark"] .memory-filter-btn {
+  background: #20171e;
+  color: #d1c4c7;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .memory-filter-btn:hover {
+  background: #2c1f29;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .memory-filter-btn.active {
+  background: linear-gradient(135deg, #c89d3d, #e2b44f);
+  color: #1a0f00;
+  font-weight: 700;
+}
+
+[data-theme="dark"] .memory-card {
+  background: #191217;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .memory-student-name {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .memory-text {
+  color: #ded4d6;
+}
+
+[data-theme="dark"] .memory-nav-btn,
+[data-theme="dark"] .memory-slider-arrow {
+  background: #241922;
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+/* Testimonials */
+[data-theme="dark"] .testimonial-card {
+  background: #191217;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .testimonial-text {
+  color: #ded4d6;
+}
+
+[data-theme="dark"] .author-name {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .author-role {
+  color: #b5a4a7;
+}
+
+[data-theme="dark"] .testimonial-nav-btn {
+  background: #241922;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Contact Section */
+[data-theme="dark"] .contact-card-item {
+  background: #191217;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .contact-item-title {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .contact-item-detail {
+  color: #c4b5b8;
+}
+
+[data-theme="dark"] .contact-form-card {
+  background: #191217;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="dark"] .form-label {
+  color: #e8dcdf;
+}
+
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] .form-textarea {
+  background-color: #21171f;
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .form-input:focus,
+[data-theme="dark"] .form-select:focus,
+[data-theme="dark"] .form-textarea:focus {
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 0 0 3px rgba(226, 180, 79, 0.25);
+}
+
+/* Modals (Holiday, Visitor, Admin) */
+[data-theme="dark"] .holiday-modal-content,
+[data-theme="dark"] .visitor-gateway-container,
+[data-theme="dark"] .admin-modal-content,
+[data-theme="dark"] .admin-dashboard-container {
+  background: #191217;
+  border-color: rgba(226, 180, 79, 0.45);
+  color: #f5edef;
+}
+
+[data-theme="dark"] .holiday-modal-header,
+[data-theme="dark"] .admin-modal-header,
+[data-theme="dark"] .admin-dash-header {
+  background: #20171e;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .holiday-modal-title,
+[data-theme="dark"] .admin-modal-title,
+[data-theme="dark"] .admin-dash-title {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .holiday-table-sheet,
+[data-theme="dark"] .admin-dash-table-card {
+  background: #20171e;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .holiday-table th,
+[data-theme="dark"] .admin-dash-table th {
+  background: #291c26;
+  color: #ffdca3;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .holiday-table td,
+[data-theme="dark"] .admin-dash-table td {
+  border-bottom-color: rgba(255, 255, 255, 0.07);
+  color: #e8dcdf;
+}
+
+[data-theme="dark"] .holiday-table tr:hover,
+[data-theme="dark"] .admin-dash-table tr:hover {
+  background: rgba(226, 180, 79, 0.06);
+}
+
+[data-theme="dark"] .holiday-story-card {
+  background: #21171f;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #e8dcdf;
+}
+
+[data-theme="dark"] .story-card-header h4 {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .story-card-body {
+  color: #d1c4c7;
+}
+
+[data-theme="dark"] .holiday-modal-footer,
+[data-theme="dark"] .admin-dash-footer {
+  background: #1c141a;
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .admin-dash-kpi-card {
+  background: #21171f;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .kpi-num {
+  color: var(--color-accent-gold);
+}
+
+[data-theme="dark"] .admin-dash-search-input,
+[data-theme="dark"] .admin-dash-filter-select {
+  background-color: #21171f;
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+/* Floating Utilities */
+[data-theme="dark"] .back-to-top {
+  background: #241922;
+  border-color: rgba(226, 180, 79, 0.4);
+  color: var(--color-accent-gold);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="dark"] .toast-notice {
+  background: #241922;
+  border-color: rgba(226, 180, 79, 0.35);
+  color: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
 
@@ -9297,6 +10089,16 @@ body.is-admin-active .btn-remove-teacher {
 
   .btn-nav-contact,
   .btn-nav-apply {
+    display: none;
+  }
+
+  .theme-toggle-btn {
+    padding: 0.38rem 0.6rem;
+    gap: 0;
+    border-radius: var(--radius-full);
+  }
+
+  .theme-toggle-text {
     display: none;
   }
 

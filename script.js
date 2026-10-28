@@ -548,7 +548,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const exTeachersRosterWrapper = document.getElementById("ex-teachers-roster-wrapper");
   const teacherBtnStatus = document.getElementById("teacher-btn-status");
   const exTeacherBtnStatus = document.getElementById("ex-teacher-btn-status");
-  const headmasterCard = document.getElementById("headmaster-showcase-card");
 
   // =========================================================================
   // 6a. MAIN ADMIN AUTHENTICATION (Mamun190a - PIN: 112292)
@@ -571,6 +570,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnAdminLoginNav = document.getElementById("btn-admin-login-nav");
   const btnMobileAdminLogin = document.getElementById("btn-mobile-admin-login");
   const btnMobileAdminDashboard = document.getElementById("btn-mobile-admin-dashboard");
+  const btnMobileAdminLogout = document.getElementById("btn-mobile-admin-logout");
+  const drawerAdminSessionBox = document.getElementById("drawer-admin-session-box");
   const btnNavAdminDashboard = document.getElementById("btn-nav-admin-dashboard");
   const adminSessionBadge = document.getElementById("admin-session-badge");
   const btnAdminLogout = document.getElementById("btn-admin-logout");
@@ -624,7 +625,9 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.classList.add("is-admin-active");
       if (btnAdminLoginNav) btnAdminLoginNav.style.display = "none";
       if (adminSessionBadge) adminSessionBadge.style.display = "inline-flex";
+      if (btnMobileAdminLogin) btnMobileAdminLogin.style.display = "none";
       if (btnMobileAdminDashboard) btnMobileAdminDashboard.style.display = "block";
+      if (drawerAdminSessionBox) drawerAdminSessionBox.style.display = "flex";
 
       // Floating indicator
       let floatingBar = document.getElementById("admin-floating-status-bar");
@@ -648,7 +651,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Update faculty bar status
       const statusPill = document.querySelector(".faculty-status-pill span:not(.pulse-dot)");
       if (statusPill) {
-        statusPill.textContent = "👑 মেইন এডমিন মোড সক্রিয় (Mamun190a)";
+        statusPill.textContent = "👑 মেইন এডমিন মোড সক্রিয়";
       }
       const addTeacherBtnText = document.querySelector("#btn-open-teacher-modal span");
       if (addTeacherBtnText) {
@@ -658,7 +661,9 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.classList.remove("is-admin-active");
       if (btnAdminLoginNav) btnAdminLoginNav.style.display = "inline-flex";
       if (adminSessionBadge) adminSessionBadge.style.display = "none";
+      if (btnMobileAdminLogin) btnMobileAdminLogin.style.display = "block";
       if (btnMobileAdminDashboard) btnMobileAdminDashboard.style.display = "none";
+      if (drawerAdminSessionBox) drawerAdminSessionBox.style.display = "none";
 
       const floatingBar = document.getElementById("admin-floating-status-bar");
       if (floatingBar) {
@@ -687,7 +692,7 @@ document.addEventListener("DOMContentLoaded", () => {
       sessionStorage.setItem("ghoshgaon_main_admin_session", "Mamun190a");
       closeAdminAuthModal();
       updateAdminUI();
-      showToast(`🎉 স্বাগতম মামুন মিয়া (Mamun190a)! মেইন এডমিন মোড সক্রিয় হয়েছে।`);
+      showToast(`🎉 স্বাগতম মেইন এডমিন মোড সক্রিয় হয়েছে।`);
 
       if (typeof pendingAdminAction === "function") {
         const action = pendingAdminAction;
@@ -707,6 +712,14 @@ document.addEventListener("DOMContentLoaded", () => {
   btnMobileAdminLogin?.addEventListener("click", () => {
     closeDrawer();
     openAdminAuthModal();
+  });
+  btnMobileAdminDashboard?.addEventListener("click", () => {
+    closeDrawer();
+    openAdminDashboardModal();
+  });
+  btnMobileAdminLogout?.addEventListener("click", () => {
+    closeDrawer();
+    logoutAdmin();
   });
   footerAdminLink?.addEventListener("click", (e) => {
     e.preventDefault();
@@ -904,7 +917,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const categoryFilter = dashCategoryFilter?.value || "all";
 
     const filteredLogs = logs.filter(item => {
-      const matchesSearch = !searchQuery || 
+      const matchesSearch = !searchQuery ||
         (item.name && item.name.toLowerCase().includes(searchQuery)) ||
         (item.sscYearLabel && item.sscYearLabel.toLowerCase().includes(searchQuery)) ||
         (item.device && item.device.toLowerCase().includes(searchQuery));
@@ -1136,7 +1149,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btnToggleHiddenRoster.classList.add("active");
       btnToggleHiddenRoster.setAttribute("aria-expanded", "true");
       if (btnToggleHiddenRosterText) {
-        btnToggleHiddenRosterText.textContent = "সংরক্ষিত তালিকা লুকান";
+        btnToggleHiddenRosterText.textContent = "শিক্ষক তালিকা লুকান";
       }
       setTimeout(() => {
         archivedFacultyWrapper.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1146,7 +1159,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btnToggleHiddenRoster.classList.remove("active");
       btnToggleHiddenRoster.setAttribute("aria-expanded", "false");
       if (btnToggleHiddenRosterText) {
-        btnToggleHiddenRosterText.textContent = "সংরক্ষিত শিক্ষক তালিকা দেখুন";
+        btnToggleHiddenRosterText.textContent = "শিক্ষক তালিকা দেখুন";
       }
     }
   });
@@ -1501,6 +1514,88 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // =========================================================================
+  // 8.5. DARK & LIGHT THEME SYSTEM (PERSISTENCE, SYNC & USER TOGGLE)
+  // =========================================================================
+  const themeToggleBtn = document.getElementById("theme-toggle-btn");
+  const themeToggleText = document.getElementById("theme-toggle-text");
+  const drawerBtnThemeLight = document.getElementById("btn-theme-light");
+  const drawerBtnThemeDark = document.getElementById("btn-theme-dark");
+
+  const getStoredTheme = () => {
+    try {
+      const saved = localStorage.getItem("ghoshgaon_theme");
+      if (saved === "dark" || saved === "light") return saved;
+    } catch (e) {}
+    return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+  };
+
+  const applyThemeMode = (theme, showToastAlert = false) => {
+    const isDark = theme === "dark";
+    if (isDark) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+    }
+
+    try {
+      localStorage.setItem("ghoshgaon_theme", theme);
+    } catch (e) {}
+
+    // Update Header Button State
+    if (themeToggleBtn) {
+      themeToggleBtn.setAttribute("aria-label", isDark ? "লাইট মোডে ফিরে যান" : "ডার্ক মোডে পরিবর্তন করুন");
+      themeToggleBtn.title = isDark ? "লাইট মোড চালু করুন (দিন)" : "ডার্ক মোড চালু করুন (রাত)";
+    }
+    if (themeToggleText) {
+      themeToggleText.textContent = isDark ? "লাইট" : "ডার্ক";
+    }
+
+    // Update Mobile Drawer Button States
+    if (drawerBtnThemeLight && drawerBtnThemeDark) {
+      if (isDark) {
+        drawerBtnThemeDark.classList.add("active");
+        drawerBtnThemeLight.classList.remove("active");
+      } else {
+        drawerBtnThemeLight.classList.add("active");
+        drawerBtnThemeDark.classList.remove("active");
+      }
+    }
+
+    if (showToastAlert) {
+      showToast(isDark ? "🌙 ডার্ক মোড (Night Mode) সক্রিয় করা হয়েছে" : "☀️ লাইট মোড (Day Mode) সক্রিয় করা হয়েছে");
+    }
+  };
+
+  // Click Handler for Header Toggle Button
+  themeToggleBtn?.addEventListener("click", () => {
+    const isCurrentlyDark = document.documentElement.getAttribute("data-theme") === "dark";
+    applyThemeMode(isCurrentlyDark ? "light" : "dark", true);
+  });
+
+  // Click Handlers for Mobile Drawer Buttons
+  drawerBtnThemeLight?.addEventListener("click", () => {
+    applyThemeMode("light", true);
+  });
+
+  drawerBtnThemeDark?.addEventListener("click", () => {
+    applyThemeMode("dark", true);
+  });
+
+  // Synchronize on load
+  applyThemeMode(getStoredTheme(), false);
+
+  // Listen to System Preference changes if user has not explicitly locked a choice
+  if (window.matchMedia) {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+      try {
+        if (!localStorage.getItem("ghoshgaon_theme")) {
+          applyThemeMode(e.matches ? "dark" : "light", false);
+        }
+      } catch (err) {}
+    });
+  }
+
   // Lightbox helper for Memory Photos
   window.viewMemoryPhoto = (imgSrc, title, subtitle) => {
     if (lightboxImg) lightboxImg.src = imgSrc;
@@ -1644,7 +1739,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     try {
       localStorage.setItem(MEMORIES_STORAGE_KEY, JSON.stringify(defaultAlumniMemories));
-    } catch (e) {}
+    } catch (e) { }
     return defaultAlumniMemories;
   };
 
@@ -2220,7 +2315,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // =========================================================================
   // 10. Modal Utilities & Keyboard Accessibility
   // =========================================================================
-  window.openAdmissionModal = () => {};
+  window.openAdmissionModal = () => { };
 
   // Keyboard accessibility: Escape to close all modals, Arrow keys for gallery
   document.addEventListener("keydown", (e) => {

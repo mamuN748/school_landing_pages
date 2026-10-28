@@ -23,6 +23,22 @@
 
   <!-- Main Design System Stylesheet -->
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Immediate Theme Initialization Script (Prevents FOUC) -->
+  <script>
+    (function () {
+      try {
+        const savedTheme = localStorage.getItem("ghoshgaon_theme");
+        const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const activeTheme = savedTheme ? savedTheme : (prefersDark ? "dark" : "light");
+        if (activeTheme === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+          document.documentElement.removeAttribute("data-theme");
+        }
+      } catch (e) { }
+    })();
+  </script>
 </head>
 
 <body class="notranslate" translate="no">
@@ -72,8 +88,7 @@
   <header class="site-header" id="header">
     <div class="container nav-container">
       <!-- Mobile Hamburger Button (Visible on Mobile Left) -->
-      <button class="ham-btn" id="menu-toggle" type="button" aria-label="মেনু" aria-expanded="false"
-        onclick="this.classList.toggle('active')">
+      <button class="ham-btn" id="menu-toggle" type="button" aria-label="মেনু" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
@@ -178,58 +193,80 @@
               <span class="nav-arrow-mobile">›</span>
             </a>
           </div>
-          <div class="nav-item">
-            <a href="#contact" class="nav-link">
-              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <path
-                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                </path>
-              </svg>
-              <span data-i18n="nav_contact">যোগাযোগ</span>
-              <span class="nav-arrow-mobile">›</span>
-            </a>
-          </div>
         </div>
 
         <!-- Mobile Drawer Footer Actions -->
         <div class="drawer-footer-actions">
-          <a href="#contact" class="btn btn-primary btn-block nav-link">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path
-                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-              </path>
-            </svg>
-            <span data-i18n="nav_contact">যোগাযোগ করুন</span>
-          </a>
+          <!-- Mobile Theme Switch Bar -->
+          <div class="drawer-theme-toggle-row">
+            <span class="drawer-theme-title">
+              <span class="drawer-theme-icon">🌓</span>
+              <span>সাইট থিম নির্বাচন:</span>
+            </span>
+            <div class="drawer-theme-switch-group">
+              <button type="button" class="drawer-theme-opt-btn active" id="btn-theme-light" data-theme-set="light" aria-label="লাইট মোড">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <line x1="12" y1="1" x2="12" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="23"></line>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                  <line x1="1" y1="12" x2="3" y2="12"></line>
+                  <line x1="21" y1="12" x2="23" y2="12"></line>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <span>দিন</span>
+              </button>
+              <button type="button" class="drawer-theme-opt-btn" id="btn-theme-dark" data-theme-set="dark" aria-label="ডার্ক মোড">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <span>রাত</span>
+              </button>
+            </div>
+          </div>
+
           <button type="button" class="btn btn-secondary btn-block btn-mobile-admin-trigger" id="btn-mobile-admin-login" style="margin-top: 8px;">
             <span>🔐 মেইন এডমিন প্রবেশ</span>
           </button>
-          <button type="button" class="btn btn-gold btn-block" id="btn-mobile-admin-dashboard" style="margin-top: 8px; display: none;">
-            <span>📊 মেইন এডমিন ড্যাশবোর্ড</span>
-          </button>
+          <div id="drawer-admin-session-box" style="display: none; margin-top: 8px; flex-direction: column; gap: 8px;">
+            <div style="background: linear-gradient(135deg, #1e293b, #0f172a); color: #ffd56b; padding: 10px 14px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(255, 213, 107, 0.4);">
+              <span>👑 এডমিন: Mamun190a</span>
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px #22c55e;"></span>
+            </div>
+            <button type="button" class="btn btn-gold btn-block" id="btn-mobile-admin-dashboard">
+              <span>📊 মেইন এডমিন ড্যাশবোর্ড</span>
+            </button>
+            <button type="button" class="btn btn-danger btn-block" id="btn-mobile-admin-logout" style="background: #dc2626; color: #ffffff; border: none; padding: 0.55rem; border-radius: 8px; font-weight: 600;">
+              <span>🚪 এডমিন লগআউট</span>
+            </button>
+          </div>
         </div>
       </nav>
 
-      <!-- Action Buttons -->
+      <!-- Action Buttons (Theme Toggle & Contact) -->
       <div class="nav-actions">
-        <div id="admin-nav-container">
-          <button type="button" class="btn-admin-login-nav" id="btn-admin-login-nav" title="মেইন এডমিন প্রবেশ">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        <!-- Interactive Theme Toggle Button (Light / Dark) -->
+        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="ডার্ক / লাইট মোড পরিবর্তন করুন" title="ডার্ক / লাইট মোড পরিবর্তন করুন">
+          <span class="theme-icon-slot" aria-hidden="true">
+            <svg class="theme-svg theme-svg-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
-            <span>এডমিন লগইন</span>
-          </button>
-          <div class="admin-session-badge" id="admin-session-badge" style="display: none;">
-            <button type="button" class="btn-admin-dashboard-nav" id="btn-nav-admin-dashboard" title="ভিজিটর অ্যানালিটিক্স ড্যাশবোর্ড">
-              📊 ড্যাশবোর্ড
-            </button>
-            <span class="admin-badge-dot"></span>
-            <span class="admin-badge-name">👑 Mamun190a</span>
-            <button type="button" class="btn-admin-logout" id="btn-admin-logout" title="লগআউট">লগআউট</button>
-          </div>
-        </div>
+            <svg class="theme-svg theme-svg-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </span>
+          <span class="theme-toggle-text" id="theme-toggle-text">ডার্ক</span>
+        </button>
 
         <a href="#contact" class="btn btn-primary btn-sm btn-nav-contact">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -960,67 +997,6 @@
         </div>
 
         <!-- ==================================================================
-             1. SCHOOL HEAD MASTER SHOWCASE CARD (Permanently Visible)
-             ================================================================== -->
-        <div class="headmaster-showcase-card" id="headmaster-showcase-card">
-            <div class="headmaster-card-badge-top">
-              <span class="gold-star">★</span>
-              <span>বিদ্যালয়ের সর্বোচ্চ প্রশাসনিক ও একাডেমিক প্রধান</span>
-            </div>
-
-            <div class="headmaster-card-grid">
-              <!-- Head Master Photo Box -->
-              <div class="headmaster-photo-box">
-                <img src="school-headmaster.jpg"
-                  alt="প্রধান শিক্ষক আবু সাদেক" class="headmaster-photo" loading="lazy">
-                <div class="headmaster-title-pill">
-                  <span class="pill-dot"></span>
-                  <span>প্রধান শিক্ষক</span>
-                </div>
-              </div>
-
-              <!-- Head Master Details (Name, Qualification, Experience) -->
-              <div class="headmaster-details-box">
-                <div class="headmaster-tag-wrap">
-                  <span class="headmaster-role-badge">প্রধান শিক্ষক (অধ্যক্ষ)</span>
-                  <span class="headmaster-board-badge">ময়মনসিংহ শিক্ষা বোর্ড</span>
-                </div>
-
-                <h3 class="headmaster-name">আবু সাদেক</h3>
-
-                <!-- Qualification prominently featured -->
-                <div class="headmaster-qualification-box">
-                  <div class="qual-header">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                      <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                    </svg>
-                    <strong>শিক্ষাগত যোগ্যতা (Qualification):</strong>
-                  </div>
-                  <div class="qual-detail-text">
-                    এম.এ, বি.এড (প্রথম শ্রেণি), সিনিয়র শিক্ষাবিদ
-                  </div>
-                </div>
-
-                <p class="headmaster-intro">
-                  দীর্ঘ অভিজ্ঞতা ও দূরদর্শী নেতৃত্বে প্রতিষ্ঠানের প্রাতিষ্ঠানিক শৃঙ্খলা, মানসম্মত পাঠদান এবং শিক্ষার্থীদের সুপ্ত মেধা ও নৈতিকতা বিকাশে অনন্য পথপ্রদর্শক হিসেবে সেবা দিয়ে আসছেন।
-                </p>
-
-                <div class="headmaster-meta-footer">
-                  <div class="headmaster-stat-item">
-                    <span class="stat-lbl">শিক্ষকতার অভিজ্ঞতা:</span>
-                    <strong class="stat-val">২৫+ বছর</strong>
-                  </div>
-                  <div class="headmaster-stat-item">
-                    <span class="stat-lbl">দায়িত্ব:</span>
-                    <strong class="stat-val">প্রধান শিক্ষক ও একাডেমিক প্রধান</strong>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        <!-- ==================================================================
              FACULTY MANAGEMENT & ADD TEACHER ACTION BAR
              ================================================================== -->
         <div class="faculty-management-bar">
@@ -1036,10 +1012,10 @@
               </svg>
               <span>নতুন শিক্ষকের তথ্য যুক্ত করুন</span>
             </button>
-            <button type="button" class="btn-toggle-hidden-roster" id="btn-toggle-hidden-roster" aria-expanded="false" title="সকল সংরক্ষিত শিক্ষক তালিকা দেখুন বা লুকান">
-              <span id="btn-toggle-hidden-roster-text">সংরক্ষিত শিক্ষক তালিকা দেখুন</span>
+            <button type="button" class="btn-toggle-hidden-roster active" id="btn-toggle-hidden-roster" aria-expanded="true" title="শিক্ষক তালিকা প্রদর্শন বা লুকান">
+              <span id="btn-toggle-hidden-roster-text">শিক্ষক তালিকা লুকান</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9"></polyline>
+                <polyline points="18 15 12 9 6 15"></polyline>
               </svg>
             </button>
           </div>
@@ -1058,9 +1034,9 @@
         </div>
 
         <!-- ==================================================================
-             HIDDEN / ARCHIVED FACULTY ROSTER (Preserved & Easily Accessible)
+             FACULTY ROSTER (Current Teacher & Ex-Teacher Honor Showcase)
              ================================================================== -->
-        <div class="archived-faculty-wrapper" id="archived-faculty-wrapper" style="display: none;">
+        <div class="archived-faculty-wrapper is-open" id="archived-faculty-wrapper" style="display: block;">
           <div class="teachers-roster-wrapper is-open" id="teachers-roster-wrapper">
 
           <!-- ==================================================================
@@ -1082,8 +1058,8 @@
 
           <!-- General Teachers Grid (Strict Square 1:1 Images) -->
           <div class="teachers-grid">
-            <!-- Teacher: Farida Khatoon (Assistant Teacher - Teachers Portal Verified) -->
-            <article class="teacher-card" data-category="arts">
+            <!-- Teacher: Assistant Teacher (সহকারী শিক্ষক কাঠামো) -->
+            <article class="teacher-card" data-category="arts science">
               <div class="teacher-photo-wrap">
                 <img src="teacher-farida-khatoon.jpg" alt="ফরিদা খাতুন - সহকারী শিক্ষক" class="teacher-photo"
                   loading="lazy">
@@ -1099,9 +1075,15 @@
                   <span><strong>যোগ্যতা:</strong> এম.এ ও বি.এ (অনার্স, আনন্দ মোহন কলেজ), বি.এড (বাউবি)</span>
                 </div>
                 <div class="teacher-role">সহকারী শিক্ষক (ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়)</div>
+                <div class="teacher-credentials" title="ঠিকানা ও কর্মস্থল" style="margin-top: 4px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <span><strong>ঠিকানা:</strong> ঘোষগাঁও, ধোবাউড়া, ময়মনসিংহ</span>
+                </div>
                 <p class="teacher-bio">
-                  "শিক্ষকতা পেশায় নিজেকে সর্বদা নিয়োজিত রাখতে চাই।" দীর্ঘ ২৬ বছরেরও বেশি সময় ধরে শিক্ষার্থীদের
-                  মমতাময় পাঠদান এবং শিক্ষক বাতায়নে ডিজিটাল ভিডিও ক্লাসের মাধ্যমে মেধা বিকাশে নিবেদিতপ্রাণ।
+                  "শিক্ষকতা পেশায় নিজেকে সর্বদা নিয়োজিত রাখতে চাই।" দীর্ঘ ২৬ বছরেরও বেশি সময় ধরে শিক্ষার্থীদের মমতাময় পাঠদান এবং শিক্ষক বাতায়নে ডিজিটাল ভিডিও ক্লাসের মাধ্যমে মেধা বিকাশে নিবেদিতপ্রাণ।
                 </p>
                 <div class="teacher-card-footer">
                   <span>অভিজ্ঞতা: <strong>২৬+ বছর</strong></span>
@@ -1120,251 +1102,6 @@
               </div>
             </article>
 
-            <!-- Teacher 1: Senior Mathematics -->
-            <article class="teacher-card" data-category="science">
-              <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=400&q=80"
-                  alt="অধ্যাপক মাহমুদুল হাসান - গণিত বিভাগ" class="teacher-photo" loading="lazy">
-                <span class="teacher-subject-badge" data-i18n="tchr_1_subj">গণিত বিভাগ</span>
-              </div>
-              <div class="teacher-details">
-                <h3 class="teacher-name" data-i18n="tchr_1_name">অধ্যাপক মাহমুদুল হাসান</h3>
-                <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
-                  <span><strong>যোগ্যতা:</strong> এম.এসসি (ফলিত গণিত, ঢাবি)</span>
-                </div>
-                <div class="teacher-role" data-i18n="tchr_1_role">বিভাগীয় প্রধান, গণিত বিভাগ</div>
-                <p class="teacher-bio" data-i18n="tchr_1_bio">
-                  ১৮ বছরেরও বেশি সময় ধরে অলিম্পিয়াড ও বোর্ড পরীক্ষায় শিক্ষার্থীদের অনন্য সফলতার কারিগর।
-                </p>
-                <div class="teacher-card-footer">
-                  <span data-i18n="tchr_1_exp">অভিজ্ঞতা: <strong>১৮+ বছর</strong></span>
-                  <span data-i18n="tchr_1_award" title="সেরা শিক্ষক পুরস্কার">★ সেরা শিক্ষক ২০২৪</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Teacher: ICT & Computer Science -->
-            <article class="teacher-card" data-category="science">
-              <div class="teacher-photo-wrap">
-                <img src="teacher-ict.jpg" alt="মো. নাজমুল হাসান - সহকারী শিক্ষক (তথ্য ও যোগাযোগ প্রযুক্তি)"
-                  class="teacher-photo" loading="lazy">
-                <span class="teacher-subject-badge" data-i18n="tchr_ict_subj">তথ্য ও যোগাযোগ প্রযুক্তি (ICT)</span>
-              </div>
-              <div class="teacher-details">
-                <h3 class="teacher-name" data-i18n="tchr_ict_name">প্রকৌশলী মো. নাজমুল হাসান</h3>
-                <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
-                  <span><strong>যোগ্যতা:</strong> বি.এসসি ইন সিএসই (ইঞ্জিনিয়ারিং), বি.এড</span>
-                </div>
-                <div class="teacher-role" data-i18n="tchr_ict_role">সহকারী শিক্ষক (আইসিটি ও ডিজিটাল প্রযুক্তি)</div>
-                <p class="teacher-bio" data-i18n="tchr_ict_bio">
-                  শেখ রাসেল ডিজিটাল ল্যাব ও আধুনিক কম্পিউটার ল্যাবে কোডিং, প্রোগ্রামিং, ওয়েব প্রযুক্তি ও ব্যবহারিক
-                  আইসিটিতে শিক্ষার্থীদের দক্ষ করে তোলেন।
-                </p>
-                <div class="teacher-card-footer">
-                  <span data-i18n="tchr_ict_exp">অভিজ্ঞতা: <strong>৮+ বছর</strong></span>
-                  <span data-i18n="tchr_ict_tag">আইসিটি ল্যাব ইনচার্জ</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Teacher 2: Physics & STEM -->
-            <article class="teacher-card" data-category="science">
-              <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80"
-                  alt="ড. ফারজানা রহমান - পদার্থবিজ্ঞান বিশেষজ্ঞ" class="teacher-photo" loading="lazy">
-                <span class="teacher-subject-badge" data-i18n="tchr_2_subj">পদার্থবিজ্ঞান ও রোবোটিক্স</span>
-              </div>
-              <div class="teacher-details">
-                <h3 class="teacher-name" data-i18n="tchr_2_name">ড. ফারজানা রহমান</h3>
-                <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
-                  <span><strong>যোগ্যতা:</strong> পিএইচ.ডি (পদার্থবিজ্ঞান), বুয়েট ফেলো</span>
-                </div>
-                <div class="teacher-role" data-i18n="tchr_2_role">সিনিয়র বিজ্ঞান বিশেষজ্ঞ</div>
-                <p class="teacher-bio" data-i18n="tchr_2_bio">
-                  ব্যবহারিক গবেষণাগারে পরীক্ষা-নিরীক্ষা ও বিজ্ঞান প্রজেক্টের মাধ্যমে শিক্ষার্থীদের বিজ্ঞানমনস্ক করে
-                  তোলেন।
-                </p>
-                <div class="teacher-card-footer">
-                  <span data-i18n="tchr_2_exp">অভিজ্ঞতা: <strong>১২+ বছর</strong></span>
-                  <span data-i18n="tchr_2_tag">স্টেম ল্যাব মেন্টর</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Teacher 3: English Literature -->
-            <article class="teacher-card" data-category="arts">
-              <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
-                  alt="রেবেকা চৌধুরী - ইংরেজি বিভাগ" class="teacher-photo" loading="lazy">
-                <span class="teacher-subject-badge" data-i18n="tchr_3_subj">ইংরেজি সাহিত্য ও ভাষা</span>
-              </div>
-              <div class="teacher-details">
-                <h3 class="teacher-name" data-i18n="tchr_3_name">রেবেকা চৌধুরী</h3>
-                <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
-                  <span><strong>যোগ্যতা:</strong> এম.এ ইন ইংলিশ (ওয়ারউইক), সেল্টা</span>
-                </div>
-                <div class="teacher-role" data-i18n="tchr_3_role">বিভাগীয় প্রধান, ইংরেজি বিভাগ</div>
-                <p class="teacher-bio" data-i18n="tchr_3_bio">
-                  সাবলীল ভাষা শিক্ষা, পাবলিক স্পিকিং, বিতর্ক ও সৃজনশীল ইংরেজি রচনায় শিক্ষার্থীদের দক্ষ করে তোলেন।
-                </p>
-                <div class="teacher-card-footer">
-                  <span data-i18n="tchr_3_exp">অভিজ্ঞতা: <strong>১০+ বছর</strong></span>
-                  <span data-i18n="tchr_3_tag">বিতর্ক প্রশিক্ষক</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Teacher 4: Chemistry & Environmental -->
-            <article class="teacher-card" data-category="science">
-              <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80"
-                  alt="তানভীর আহমেদ - রসায়ন বিশেষজ্ঞ" class="teacher-photo" loading="lazy">
-                <span class="teacher-subject-badge" data-i18n="tchr_4_subj">রসায়ন বিভাগ</span>
-              </div>
-              <div class="teacher-details">
-                <h3 class="teacher-name" data-i18n="tchr_4_name">তানভীর আহমেদ</h3>
-                <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
-                  <span><strong>যোগ্যতা:</strong> এম.এসসি (জৈব রসায়ন), বি.এড</span>
-                </div>
-                <div class="teacher-role" data-i18n="tchr_4_role">প্রধান রসায়ন বিশেষজ্ঞ</div>
-                <p class="teacher-bio" data-i18n="tchr_4_bio">
-                  ব্যবহারিক রসায়নাগারে আকর্ষণীয় পরীক্ষার মাধ্যমে রসায়নের জটিল বিক্রিয়াকে সহজবোধ্য করে উপস্থাপন করেন।
-                </p>
-                <div class="teacher-card-footer">
-                  <span data-i18n="tchr_4_exp">অভিজ্ঞতা: <strong>১৪+ বছর</strong></span>
-                  <span data-i18n="tchr_4_tag">অলিম্পিয়াড ট্রেইনার</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Teacher 5: Social Science & History -->
-            <article class="teacher-card" data-category="arts">
-              <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80"
-                  alt="আমিনুল হক - সামাজিক বিজ্ঞান ও ইতিহাস" class="teacher-photo" loading="lazy">
-                <span class="teacher-subject-badge" data-i18n="tchr_5_subj">সামাজিক বিজ্ঞান ও ইতিহাস</span>
-              </div>
-              <div class="teacher-details">
-                <h3 class="teacher-name" data-i18n="tchr_5_name">আমিনুল হক</h3>
-                <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
-                  <span><strong>যোগ্যতা:</strong> এম.এ (ইতিহাস ও আন্তর্জাতিক সম্পর্ক)</span>
-                </div>
-                <div class="teacher-role" data-i18n="tchr_5_role">সিনিয়র মানবিক বিভাগ শিক্ষক</div>
-                <p class="teacher-bio" data-i18n="tchr_5_bio">
-                  ঐতিহাসিক ঐতিহ্য, নাগরিক অধিকার, অর্থনীতি ও ভূগোলের বাস্তব শিক্ষায় শিক্ষার্থীদের উদ্বুদ্ধ করেন।
-                </p>
-                <div class="teacher-card-footer">
-                  <span data-i18n="tchr_5_exp">অভিজ্ঞতা: <strong>১৫+ বছর</strong></span>
-                  <span data-i18n="tchr_5_tag">মডেল জাতিসংঘ মেন্টর</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Teacher 6: Bangla Language & Culture -->
-            <article class="teacher-card" data-category="arts">
-              <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=400&q=80"
-                  alt="নুসরাত জাহান - বাংলা বিভাগীয় প্রধান" class="teacher-photo" loading="lazy">
-                <span class="teacher-subject-badge" data-i18n="tchr_6_subj">বাংলা সাহিত্য ও সংস্কৃতি</span>
-              </div>
-              <div class="teacher-details">
-                <h3 class="teacher-name" data-i18n="tchr_6_name">নুসরাত জাহান</h3>
-                <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
-                  <span><strong>যোগ্যতা:</strong> এম.এ (বাংলা সাহিত্য, ঢাবি)</span>
-                </div>
-                <div class="teacher-role" data-i18n="tchr_6_role">বিভাগীয় প্রধান, বাংলা বিভাগ</div>
-                <p class="teacher-bio" data-i18n="tchr_6_bio">
-                  মাতৃভাষার শুদ্ধ উচ্চারণ, কবিতা আবৃত্তি, মননশীল পাঠ ও সাংস্কৃতিক মূল্যবোধের সার্বক্ষণিক যত্ন নেন।
-                </p>
-                <div class="teacher-card-footer">
-                  <span data-i18n="tchr_6_exp">অভিজ্ঞতা: <strong>১৬+ বছর</strong></span>
-                  <span data-i18n="tchr_6_tag">সাংস্কৃতিক ক্লাব প্রধান</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Teacher 7: Fine Arts & Visual Design -->
-            <article class="teacher-card" data-category="arts">
-              <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?auto=format&fit=crop&w=400&q=80"
-                  alt="শারমিন আক্তার - চারুকলা প্রশিক্ষক" class="teacher-photo" loading="lazy">
-                <span class="teacher-subject-badge" data-i18n="tchr_7_subj">চারুকলা ও ডিজাইন</span>
-              </div>
-              <div class="teacher-details">
-                <h3 class="teacher-name" data-i18n="tchr_7_name">শারমিন আক্তার</h3>
-                <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
-                  <span><strong>যোগ্যতা:</strong> এম.এফ.এ (চিত্রকলা ও ভাস্কর্য)</span>
-                </div>
-                <div class="teacher-role" data-i18n="tchr_7_role">চারুকলা ও সৃজনশীল প্রশিক্ষক</div>
-                <p class="teacher-bio" data-i18n="tchr_7_bio">
-                  ক্যানভাসে তেলরং, মৃৎশিল্প ও আধুনিক গ্রাফিক ডিজাইনের মাধ্যমে শিক্ষার্থীদের নান্দনিক দৃষ্টিভঙ্গি সমৃদ্ধ
-                  করেন।
-                </p>
-                <div class="teacher-card-footer">
-                  <span data-i18n="tchr_7_exp">অভিজ্ঞতা: <strong>৯+ বছর</strong></span>
-                  <span data-i18n="tchr_7_tag">শিল্প প্রদর্শক</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Teacher 8: Physical Education & Sports -->
-            <article class="teacher-card" data-category="arts">
-              <div class="teacher-photo-wrap">
-                <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80"
-                  alt="কোচ জহিরুল ইসলাম - ক্রীড়া পরিচালক" class="teacher-photo" loading="lazy">
-                <span class="teacher-subject-badge" data-i18n="tchr_8_subj">শারীরিক শিক্ষা ও ক্রীড়া</span>
-              </div>
-              <div class="teacher-details">
-                <h3 class="teacher-name" data-i18n="tchr_8_name">কোচ জহিরুল ইসলাম</h3>
-                <div class="teacher-credentials" title="শিক্ষাগত যোগ্যতা">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
-                  <span><strong>যোগ্যতা:</strong> বি.পি.এড, এএফসি সি-লাইসেন্স</span>
-                </div>
-                <div class="teacher-role" data-i18n="tchr_8_role">ক্রীড়া পরিচালক</div>
-                <p class="teacher-bio" data-i18n="tchr_8_bio">
-                  শারীরিক সুস্থতা, শৃঙ্খলা, ক্রীড়াসুলভ মনোভাব ও দলগত খেলার কলাকৌশল নিয়মিত প্রশিক্ষণ দেন।
-                </p>
-                <div class="teacher-card-footer">
-                  <span data-i18n="tchr_8_exp">অভিজ্ঞতা: <strong>১১+ বছর</strong></span>
-                  <span data-i18n="tchr_8_tag">চ্যাম্পিয়নশিপ কোচ</span>
-                </div>
-              </div>
-            </article>
           </div>
         </div>
 
@@ -1399,308 +1136,49 @@
 
           <!-- Ex-Teachers Cards Grid -->
           <div class="ex-teachers-grid" id="ex-teachers-grid">
-            <!-- Ex-Teacher 1: Founding Headmaster -->
+            <!-- Ex-Teacher 1: Former Faculty Profile -->
             <article class="ex-teacher-card">
               <div class="ex-teacher-card-badge">
                 <span class="badge-icon">🎖️</span>
-                <span>প্রতিষ্ঠাতা প্রধান শিক্ষক</span>
+                <span>প্রাক্তন শিক্ষক</span>
               </div>
               <div class="ex-teacher-header">
-                <div class="ex-teacher-photo-wrap">
-                  <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=400&q=80"
-                    alt="মরহুম মো. আব্দুল করিম স্যার" class="ex-teacher-photo" loading="lazy">
-                  <span class="ex-teacher-status-tag status-late">মরহুম (স্মৃতিতে অম্লান)</span>
-                </div>
-                <div class="ex-teacher-bio-top">
-                  <h4 class="ex-teacher-name">মরহুম মো. আব্দুল করিম স্যার</h4>
-                  <div class="ex-teacher-designation">প্রাক্তন প্রধান শিক্ষক ও প্রতিষ্ঠাতা সংগঠক</div>
-                  <div class="ex-teacher-subject-tag">ইংরেজি ও প্রাতিষ্ঠানিক প্রশাসন</div>
-                </div>
-              </div>
-
-              <!-- Service Info Prominently Highlighted (Year & Duration) -->
-              <div class="ex-teacher-service-box">
-                <div class="service-pill-row">
-                  <div class="service-stat">
-                    <span class="service-label">সেবাকাল:</span>
-                    <strong class="service-period">১৯৭৪ – ২০০২</strong>
-                  </div>
-                  <div class="service-tenure-badge">
-                    <span class="tenure-clock">⏳</span>
-                    <strong>২৮ বছর নিবেদিত সেবা</strong>
-                  </div>
-                </div>
-                <div class="ex-teacher-qual">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                <div class="ex-teacher-photo-wrap" style="display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);">
+                  <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color: #64748b;">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
                   </svg>
-                  <span><strong>যোগ্যতা:</strong> এম.এ (ইংরেজি, ঢাবি), বি.এড (১ম শ্রেণি)</span>
-                </div>
-              </div>
-
-              <p class="ex-teacher-tribute">
-                বিদ্যালয় প্রতিষ্ঠার কঠিনতম দিনগুলোতে নিরলস শ্রম, শৃঙ্খলা ও দূরদর্শী নেতৃত্বে প্রতিষ্ঠানকে ধোবাউড়ার
-                শ্রেষ্ঠ শিক্ষাপ্রতিষ্ঠানে রূপান্তর করেছিলেন।
-              </p>
-
-              <div class="ex-teacher-card-footer">
-                <span class="honor-tag">★ আজীবন স্মারক সম্মাননা</span>
-                <span class="service-years-count">মোট সেবা: <strong>২৮ বছর</strong></span>
-              </div>
-            </article>
-
-            <!-- Ex-Teacher 2: Math & Science Legend -->
-            <article class="ex-teacher-card">
-              <div class="ex-teacher-card-badge">
-                <span class="badge-icon">📐</span>
-                <span>প্রাক্তন সহকারী প্রধান শিক্ষক</span>
-              </div>
-              <div class="ex-teacher-header">
-                <div class="ex-teacher-photo-wrap">
-                  <img
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"
-                    alt="বাবু নিখিল চন্দ্র দাস" class="ex-teacher-photo" loading="lazy">
-                  <span class="ex-teacher-status-tag status-retired">অবসরপ্রাপ্ত গুণী শিক্ষক</span>
+                  <span class="ex-teacher-status-tag status-retired">অবসরপ্রাপ্ত</span>
                 </div>
                 <div class="ex-teacher-bio-top">
-                  <h4 class="ex-teacher-name">বাবু নিখিল চন্দ্র দাস</h4>
-                  <div class="ex-teacher-designation">সহকারী প্রধান শিক্ষক (গণিত ও পদার্থবিজ্ঞান)</div>
-                  <div class="ex-teacher-subject-tag">উচ্চতর গণিত ও বিজ্ঞান</div>
+                  <h4 class="ex-teacher-name">প্রাক্তন শিক্ষক</h4>
+                  <div class="ex-teacher-designation">ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়</div>
+                  <div class="ex-teacher-credentials" title="ঠিকানা ও প্রতিষ্ঠান" style="margin-top: 6px; display: flex; align-items: center; gap: 6px; font-size: 0.88rem; color: #475569;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <span><strong>ঠিকানা:</strong> ঘোষগাঁও, ধোবাউড়া, ময়মনসিংহ</span>
+                  </div>
                 </div>
               </div>
 
               <div class="ex-teacher-service-box">
                 <div class="service-pill-row">
                   <div class="service-stat">
-                    <span class="service-label">সেবাকাল:</span>
-                    <strong class="service-period">১৯৭৫ – ২০০৮</strong>
+                    <span class="service-label">কর্মস্থল:</span>
+                    <strong class="service-period">ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়</strong>
                   </div>
-                  <div class="service-tenure-badge">
-                    <span class="tenure-clock">⏳</span>
-                    <strong>৩৩ বছর নিবেদিত সেবা</strong>
-                  </div>
-                </div>
-                <div class="ex-teacher-qual">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
-                  <span><strong>যোগ্যতা:</strong> বি.এসসি (সম্মান), এম.এসসি (গণিত), বি.এড</span>
                 </div>
               </div>
 
               <p class="ex-teacher-tribute">
-                কঠিন গাণিতিক ধারণাকে পরম স্নেহে শিক্ষার্থীদের মনের গভীরে গেঁথে দিতেন। তাঁর হাতে তৈরি হাজারো শিক্ষার্থী
-                আজ দেশ-বিদেশে প্রতিষ্ঠিত।
+                যাঁদের অক্লান্ত ত্যাগ, মেধা ও মমতাময় পাঠদানে ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় আলোকিত হয়েছে। তাঁদের অবদান চিরস্মরণীয়।
               </p>
 
               <div class="ex-teacher-card-footer">
-                <span class="honor-tag">★ আদর্শ শিক্ষক পদক</span>
-                <span class="service-years-count">মোট সেবা: <strong>৩৩ বছর</strong></span>
-              </div>
-            </article>
-
-            <!-- Ex-Teacher 3: Science & Chemistry Pioneer -->
-            <article class="ex-teacher-card">
-              <div class="ex-teacher-card-badge">
-                <span class="badge-icon">🧪</span>
-                <span>সিনিয়র শিক্ষক (বিজ্ঞান)</span>
-              </div>
-              <div class="ex-teacher-header">
-                <div class="ex-teacher-photo-wrap">
-                  <img
-                    src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80"
-                    alt="মরহুম মোজাম্মেল হক বি.এসসি" class="ex-teacher-photo" loading="lazy">
-                  <span class="ex-teacher-status-tag status-late">মরহুম (স্মৃতিতে অম্লান)</span>
-                </div>
-                <div class="ex-teacher-bio-top">
-                  <h4 class="ex-teacher-name">মরহুম মোজাম্মেল হক বি.এসসি</h4>
-                  <div class="ex-teacher-designation">সিনিয়র সহকারী শিক্ষক (রসায়ন ও জীববিজ্ঞান)</div>
-                  <div class="ex-teacher-subject-tag">বিজ্ঞান ও ব্যবহারিক ল্যাব</div>
-                </div>
-              </div>
-
-              <div class="ex-teacher-service-box">
-                <div class="service-pill-row">
-                  <div class="service-stat">
-                    <span class="service-label">সেবাকাল:</span>
-                    <strong class="service-period">১৯৭৮ – ২০১১</strong>
-                  </div>
-                  <div class="service-tenure-badge">
-                    <span class="tenure-clock">⏳</span>
-                    <strong>৩৩ বছর নিবেদিত সেবা</strong>
-                  </div>
-                </div>
-                <div class="ex-teacher-qual">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
-                  <span><strong>যোগ্যতা:</strong> বি.এসসি (রসায়ন), ডিপ্লোমা ইন এডুকেশন</span>
-                </div>
-              </div>
-
-              <p class="ex-teacher-tribute">
-                বিদ্যালয়ে প্রথম বিজ্ঞানাগার তৈরিতে ব্যক্তিগত উদ্যোগে যন্ত্রপাতি ও রিএজেন্ট সংগ্রহ করেছিলেন। বিজ্ঞান
-                শিক্ষায় শিক্ষার্থীদের প্রেরণার প্রতীক।
-              </p>
-
-              <div class="ex-teacher-card-footer">
-                <span class="honor-tag">★ বিজ্ঞানাগার স্বপ্নদ্রষ্টা</span>
-                <span class="service-years-count">মোট সেবা: <strong>৩৩ বছর</strong></span>
-              </div>
-            </article>
-
-            <!-- Ex-Teacher 4: Language & Literary Guide -->
-            <article class="ex-teacher-card">
-              <div class="ex-teacher-card-badge">
-                <span class="badge-icon">📖</span>
-                <span>সিনিয়র শিক্ষিকা (বাংলা)</span>
-              </div>
-              <div class="ex-teacher-header">
-                <div class="ex-teacher-photo-wrap">
-                  <img
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80"
-                    alt="বেগম নূরজাহান আক্তার" class="ex-teacher-photo" loading="lazy">
-                  <span class="ex-teacher-status-tag status-retired">অবসরপ্রাপ্ত গুণী শিক্ষক</span>
-                </div>
-                <div class="ex-teacher-bio-top">
-                  <h4 class="ex-teacher-name">বেগম নূরজাহান আক্তার</h4>
-                  <div class="ex-teacher-designation">সিনিয়র সহকারী শিক্ষিকা (বাংলা ও সমাজবিদ্যা)</div>
-                  <div class="ex-teacher-subject-tag">বাংলা সাহিত্য ও সংস্কৃতি চর্চা</div>
-                </div>
-              </div>
-
-              <div class="ex-teacher-service-box">
-                <div class="service-pill-row">
-                  <div class="service-stat">
-                    <span class="service-label">সেবাকাল:</span>
-                    <strong class="service-period">১৯৮২ – ২০১৮</strong>
-                  </div>
-                  <div class="service-tenure-badge">
-                    <span class="tenure-clock">⏳</span>
-                    <strong>৩৬ বছর নিবেদিত সেবা</strong>
-                  </div>
-                </div>
-                <div class="ex-teacher-qual">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
-                  <span><strong>যোগ্যতা:</strong> এম.এ (বাংলা), বি.এড (১ম শ্রেণি)</span>
-                </div>
-              </div>
-
-              <p class="ex-teacher-tribute">
-                অঞ্চলজুড়ে নারী শিক্ষার প্রসার ও মেয়েদের বিদ্যালয়মুখী করতে বাড়ি বাড়ি গিয়ে অভিভাবকদের উদ্বুদ্ধ
-                করেছেন। সাংস্কৃতিক ব্যক্তিত্ব হিসেবে সমাদৃত।
-              </p>
-
-              <div class="ex-teacher-card-footer">
-                <span class="honor-tag">★ নারী শিক্ষা প্রসার স্মারক</span>
-                <span class="service-years-count">মোট সেবা: <strong>৩৬ বছর</strong></span>
-              </div>
-            </article>
-
-            <!-- Ex-Teacher 5: Religious Studies & Character Mentor -->
-            <article class="ex-teacher-card">
-              <div class="ex-teacher-card-badge">
-                <span class="badge-icon">🕌</span>
-                <span>সিনিয়র শিক্ষক (ইসলাম শিক্ষা)</span>
-              </div>
-              <div class="ex-teacher-header">
-                <div class="ex-teacher-photo-wrap">
-                  <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80"
-                    alt="মাওলানা মো. শামসুল হুদা" class="ex-teacher-photo" loading="lazy">
-                  <span class="ex-teacher-status-tag status-retired">অবসরপ্রাপ্ত গুণী শিক্ষক</span>
-                </div>
-                <div class="ex-teacher-bio-top">
-                  <h4 class="ex-teacher-name">মাওলানা মো. শামসুল হুদা</h4>
-                  <div class="ex-teacher-designation">সিনিয়র শিক্ষক (ধর্ম ও আরবি শিক্ষা)</div>
-                  <div class="ex-teacher-subject-tag">ইসলাম শিক্ষা ও নৈতিক চরিত্র গঠন</div>
-                </div>
-              </div>
-
-              <div class="ex-teacher-service-box">
-                <div class="service-pill-row">
-                  <div class="service-stat">
-                    <span class="service-label">সেবাকাল:</span>
-                    <strong class="service-period">১৯৭৬ – ২০১০</strong>
-                  </div>
-                  <div class="service-tenure-badge">
-                    <span class="tenure-clock">⏳</span>
-                    <strong>৩৪ বছর নিবেদিত সেবা</strong>
-                  </div>
-                </div>
-                <div class="ex-teacher-qual">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
-                  <span><strong>যোগ্যতা:</strong> কামিল (হাদিস ও তাফসির), বি.এড</span>
-                </div>
-              </div>
-
-              <p class="ex-teacher-tribute">
-                অত্যন্ত নিরহংকার ও সদালাপী এই শিক্ষক শিক্ষার্থীদের সততা, সত্যবাদিতা এবং জীবনের সর্বক্ষেত্রে নীতি ও
-                শৃঙ্খলার পাঠ দিয়ে গেছেন।
-              </p>
-
-              <div class="ex-teacher-card-footer">
-                <span class="honor-tag">★ নৈতিক শিক্ষা সম্মাননা</span>
-                <span class="service-years-count">মোট সেবা: <strong>৩৪ বছর</strong></span>
-              </div>
-            </article>
-
-            <!-- Ex-Teacher 6: Arts & Sports Veteran -->
-            <article class="ex-teacher-card">
-              <div class="ex-teacher-card-badge">
-                <span class="badge-icon">🏆</span>
-                <span>ক্রীড়া ও শরীরচর্চা শিক্ষক</span>
-              </div>
-              <div class="ex-teacher-header">
-                <div class="ex-teacher-photo-wrap">
-                  <img
-                    src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80"
-                    alt="ওস্তাদ রফিকুল ইসলাম" class="ex-teacher-photo" loading="lazy">
-                  <span class="ex-teacher-status-tag status-retired">অবসরপ্রাপ্ত গুণী শিক্ষক</span>
-                </div>
-                <div class="ex-teacher-bio-top">
-                  <h4 class="ex-teacher-name">ওস্তাদ রফিকুল ইসলাম</h4>
-                  <div class="ex-teacher-designation">শারীরিক শিক্ষা শিক্ষক ও প্রধান ক্রীড়া প্রশিক্ষক</div>
-                  <div class="ex-teacher-subject-tag">ক্রীড়া, শরীরচর্চা ও স্কাউটিং</div>
-                </div>
-              </div>
-
-              <div class="ex-teacher-service-box">
-                <div class="service-pill-row">
-                  <div class="service-stat">
-                    <span class="service-label">সেবাকাল:</span>
-                    <strong class="service-period">১৯৮০ – ২০১৩</strong>
-                  </div>
-                  <div class="service-tenure-badge">
-                    <span class="tenure-clock">⏳</span>
-                    <strong>৩৩ বছর নিবেদিত সেবা</strong>
-                  </div>
-                </div>
-                <div class="ex-teacher-qual">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
-                  <span><strong>যোগ্যতা:</strong> বি.পি.এড, জাতীয় অ্যাথলেটিক্স কোচিং সনদ</span>
-                </div>
-              </div>
-
-              <p class="ex-teacher-tribute">
-                বিদ্যালয়ের সুবিশাল ২০০ শতক খেলার মাঠে অসংখ্য ফুটবল ও অ্যাথলেটিক্স চ্যাম্পিয়ন তৈরি করেছেন। আন্তঃস্কুল
-                টুর্নামেন্টে বিদ্যালয়ের সুনাম শীর্ষস্থানে নিয়েছেন।
-              </p>
-
-              <div class="ex-teacher-card-footer">
-                <span class="honor-tag">★ আজীবন ক্রীড়া সংগঠক</span>
-                <span class="service-years-count">মোট সেবা: <strong>৩৩ বছর</strong></span>
+                <span class="honor-tag">★ চিরস্মরণীয় শ্রদ্ধা</span>
+                <span class="service-years-count">ঘোষগাঁও, ধোবাউড়া</span>
               </div>
             </article>
           </div>
