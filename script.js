@@ -1188,6 +1188,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // =========================================================================
   const FIREBASE_CONFIG_STORAGE_KEY = "ghoshgaon_firebase_config_v1";
 
+  // Official Ghoshgaon High School Firebase Cloud Configuration (school-landing-page-fcad1)
+  const DEFAULT_FIREBASE_CONFIG = {
+    apiKey: "AIzaSyAo3af1pd_nN0bvmiK0z1Zs3eRfW7LOlNo",
+    authDomain: "school-landing-page-fcad1.firebaseapp.com",
+    projectId: "school-landing-page-fcad1",
+    storageBucket: "school-landing-page-fcad1.firebasestorage.app",
+    messagingSenderId: "514886238243",
+    appId: "1:514886238243:web:6c730c01fca47280cfb196"
+  };
+
   // State
   let firebaseApp = null;
   let firestoreDb = null;
@@ -1746,16 +1756,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Auto initialize cloud if stored config exists
+  // Auto initialize cloud with default or stored config (Real-Time Cross-Device Sync)
   try {
     const savedConfigStr = localStorage.getItem(FIREBASE_CONFIG_STORAGE_KEY);
-    if (savedConfigStr) {
-      const cfg = parseFirebaseConfig(savedConfigStr);
-      if (cfg) {
-        initFirebase(cfg, false);
-      }
+    const cfg = savedConfigStr ? (parseFirebaseConfig(savedConfigStr) || DEFAULT_FIREBASE_CONFIG) : DEFAULT_FIREBASE_CONFIG;
+    if (cfg) {
+      initFirebase(cfg, false);
     }
-  } catch (e) {}
+  } catch (e) {
+    console.warn("Firebase auto-init error:", e);
+  }
 
   // 10. Automatically trigger Entry Gateway for First-Time Normal Visitors
   if (!localStorage.getItem("ghoshgaon_visitor_profile") && !isAdminLoggedIn()) {

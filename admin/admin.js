@@ -70,36 +70,39 @@
       }, 4000);
     },
 
+    DEFAULT_FIREBASE_CONFIG: {
+      apiKey: "AIzaSyAo3af1pd_nN0bvmiK0z1Zs3eRfW7LOlNo",
+      authDomain: "school-landing-page-fcad1.firebaseapp.com",
+      projectId: "school-landing-page-fcad1",
+      storageBucket: "school-landing-page-fcad1.firebasestorage.app",
+      messagingSenderId: "514886238243",
+      appId: "1:514886238243:web:6c730c01fca47280cfb196"
+    },
+
     initFirebaseSync: function () {
       const stored = localStorage.getItem('ghoshgaon_firebase_config_v1');
       const statusPill = document.getElementById('admin-cloud-status');
-      if (!stored) {
-        if (statusPill) {
-          statusPill.textContent = '🟡 অফলাইন (লোকাল মোড)';
-          statusPill.className = 'badge-status badge-pending-status';
-        }
-        return;
-      }
 
-      try {
-        let cfg = null;
+      let cfg = this.DEFAULT_FIREBASE_CONFIG;
+      if (stored) {
         try {
           cfg = JSON.parse(stored);
         } catch (e) {
           try {
             cfg = new Function(`return (${stored});`)();
           } catch (err) {
-            cfg = null;
+            cfg = this.DEFAULT_FIREBASE_CONFIG;
           }
         }
+      }
 
-        if (!cfg || !cfg.apiKey || !cfg.projectId) {
-          if (statusPill) {
-            statusPill.textContent = '⚠️ অসম্পূর্ণ কনফিগ';
-            statusPill.className = 'badge-status badge-pending-status';
-          }
-          return;
+      if (!cfg || !cfg.apiKey || !cfg.projectId) {
+        if (statusPill) {
+          statusPill.textContent = '⚠️ অসম্পূর্ণ কনফিগ';
+          statusPill.className = 'badge-status badge-pending-status';
         }
+        return;
+      }
 
         if (!window.firebase) {
           console.warn('Firebase SDK not loaded.');
@@ -1325,6 +1328,8 @@
         } catch (e) {
           this.setVal('admin-firebase-config-input', savedFb);
         }
+      } else {
+        this.setVal('admin-firebase-config-input', JSON.stringify(this.DEFAULT_FIREBASE_CONFIG, null, 2));
       }
     },
 
