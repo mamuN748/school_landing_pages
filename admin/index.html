@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="description" content="ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় - নিরাপদ অ্যাডমিন কন্ট্রোল ও ম্যানেজমেন্ট ড্যাশবোর্ড">
+  <meta name="robots" content="noindex, nofollow">
+  <title>অ্যাডমিন ড্যাশবোর্ড | ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়</title>
+  <link rel="icon" type="image/jpeg" href="../school-logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. SECURE AUTHENTICATION PORTAL (PIN & USERNAME LOCKOUT PROTECTED)
+       ========================================================================= -->
+  <div id="auth-portal" class="auth-portal-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo-badge">🏫</div>
+        <h1 class="auth-title">অ্যাডমিন প্রবেশদ্বার</h1>
+        <p class="auth-sub">ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়</p>
+      </div>
+
+      <div id="auth-error" class="auth-error-box">
+        ভুল ইউজারনেম বা পিন নম্বর! আবার চেষ্টা করুন।
+      </div>
+
+      <form id="auth-login-form">
+        <div class="form-group">
+          <label class="form-label" for="admin-username">অ্যাডমিন ইউজারনেম (Username)</label>
+          <div class="input-with-icon">
+            <span class="input-icon">👤</span>
+            <input type="text" id="admin-username" class="form-control" placeholder="যেমন: Mamun190a" required autocomplete="username">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="admin-pin">অ্যাডমিন সিক্রেট পিন / পাসওয়ার্ড (PIN)</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="admin-pin" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary-auth">
+          <span>ড্যাশবোর্ডে লগইন করুন</span>
+          <span>➜</span>
+        </button>
+      </form>
+
+      <div class="auth-footer-help">
+        <p>ডিফল্ট অ্যাডমিন ক্রেডেনশিয়াল: <strong>Mamun190a</strong> / <strong>190190a</strong></p>
+        <p style="margin-top: 0.5rem;"><a href="../index.html">← মূল ওয়েবসাইটে ফিরে যান</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       2. MAIN APPLICATION WORKSPACE (POST-AUTHENTICATION)
+       ========================================================================= -->
+  <div id="admin-app" class="admin-app-container" style="display: none;">
+
+    <!-- Left Collapsible Sidebar -->
+    <aside id="admin-sidebar" class="admin-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">GSB</div>
+        <div class="sidebar-brand">
+          <h2>ঘোষগাঁও শেরে বাংলা</h2>
+          <span>অ্যাডমিন ম্যানেজমেন্ট পোর্টাল</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">প্রধান মেনু</div>
+
+        <button type="button" class="nav-item-btn active" data-view="overview">
+          <span class="nav-btn-left">
+            <span class="nav-icon">📊</span>
+            <span>ড্যাশবোর্ড ওভারভিউ</span>
+          </span>
+        </button>
+
+        <button type="button" class="nav-item-btn" data-view="students">
+          <span class="nav-btn-left">
+            <span class="nav-icon">🎓</span>
+            <span>শিক্ষার্থী ব্যবস্থাপনা</span>
+          </span>
+          <span class="nav-badge-pill" id="sidebar-badge-students">0</span>
+        </button>
+
+        <button type="button" class="nav-item-btn" data-view="teachers">
+          <span class="nav-btn-left">
+            <span class="nav-icon">👨‍🏫</span>
+            <span>শিক্ষক ও স্টাফ</span>
+          </span>
+          <span class="nav-badge-pill" id="sidebar-badge-teachers">0</span>
+        </button>
+
+        <button type="button" class="nav-item-btn" data-view="classes">
+          <span class="nav-btn-left">
+            <span class="nav-icon">🏛️</span>
+            <span>ক্লাস ও একাডেমিক</span>
+          </span>
+        </button>
+
+        <button type="button" class="nav-item-btn" data-view="admissions">
+          <span class="nav-btn-left">
+            <span class="nav-icon">📝</span>
+            <span>ভর্তি আবেদনসমূহ</span>
+          </span>
+          <span class="nav-badge-pill badge-pending" id="sidebar-badge-admissions">0</span>
+        </button>
+
+        <div class="nav-section-title">কন্টেন্ট ও প্রকাশনা</div>
+
+        <button type="button" class="nav-item-btn" data-view="notices">
+          <span class="nav-btn-left">
+            <span class="nav-icon">📢</span>
+            <span>নোটিশ ও ইভেন্ট</span>
+          </span>
+          <span class="nav-badge-pill" id="sidebar-badge-notices">0</span>
+        </button>
+
+        <button type="button" class="nav-item-btn" data-view="results">
+          <span class="nav-btn-left">
+            <span class="nav-icon">📑</span>
+            <span>পরীক্ষার ফলাফল</span>
+          </span>
+        </button>
+
+        <button type="button" class="nav-item-btn" data-view="gallery">
+          <span class="nav-btn-left">
+            <span class="nav-icon">🖼️</span>
+            <span>ফটো গ্যালারি</span>
+          </span>
+        </button>
+
+        <button type="button" class="nav-item-btn" data-view="messages">
+          <span class="nav-btn-left">
+            <span class="nav-icon">✉️</span>
+            <span>যোগাযোগ বার্তা</span>
+          </span>
+          <span class="nav-badge-pill badge-unread" id="sidebar-badge-messages">0</span>
+        </button>
+
+        <div class="nav-section-title">সিস্টেম কনফিগারেশন</div>
+
+        <button type="button" class="nav-item-btn" data-view="settings">
+          <span class="nav-btn-left">
+            <span class="nav-icon">⚙️</span>
+            <span>সেটিংস ও ব্যাকআপ</span>
+          </span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="admin-profile-compact">
+          <div class="admin-avatar">M</div>
+          <div class="admin-info-text">
+            <span class="admin-info-name" id="admin-display-name">আল মামুন</span>
+            <span class="admin-info-role">সুপার অ্যাডমিন</span>
+          </div>
+        </div>
+        <button type="button" id="btn-sidebar-logout" class="btn-sidebar-logout" title="লগআউট করুন">
+          🚪
+        </button>
+      </div>
+    </aside>
+
+    <!-- Right Workspace Area -->
+    <div class="admin-main-wrapper">
+
+      <!-- Sticky Topbar -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <button type="button" id="btn-sidebar-toggle" class="btn-mobile-sidebar-toggle" aria-label="মেনু খুলুন">
+            ☰
+          </button>
+          <div class="topbar-page-title">
+            <h1 id="topbar-title">ড্যাশবোর্ড ওভারভিউ</h1>
+            <p id="topbar-sub">ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় ম্যানেজমেন্ট সিস্টেম</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <a href="../index.html" target="_blank" class="btn-topbar-action btn-public-site">
+            <span>🌐</span>
+            <span>ওয়েবসাইট দেখুন</span>
+          </a>
+          <button type="button" id="btn-theme-toggle" class="btn-topbar-action btn-theme-admin" title="থিম পরিবর্তন">
+            <span id="theme-icon">🌙</span>
+          </button>
+          <button type="button" id="btn-topbar-logout" class="btn-topbar-action" style="background: rgba(220, 38, 38, 0.1); color: var(--color-danger); border: 1px solid rgba(220, 38, 38, 0.3);">
+            <span>🚪</span>
+            <span>লগআউট</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Scrollable Content Body -->
+      <main class="admin-content-body">
+
+        <!-- ===================================================================
+             VIEW 1: OVERVIEW DASHBOARD
+             =================================================================== -->
+        <section id="view-overview" class="admin-view-pane active">
+          <!-- KPI Summary Cards -->
+          <div class="admin-kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-card-info">
+                <span>মোট শিক্ষার্থী</span>
+                <h3 id="kpi-total-students">0</h3>
+              </div>
+              <div class="kpi-card-icon icon-blue">🎓</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-card-info">
+                <span>মোট শিক্ষক ও স্টাফ</span>
+                <h3 id="kpi-total-teachers">0</h3>
+              </div>
+              <div class="kpi-card-icon icon-gold">👨‍🏫</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-card-info">
+                <span>সক্রিয় ক্লাস শাখা</span>
+                <h3 id="kpi-total-classes">5</h3>
+              </div>
+              <div class="kpi-card-icon icon-purple">🏛️</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-card-info">
+                <span>নতুন ভর্তি আবেদন</span>
+                <h3 id="kpi-pending-admissions">0</h3>
+              </div>
+              <div class="kpi-card-icon icon-green">📝</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-card-info">
+                <span>প্রকাশিত নোটিশ</span>
+                <h3 id="kpi-published-notices">0</h3>
+              </div>
+              <div class="kpi-card-icon icon-gold">📢</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-card-info">
+                <span>নতুন বার্তা</span>
+                <h3 id="kpi-unread-messages">0</h3>
+              </div>
+              <div class="kpi-card-icon icon-red">✉️</div>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="module-toolbar">
+            <div style="font-weight: 700; color: var(--text-main); font-size: 0.95rem;">
+              ⚡ দ্রুত কার্যক্রম (Quick Actions):
+            </div>
+            <div class="toolbar-actions">
+              <button type="button" class="btn-action-primary" id="btn-quick-add-student">
+                <span>+ নতুন শিক্ষার্থী যোগ</span>
+              </button>
+              <button type="button" class="btn-action-secondary" id="btn-quick-add-teacher">
+                <span>+ শিক্ষক যোগ</span>
+              </button>
+              <button type="button" class="btn-action-secondary" id="btn-quick-add-notice">
+                <span>+ নোটিশ প্রকাশ</span>
+              </button>
+              <button type="button" class="btn-action-secondary" id="btn-quick-add-result">
+                <span>+ ফলাফল এন্ট্রি</span>
+              </button>
+              <button type="button" class="btn-action-secondary" id="btn-quick-backup">
+                <span>💾 ডেটা ব্যাকআপ</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Recent Admission Applications & Recent Notices -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem;">
+            
+            <!-- Recent Admissions -->
+            <div class="table-responsive-card">
+              <div style="padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
+                <h3 style="font-size: 1rem; font-weight: 700;">📝 সাম্প্রতিক ভর্তি আবেদন</h3>
+                <button type="button" class="btn-action-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.78rem;" onclick="window.AdminApp.switchView('admissions')">সব দেখুন →</button>
+              </div>
+              <div style="overflow-x: auto;">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>আবেদনকারী</th>
+                      <th>শ্রেণি</th>
+                      <th>যোগাযোগ</th>
+                      <th>স্ট্যাটাস</th>
+                      <th>অ্যাকশন</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overview-recent-admissions-tbody">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Recent Notices -->
+            <div class="table-responsive-card">
+              <div style="padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
+                <h3 style="font-size: 1rem; font-weight: 700;">📢 সাম্প্রতিক নোটিশ ও ঘোষণা</h3>
+                <button type="button" class="btn-action-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.78rem;" onclick="window.AdminApp.switchView('notices')">সব দেখুন →</button>
+              </div>
+              <div style="overflow-x: auto;">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>তারিখ</th>
+                      <th>শিরোনাম</th>
+                      <th>ক্যাটাগরি</th>
+                      <th>স্ট্যাটাস</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overview-recent-notices-tbody">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- System Audit Log Section -->
+          <div class="table-responsive-card">
+            <div style="padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
+              <h3 style="font-size: 1rem; font-weight: 700;">🛡️ সাম্প্রতিক অ্যাডমিন অ্যাক্টিভিটি লগ (Audit Logs)</h3>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">স্বয়ংক্রিয় ট্র্যাকিং ও সুরক্ষা</span>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>সময়</th>
+                    <th>অ্যাকশন</th>
+                    <th>বিবরণ</th>
+                    <th>ব্যবহারকারী</th>
+                  </tr>
+                </thead>
+                <tbody id="overview-audit-logs-tbody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             VIEW 2: STUDENT MANAGEMENT
+             =================================================================== -->
+        <section id="view-students" class="admin-view-pane">
+          <div class="module-toolbar">
+            <div class="toolbar-search-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="student-search-input" placeholder="শিক্ষার্থীর নাম, আইডি বা রোল দিয়ে খুঁজুন...">
+            </div>
+
+            <div class="toolbar-actions">
+              <select id="student-class-filter" class="filter-select">
+                <option value="ALL">সকল শ্রেণি (Class 6 - 10)</option>
+                <option value="Class 6">ষষ্ঠ শ্রেণি (Class 6)</option>
+                <option value="Class 7">সপ্তম শ্রেণি (Class 7)</option>
+                <option value="Class 8">অষ্টম শ্রেণি (Class 8)</option>
+                <option value="Class 9">নবম শ্রেণি (Class 9)</option>
+                <option value="Class 10">দশম শ্রেণি (Class 10)</option>
+              </select>
+
+              <button type="button" class="btn-action-primary" id="btn-modal-add-student">
+                <span>+ নতুন শিক্ষার্থী যোগ</span>
+              </button>
+
+              <button type="button" class="btn-action-secondary" id="btn-export-students-csv">
+                <span>📥 CSV এক্সপোর্ট</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive-card">
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>রোল</th>
+                    <th>আইডি (ID)</th>
+                    <th>শিক্ষার্থীর নাম</th>
+                    <th>শ্রেণি ও শাখা</th>
+                    <th>অভিভাবক ও মোবাইল</th>
+                    <th>স্ট্যাটাস</th>
+                    <th>অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="students-table-tbody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             VIEW 3: TEACHERS & STAFF MANAGEMENT
+             =================================================================== -->
+        <section id="view-teachers" class="admin-view-pane">
+          <div class="module-toolbar">
+            <div class="toolbar-search-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="teacher-search-input" placeholder="শিক্ষকের নাম, পদবি বা বিষয় দিয়ে খুঁজুন...">
+            </div>
+
+            <div class="toolbar-actions">
+              <select id="teacher-designation-filter" class="filter-select">
+                <option value="ALL">সকল পদবি</option>
+                <option value="প্রধান শিক্ষক">প্রধান শিক্ষক</option>
+                <option value="সহকারী প্রধান শিক্ষক">সহকারী প্রধান শিক্ষক</option>
+                <option value="সিনিয়র সহকারী শিক্ষক">সিনিয়র সহকারী শিক্ষক</option>
+                <option value="সহকারী শিক্ষক">সহকারী শিক্ষক</option>
+                <option value="কর্মকর্তা / স্টাফ">কর্মকর্তা / স্টাফ</option>
+              </select>
+
+              <button type="button" class="btn-action-primary" id="btn-modal-add-teacher">
+                <span>+ নতুন শিক্ষক যোগ</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive-card">
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>ছবি</th>
+                    <th>নাম</th>
+                    <th>পদবি</th>
+                    <th>বিষয়</th>
+                    <th>মোবাইল নম্বর</th>
+                    <th>পাবলিক ডিসপ্লে</th>
+                    <th>অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="teachers-table-tbody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             VIEW 4: CLASSES & ACADEMIC MANAGEMENT
+             =================================================================== -->
+        <section id="view-classes" class="admin-view-pane">
+          <div class="module-toolbar">
+            <div style="font-weight: 700; color: var(--text-main);">
+              🏛️ একাডেমিক ক্লাস ও সেকশন বিন্যাস (২০২৬ শিক্ষাবর্ষ)
+            </div>
+            <div class="toolbar-actions">
+              <button type="button" class="btn-action-primary" id="btn-add-class-modal">
+                <span>+ নতুন শ্রেণি কনফিগার</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive-card">
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>শ্রেণি</th>
+                    <th>শাখা (Section)</th>
+                    <th>শ্রেণি শিক্ষক</th>
+                    <th>রুম নং</th>
+                    <th>মোট শিক্ষার্থী</th>
+                    <th>অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="classes-table-tbody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             VIEW 5: ONLINE ADMISSIONS MANAGEMENT
+             =================================================================== -->
+        <section id="view-admissions" class="admin-view-pane">
+          <div class="module-toolbar">
+            <div class="toolbar-search-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="admission-search-input" placeholder="আবেদনকারী নাম বা আবেদন আইডি খুঁজুন...">
+            </div>
+
+            <div class="toolbar-actions">
+              <select id="admission-status-filter" class="filter-select">
+                <option value="ALL">সকল স্ট্যাটাস</option>
+                <option value="Pending">Pending (অপেক্ষমাণ)</option>
+                <option value="Under Review">Under Review (যাচাই চলছে)</option>
+                <option value="Approved">Approved (অনুমোদিত)</option>
+                <option value="Rejected">Rejected (বাতিল)</option>
+              </select>
+
+              <button type="button" class="btn-action-secondary" id="btn-export-admissions-csv">
+                <span>📥 CSV এক্সপোর্ট</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive-card">
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>আবেদন নম্বর</th>
+                    <th>শিক্ষার্থীর নাম</th>
+                    <th>আবেদিত শ্রেণি</th>
+                    <th>অভিভাবকের মোবাইল</th>
+                    <th>আবেদনের তারিখ</th>
+                    <th>বর্তমান স্ট্যাটাস</th>
+                    <th>অ্যাকশন ও রিভিউ</th>
+                  </tr>
+                </thead>
+                <tbody id="admissions-table-tbody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             VIEW 6: NOTICES & EVENTS MANAGEMENT
+             =================================================================== -->
+        <section id="view-notices" class="admin-view-pane">
+          <div class="module-toolbar">
+            <div class="toolbar-search-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="notice-search-input" placeholder="নোটিশের শিরোনাম বা বিষয় খুঁজুন...">
+            </div>
+
+            <div class="toolbar-actions">
+              <select id="notice-category-filter" class="filter-select">
+                <option value="ALL">সকল ক্যাটাগরি</option>
+                <option value="পরীক্ষা">পরীক্ষা</option>
+                <option value="ভর্তি">ভর্তি</option>
+                <option value="ছুটি">ছুটি</option>
+                <option value="সাধারণ">সাধারণ</option>
+              </select>
+
+              <button type="button" class="btn-action-primary" id="btn-modal-add-notice">
+                <span>+ নতুন নোটিশ তৈরি করুন</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive-card">
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>তারিখ</th>
+                    <th>শিরোনাম</th>
+                    <th>ক্যাটাগরি</th>
+                    <th>অগ্রাধিকার</th>
+                    <th>ওয়েবসাইটে প্রকাশ</th>
+                    <th>অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="notices-table-tbody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             VIEW 7: RESULTS MANAGEMENT
+             =================================================================== -->
+        <section id="view-results" class="admin-view-pane">
+          <div class="module-toolbar">
+            <div class="toolbar-search-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="result-search-input" placeholder="শিক্ষার্থীর নাম বা রোল দিয়ে খুঁজুন...">
+            </div>
+
+            <div class="toolbar-actions">
+              <select id="result-class-filter" class="filter-select">
+                <option value="ALL">সকল শ্রেণি</option>
+                <option value="Class 6">Class 6</option>
+                <option value="Class 7">Class 7</option>
+                <option value="Class 8">Class 8</option>
+                <option value="Class 9">Class 9</option>
+                <option value="Class 10">Class 10</option>
+              </select>
+
+              <button type="button" class="btn-action-primary" id="btn-modal-add-result">
+                <span>+ পরীক্ষার ফলাফল যোগ করুন</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive-card">
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>রোল</th>
+                    <th>শিক্ষার্থীর নাম</th>
+                    <th>শ্রেণি</th>
+                    <th>পরীক্ষার নাম</th>
+                    <th>জিপিএ (GPA)</th>
+                    <th>মোট নম্বর</th>
+                    <th>ফলাফল</th>
+                    <th>অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="results-table-tbody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             VIEW 8: GALLERY & MEDIA MANAGEMENT
+             =================================================================== -->
+        <section id="view-gallery" class="admin-view-pane">
+          <div class="module-toolbar">
+            <div style="font-weight: 700; color: var(--text-main);">
+              🖼️ বিদ্যালয় ফটো গ্যালারি ও মিডিয়া
+            </div>
+            <div class="toolbar-actions">
+              <button type="button" class="btn-action-primary" id="btn-modal-add-gallery">
+                <span>+ নতুন ছবি যুক্ত করুন</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="gallery-grid-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem;">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             VIEW 9: MESSAGES & CONTACT INQUIRIES
+             =================================================================== -->
+        <section id="view-messages" class="admin-view-pane">
+          <div class="module-toolbar">
+            <div class="toolbar-search-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="message-search-input" placeholder="প্রেরকের নাম, ইমেইল বা মেসেজ খুঁজুন...">
+            </div>
+            <div class="toolbar-actions">
+              <button type="button" class="btn-action-secondary" id="btn-mark-all-read">
+                <span>✓ সবগুলো পঠিত চিহ্নিত করুন</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive-card">
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>তারিখ</th>
+                    <th>প্রেরকের নাম</th>
+                    <th>ইমেইল / মোবাইল</th>
+                    <th>বিষয় ও বার্তা</th>
+                    <th>অবস্থা</th>
+                    <th>অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="messages-table-tbody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             VIEW 10: SETTINGS, THEME CONTROLS & DATABASE BACKUP
+             =================================================================== -->
+        <section id="view-settings" class="admin-view-pane">
+          
+          <!-- Master Theme & Dark Mode Switch -->
+          <div class="table-responsive-card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">
+              🎨 থিম সেটিংস ও গ্লোবাল ডার্ক মোড নিয়ন্ত্রণ
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+              অ্যাডমিনিস্ট্রেটর হিসেবে আপনি সম্পূর্ণ ওয়েবসাইটের ডার্ক মোড ফিচারটি গ্লোবালি বন্ধ বা চালু রাখতে পারবেন।
+            </p>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; background: var(--bg-page); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              <div>
+                <strong style="display: block; font-size: 0.95rem;">গ্লোবাল ডার্ক মোড সক্রিয় রাখুন (Global Dark Mode)</strong>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">
+                  বন্ধ করলে সাধারণ ভিজিটররা ওয়েবসাইট শুধুমাত্র লাইট মোডে দেখতে পারবেন এবং ডার্ক মোড সুইচটি নিষ্ক্রিয় থাকবে।
+                </span>
+              </div>
+              <div>
+                <label style="position: relative; display: inline-block; width: 52px; height: 28px; cursor: pointer;">
+                  <input type="checkbox" id="setting-global-dark-mode" style="opacity: 0; width: 0; height: 0;">
+                  <span style="position: absolute; cursor: pointer; inset: 0; background-color: #cbd5e1; transition: .3s; border-radius: 34px;" id="toggle-slider-darkmode"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- School Information Profile Settings -->
+          <div class="table-responsive-card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">
+              🏫 বিদ্যালয় তথ্য ও যোগাযোগের বিবরণ
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+              এখানে করা পরিবর্তনসমূহ ওয়েবসাইটের হেডার, ফুটার এবং যোগাযোগ সেকশনে স্বয়ংক্রিয়ভাবে হালনাগাদ হবে।
+            </p>
+
+            <form id="settings-school-form">
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="setting-school-name">বিদ্যালয়ের নাম</label>
+                  <input type="text" id="setting-school-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="setting-school-eiin">ইআইআইএন (EIIN) নম্বর</label>
+                  <input type="text" id="setting-school-eiin" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="setting-school-phone">অফিসিয়াল ফোন নম্বর</label>
+                  <input type="text" id="setting-school-phone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="setting-school-email">অফিসিয়াল ইমেইল ঠিকানা</label>
+                  <input type="email" id="setting-school-email" class="form-control" required>
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label class="form-label" for="setting-school-address">বিদ্যালয়ের পূর্ণ ঠিকানা</label>
+                  <input type="text" id="setting-school-address" class="form-control" required>
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label class="form-label" for="setting-school-motto">বিদ্যালয়ের মূলনীতি / স্লোগান</label>
+                  <input type="text" id="setting-school-motto" class="form-control" required>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
+                <button type="submit" class="btn-action-primary">
+                  <span>তথ্য সংরক্ষণ করুন</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Database Backup, Export and Restore -->
+          <div class="table-responsive-card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">
+              💾 ডেটাবেজ ব্যাকআপ, রিস্টোর ও সিকিউরিটি
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+              যেকোনো ডিভাইসে ডেটা স্থানান্তর বা ব্যাকআপ সংরক্ষণের জন্য সম্পূর্ণ ডেটাবেজ একটি JSON ফাইল হিসেবে ডাউনলোড ও রিস্টোর করুন।
+            </p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+              <button type="button" class="btn-action-primary" id="btn-export-full-db">
+                <span>📥 সম্পূর্ণ ডেটাবেজ ডাউনলোড (JSON)</span>
+              </button>
+
+              <label class="btn-action-secondary" style="margin: 0; cursor: pointer;">
+                <span>📤 ব্যাকআপ ফাইল রিস্টোর করুন</span>
+                <input type="file" id="input-restore-db-file" accept=".json" style="display: none;">
+              </label>
+
+              <button type="button" class="btn-action-secondary btn-icon-delete" id="btn-factory-reset-db" style="margin-left: auto;">
+                <span>⚠️ ফ্যাক্টরি রিসেট (পুনরায় ডিফল্ট ডেটা)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Security Credentials Change -->
+          <div class="table-responsive-card" style="padding: 1.5rem;">
+            <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">
+              🔒 অ্যাডমিন অ্যাক্সেস সিকিউরিটি পিন পরিবর্তন
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+              লগইনের জন্য ব্যবহৃত ইউজারনেম ও গোপনীয় পিন কোড পরিবর্তন করতে পারেন।
+            </p>
+
+            <form id="settings-pin-form">
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="setting-new-username">নতুন ইউজারনেম</label>
+                  <input type="text" id="setting-new-username" class="form-control" required placeholder="বর্তমান: Mamun190a">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="setting-new-pin">নতুন সিক্রেট পিন / পাসওয়ার্ড</label>
+                  <input type="password" id="setting-new-pin" class="form-control" required placeholder="নতুন গোপন পিন">
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
+                <button type="submit" class="btn-action-primary">
+                  <span>পিন পরিবর্তন করুন</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODALS: STUDENT, TEACHER, NOTICE, RESULT, ADMISSION REVIEW, GALLERY
+       ========================================================================= -->
+
+  <!-- Modal: Student Form -->
+  <div id="modal-student" class="modal-admin-overlay">
+    <div class="modal-admin-dialog">
+      <div class="modal-admin-header">
+        <h3 id="modal-student-title">নতুন শিক্ষার্থী নিবন্ধন</h3>
+        <button type="button" class="modal-admin-close" onclick="window.AdminApp.closeModal('modal-student')">&times;</button>
+      </div>
+      <form id="form-student">
+        <input type="hidden" id="student-form-mode" value="add">
+        <div class="modal-admin-body">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="stu-id">শিক্ষার্থী আইডি (ID) *</label>
+              <input type="text" id="stu-id" class="form-control" required placeholder="যেমন: STU-2026-601">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="stu-roll">রোল নম্বর *</label>
+              <input type="number" id="stu-roll" class="form-control" required placeholder="যেমন: 1">
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label class="form-label" for="stu-name">পূর্ণ নাম (বাংলায় বা ইংরেজিতে) *</label>
+              <input type="text" id="stu-name" class="form-control" required placeholder="শিক্ষার্থীর নাম">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="stu-class">শ্রেণি *</label>
+              <select id="stu-class" class="form-control" required>
+                <option value="Class 6">ষষ্ঠ শ্রেণি (Class 6)</option>
+                <option value="Class 7">সপ্তম শ্রেণি (Class 7)</option>
+                <option value="Class 8">অষ্টম শ্রেণি (Class 8)</option>
+                <option value="Class 9">নবম শ্রেণি (Class 9)</option>
+                <option value="Class 10">দশম শ্রেণি (Class 10)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="stu-section">শাখা (Section)</label>
+              <input type="text" id="stu-section" class="form-control" value="ক" placeholder="ক / খ / পদ্মা / মেঘনা">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="stu-guardian">অভিভাবকের নাম</label>
+              <input type="text" id="stu-guardian" class="form-control" placeholder="পিতা বা মাতার নাম">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="stu-phone">অভিভাবকের মোবাইল নম্বর *</label>
+              <input type="tel" id="stu-phone" class="form-control" required placeholder="017XXXXXXXX">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="stu-blood">রক্তের গ্রুপ</label>
+              <select id="stu-blood" class="form-control">
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="stu-status">ভর্তি স্ট্যাটাস</label>
+              <select id="stu-status" class="form-control">
+                <option value="Active">সক্রিয় (Active)</option>
+                <option value="Archived">সংরক্ষিত (Archived)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-admin-footer">
+          <button type="button" class="btn-action-secondary" onclick="window.AdminApp.closeModal('modal-student')">বাতিল</button>
+          <button type="submit" class="btn-action-primary">সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Teacher Form -->
+  <div id="modal-teacher" class="modal-admin-overlay">
+    <div class="modal-admin-dialog">
+      <div class="modal-admin-header">
+        <h3 id="modal-teacher-title">নতুন শিক্ষক নিবন্ধন</h3>
+        <button type="button" class="modal-admin-close" onclick="window.AdminApp.closeModal('modal-teacher')">&times;</button>
+      </div>
+      <form id="form-teacher">
+        <input type="hidden" id="teacher-form-mode" value="add">
+        <input type="hidden" id="teacher-edit-id" value="">
+        <div class="modal-admin-body">
+          <div class="form-grid-2">
+            <div class="form-group" style="grid-column: span 2;">
+              <label class="form-label" for="teacher-name">শিক্ষকের নাম *</label>
+              <input type="text" id="teacher-name" class="form-control" required placeholder="যেমন: জনাব মোঃ আল মামুন">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="teacher-designation">পদবি *</label>
+              <input type="text" id="teacher-designation" class="form-control" required placeholder="যেমন: সহকারী শিক্ষক (গণিত)">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="teacher-subject">পাঠদানের বিষয়</label>
+              <input type="text" id="teacher-subject" class="form-control" placeholder="যেমন: উচ্চতর গণিত ও পদার্থ">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="teacher-phone">মোবাইল নম্বর</label>
+              <input type="tel" id="teacher-phone" class="form-control" placeholder="017XXXXXXXX">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="teacher-email">ইমেইল</label>
+              <input type="email" id="teacher-email" class="form-control" placeholder="teacher@school.edu.bd">
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label class="form-label" for="teacher-photo">প্রোফাইল ছবির লিংক / পাথ</label>
+              <input type="text" id="teacher-photo" class="form-control" placeholder="teacher-ict.jpg বা ইমেজ URL">
+            </div>
+          </div>
+        </div>
+        <div class="modal-admin-footer">
+          <button type="button" class="btn-action-secondary" onclick="window.AdminApp.closeModal('modal-teacher')">বাতিল</button>
+          <button type="submit" class="btn-action-primary">সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Notice Form -->
+  <div id="modal-notice" class="modal-admin-overlay">
+    <div class="modal-admin-dialog">
+      <div class="modal-admin-header">
+        <h3 id="modal-notice-title">নতুন নোটিশ তৈরি</h3>
+        <button type="button" class="modal-admin-close" onclick="window.AdminApp.closeModal('modal-notice')">&times;</button>
+      </div>
+      <form id="form-notice">
+        <input type="hidden" id="notice-form-mode" value="add">
+        <input type="hidden" id="notice-edit-id" value="">
+        <div class="modal-admin-body">
+          <div class="form-group">
+            <label class="form-label" for="notice-title">নোটিশের শিরোনাম *</label>
+            <input type="text" id="notice-title" class="form-control" required placeholder="যেমন: অর্ধবার্ষিক পরীক্ষার সময়সূচি প্রকাশ">
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="notice-category">ক্যাটাগরি</label>
+              <select id="notice-category" class="form-control">
+                <option value="পরীক্ষা">পরীক্ষা</option>
+                <option value="ভর্তি">ভর্তি</option>
+                <option value="ছুটি">ছুটি</option>
+                <option value="সাধারণ">সাধারণ</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="notice-priority">অগ্রাধিকার (Priority)</label>
+              <select id="notice-priority" class="form-control">
+                <option value="Normal">সাধারণ (Normal)</option>
+                <option value="High">জরুরি (High)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="notice-content">বিস্তারিত বিবরণ *</label>
+            <textarea id="notice-content" class="form-control" rows="5" required placeholder="নোটিশের বিস্তারিত তথ্য এখানে লিখুন..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="notice-link">সংযুক্ত ফাইল লিংক (ঐচ্ছিক)</label>
+            <input type="text" id="notice-link" class="form-control" placeholder="যেমন: notices/exam-routine.pdf বা লিংক">
+          </div>
+        </div>
+        <div class="modal-admin-footer">
+          <button type="button" class="btn-action-secondary" onclick="window.AdminApp.closeModal('modal-notice')">বাতিল</button>
+          <button type="submit" class="btn-action-primary">প্রকাশ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Result Form -->
+  <div id="modal-result" class="modal-admin-overlay">
+    <div class="modal-admin-dialog">
+      <div class="modal-admin-header">
+        <h3 id="modal-result-title">পরীক্ষার ফলাফল এন্ট্রি</h3>
+        <button type="button" class="modal-admin-close" onclick="window.AdminApp.closeModal('modal-result')">&times;</button>
+      </div>
+      <form id="form-result">
+        <input type="hidden" id="result-form-mode" value="add">
+        <input type="hidden" id="result-edit-id" value="">
+        <div class="modal-admin-body">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="res-student-id">শিক্ষার্থী আইডি (ID) *</label>
+              <input type="text" id="res-student-id" class="form-control" required placeholder="STU-2026-601">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="res-roll">রোল নম্বর *</label>
+              <input type="number" id="res-roll" class="form-control" required placeholder="1">
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label class="form-label" for="res-student-name">শিক্ষার্থীর নাম *</label>
+              <input type="text" id="res-student-name" class="form-control" required placeholder="পূর্ণ নাম">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="res-class">শ্রেণি *</label>
+              <select id="res-class" class="form-control" required>
+                <option value="Class 6">Class 6</option>
+                <option value="Class 7">Class 7</option>
+                <option value="Class 8">Class 8</option>
+                <option value="Class 9">Class 9</option>
+                <option value="Class 10">Class 10</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="res-exam">পরীক্ষার নাম *</label>
+              <input type="text" id="res-exam" class="form-control" required value="অর্ধবার্ষিক মূল্যায়ন ২০২৬">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="res-gpa">প্রাপ্ত জিপিএ (GPA) *</label>
+              <input type="text" id="res-gpa" class="form-control" required placeholder="যেমন: 5.00">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="res-marks">মোট নম্বর</label>
+              <input type="number" id="res-marks" class="form-control" placeholder="যেমন: 680">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="res-status">ফলাফল মূল্যায়ন</label>
+              <select id="res-status" class="form-control">
+                <option value="Passed">উত্তীর্ণ (Passed)</option>
+                <option value="Failed">অনুত্তীর্ণ (Failed)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-admin-footer">
+          <button type="button" class="btn-action-secondary" onclick="window.AdminApp.closeModal('modal-result')">বাতিল</button>
+          <button type="submit" class="btn-action-primary">সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Admission Review & Status Update -->
+  <div id="modal-admission-review" class="modal-admin-overlay">
+    <div class="modal-admin-dialog">
+      <div class="modal-admin-header">
+        <h3>📝 ভর্তি আবেদন বিস্তারিত ও রিভিউ</h3>
+        <button type="button" class="modal-admin-close" onclick="window.AdminApp.closeModal('modal-admission-review')">&times;</button>
+      </div>
+      <div class="modal-admin-body">
+        <div id="admission-review-content" style="font-size: 0.9rem; line-height: 1.6;">
+          <!-- Populated by JS -->
+        </div>
+        <hr style="margin: 1.25rem 0; border: none; border-top: 1px solid var(--border-color);">
+        <div class="form-group">
+          <label class="form-label" for="review-status-select">আবেদনের নতুন স্ট্যাটাস নির্ধারণ করুন:</label>
+          <select id="review-status-select" class="form-control">
+            <option value="Pending">Pending (অপেক্ষমাণ)</option>
+            <option value="Under Review">Under Review (কাগজপত্র যাচাই চলছে)</option>
+            <option value="Approved">Approved (ভর্তি অনুমোদিত)</option>
+            <option value="Rejected">Rejected (আবেদন বাতিল)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="review-admin-notes">অ্যাডমিন নোট / মন্তব্যের বিবরণ:</label>
+          <textarea id="review-admin-notes" class="form-control" rows="3" placeholder="আবেদনকারী সম্পর্কিত কোনো গুরুত্বপূর্ণ তথ্য বা করণীয়..."></textarea>
+        </div>
+      </div>
+      <div class="modal-admin-footer">
+        <button type="button" class="btn-action-secondary" onclick="window.AdminApp.closeModal('modal-admission-review')">বন্ধ করুন</button>
+        <button type="button" class="btn-action-primary" id="btn-save-admission-status">স্ট্যাটাস আপডেট করুন</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add Gallery Item -->
+  <div id="modal-gallery" class="modal-admin-overlay">
+    <div class="modal-admin-dialog">
+      <div class="modal-admin-header">
+        <h3>🖼️ নতুন ফটো গ্যালারি আইটেম</h3>
+        <button type="button" class="modal-admin-close" onclick="window.AdminApp.closeModal('modal-gallery')">&times;</button>
+      </div>
+      <form id="form-gallery">
+        <div class="modal-admin-body">
+          <div class="form-group">
+            <label class="form-label" for="gal-title">ছবির শিরোনাম *</label>
+            <input type="text" id="gal-title" class="form-control" required placeholder="যেমন: বার্ষিক ক্রীড়া প্রতিযোগিতা ও পুরস্কার বিতরণ">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="gal-category">ক্যাটাগরি</label>
+            <select id="gal-category" class="form-control">
+              <option value="ক্যাম্পাস">ক্যাম্পাস</option>
+              <option value="ক্রীড়া">ক্রীড়া</option>
+              <option value="পুরস্কার">পুরস্কার</option>
+              <option value="একাডেমিক">একাডেমিক</option>
+              <option value="অনুষ্ঠান">অনুষ্ঠান</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="gal-image">ছবির লিংক বা পাথ *</label>
+            <input type="text" id="gal-image" class="form-control" required placeholder="যেমন: hero-campus.jpg বা https://...">
+          </div>
+        </div>
+        <div class="modal-admin-footer">
+          <button type="button" class="btn-action-secondary" onclick="window.AdminApp.closeModal('modal-gallery')">বাতিল</button>
+          <button type="submit" class="btn-action-primary">যুক্ত করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- System Floating Toast -->
+  <div id="admin-toast" class="admin-toast">
+    <span id="toast-icon">✓</span>
+    <span id="toast-message">সফলভাবে সম্পন্ন হয়েছে!</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="db.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

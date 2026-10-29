@@ -5526,6 +5526,311 @@ body.is-admin-active .btn-remove-teacher {
   .visitor-gateway-container {
     padding: 1.5rem 1.25rem !important;
   }
+/* ==========================================================================
+   ADMIN DASHBOARD TABS & CLOUD FIRESTORE STYLES
+   ========================================================================== */
+.admin-dash-tabs-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.75rem;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.admin-dash-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748b;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.admin-dash-tab-btn:hover {
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.admin-dash-tab-btn.active {
+  color: #761026;
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.dash-tab-badge {
+  background: rgba(118, 16, 38, 0.1);
+  color: #761026;
+  font-size: 0.72rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.dash-cloud-indicator {
+  font-size: 0.75rem;
+}
+
+.admin-dash-tabs-content {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-dash-tab-pane {
+  display: none;
+  flex-direction: column;
+}
+
+.admin-dash-tab-pane.active {
+  display: flex;
+}
+
+/* Cloud Settings Panel */
+.admin-cloud-settings-container {
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.admin-cloud-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.cloud-status-box-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.cloud-status-icon-wrap {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cloud-status-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
+}
+
+.cloud-status-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.cloud-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.cloud-status-pill.online {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+
+.cloud-status-pill.offline {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.cloud-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.cloud-status-pill.online .cloud-status-dot {
+  box-shadow: 0 0 6px #22c55e;
+}
+
+.cloud-status-desc {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.cloud-status-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.cloud-meta-item {
+  background: #f8fafc;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.cloud-meta-label {
+  display: block;
+  font-size: 0.72rem;
+  color: #64748b;
+  margin-bottom: 0.15rem;
+}
+
+.cloud-meta-val {
+  font-size: 0.82rem;
+  color: #0f172a;
+  word-break: break-all;
+}
+
+/* Config Textarea & Buttons */
+.cloud-card-header {
+  margin-bottom: 0.85rem;
+}
+
+.cloud-card-header h5 {
+  margin: 0 0 0.25rem;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.cloud-hint {
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+.cloud-config-textarea {
+  width: 100%;
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  font-size: 0.82rem;
+  background: #0f172a;
+  color: #38bdf8;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 0.85rem;
+  line-height: 1.5;
+  resize: vertical;
+  margin-bottom: 0.85rem;
+}
+
+.cloud-config-textarea:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+
+.cloud-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+/* Guide box */
+.cloud-guide-steps {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  font-size: 0.84rem;
+  color: #475569;
+  line-height: 1.55;
+}
+
+.cloud-guide-steps code {
+  background: #f1f5f9;
+  color: #761026;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+/* Dark Theme Overrides for Dashboard Tabs & Cloud */
+[data-theme="dark"] .admin-dash-tabs-bar {
+  background: #090f1d;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .admin-dash-tab-btn {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .admin-dash-tab-btn:hover {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .admin-dash-tab-btn.active {
+  color: #ffd56b;
+  background: #1e293b;
+  border-color: rgba(200, 157, 61, 0.35);
+}
+
+[data-theme="dark"] .dash-tab-badge {
+  background: rgba(200, 157, 61, 0.15);
+  color: #ffd56b;
+}
+
+[data-theme="dark"] .admin-cloud-card {
+  background: #111a2e;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .cloud-status-title,
+[data-theme="dark"] .cloud-card-header h5 {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .cloud-meta-item {
+  background: #0c1424;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .cloud-meta-val {
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .cloud-guide-steps {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .cloud-guide-steps code {
+  background: #1e293b;
+  color: #ffd56b;
 }
 
 /* ==========================================================================

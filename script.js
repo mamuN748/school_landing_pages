@@ -14,14 +14,46 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   // =========================================================================
+  // 0. ADMIN ROUTE REDIRECT CONTROLLER (/admin or #/admin)
+  // =========================================================================
+  const checkAdminNavigation = () => {
+    const hash = (window.location.hash || "").toLowerCase();
+    const path = (window.location.pathname || "").toLowerCase();
+    if (
+      hash === "#admin" ||
+      hash === "#/admin" ||
+      path.endsWith("/admin") ||
+      path.endsWith("/admin/")
+    ) {
+      window.location.href = "admin/index.html";
+    }
+  };
+  checkAdminNavigation();
+  window.addEventListener("hashchange", checkAdminNavigation);
+
+  // =========================================================================
   // 1. NATIVE BENGALI NOTICES & NUMERAL UTILITIES
   // =========================================================================
-  const activeNotices = [
+  let activeNotices = [
     { date: "১৪ অক্টোবর, ২০২৬", title: "২০২৬ শিক্ষাবর্ষে ৬ষ্ঠ থেকে ১০ম শ্রেণিতে ভর্তি বিজ্ঞপ্তি: বিজ্ঞান ও মানবিক (আর্টস) বিভাগ", link: "#notice" },
     { date: "১৮ অক্টোবর, ২০২৬", title: "ময়মনসিংহ শিক্ষা বোর্ডের অধীনে বার্ষিক মূল্যায়ন ও অভিভাবক-শিক্ষক মতবিনিময় সভা", link: "#notice" },
     { date: "২২ অক্টোবর, ২০২৬", title: "ধোবাউড়া উপজেলা আন্তঃস্কুল ক্রীড়া ও বিজ্ঞান অলিম্পিয়াড প্রস্তুতি সভা", link: "#teachers" },
     { date: "০২ নভেম্বর, ২০২৬", title: "বিদ্যালয়ের সুবিশাল ২০০ শতাংশ খেলার মাঠে বার্ষিক ক্রীড়া প্রতিযোগিতা ও সাংস্কৃতিক উৎসব", link: "#gallery" }
   ];
+
+  // Pull real published notices from database if available
+  if (window.SchoolDB && window.SchoolDB.getNotices) {
+    try {
+      const dbNotices = window.SchoolDB.getNotices().filter((n) => n.isPublished);
+      if (dbNotices.length > 0) {
+        activeNotices = dbNotices.map((n) => ({
+          date: n.date,
+          title: n.title,
+          link: n.fileUrl || "#notice"
+        }));
+      }
+    } catch (e) {}
+  }
 
   // Bengali numerals converter helper
   const bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
@@ -889,6 +921,8 @@ document.addEventListener("DOMContentLoaded", () => {
       adminDashboardModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
       renderAdminDashboard();
+      updateTabBadges();
+      populateCloudConfigTextarea();
     }
   };
 
@@ -1073,12 +1107,24 @@ document.addEventListener("DOMContentLoaded", () => {
     currentLogs.unshift(visitorRecord);
     saveVisitorsLog(currentLogs);
 
+    // Real-Time Cloud Firestore Sync (Synchronizes across all devices)
+    if (isCloudActive && firestoreDb) {
+      firestoreDb.collection("visitors").doc(visitorRecord.id).set(visitorRecord).catch((err) => {
+        console.warn("Cloud visitor sync warning:", err);
+      });
+      firestoreDb.collection("analytics").doc("site_stats").set({
+        totalViews: window.firebase.firestore.FieldValue.increment(1),
+        lastUpdated: Date.now()
+      }, { merge: true }).catch(() => {});
+    }
+
     closeVisitorGatewayModal();
     showToast(`🎉 স্বাগতম ${name}! ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ে আপনাকে স্বাগতম।`);
 
     if (adminDashboardModal?.classList.contains("active")) {
       renderAdminDashboard();
     }
+    updateTabBadges();
   });
 
   // 9. Dashboard Event Handlers
@@ -1112,11 +1158,579 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target === adminDashboardModal) closeAdminDashboardModal();
   });
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      if (adminDashboardModal?.classList.contains("active")) closeAdminDashboardModal();
+  // =========================================================================
+  // 9.5. GOOGLE FIREBASE FIRESTORE CLOUD INTEGRATION & REAL-TIME MULTI-DEVICE SYNC
+  // =========================================================================
+  const FIREBASE_CONFIG_STORAGE_KEY = "ghoshgaon_firebase_config_v1";
+
+  // State
+  let firebaseApp = null;
+  let firestoreDb = null;
+  let isCloudActive = false;
+  let unsubscribeVisitors = null;
+  let unsubscribeFaculty = null;
+  let unsubscribeMemories = null;
+  let unsubscribeViews = null;
+
+  // Cloud UI Elements
+  const cloudStatusPill = document.getElementById("cloud-status-pill");
+  const cloudStatusText = document.getElementById("cloud-status-text");
+  const cloudMetaProject = document.getElementById("cloud-meta-project");
+  const cloudMetaSync = document.getElementById("cloud-meta-sync");
+  const cloudMetaTime = document.getElementById("cloud-meta-time");
+  const firebaseConfigTextarea = document.getElementById("firebase-config-textarea");
+  const btnSaveFirebaseConfig = document.getElementById("btn-save-firebase-config");
+  const btnTestFirebaseConn = document.getElementById("btn-test-firebase-conn");
+  const btnSyncAllToCloud = document.getElementById("btn-sync-all-to-cloud");
+  const btnPullCloudData = document.getElementById("btn-pull-cloud-data");
+  const dashCloudIndicator = document.getElementById("dash-cloud-indicator");
+
+  const updateCloudStatusUI = (active, project = null, lastSync = null) => {
+    isCloudActive = active;
+    if (cloudStatusPill) {
+      cloudStatusPill.className = `cloud-status-pill ${active ? "online" : "offline"}`;
+    }
+    if (cloudStatusText) {
+      cloudStatusText.textContent = active ? "অনলাইন (ক্লাউড সক্রিয়)" : "অফলাইন (লোকাল মোড)";
+    }
+    if (dashCloudIndicator) {
+      dashCloudIndicator.textContent = active ? "🟢" : "🟡";
+    }
+    if (cloudMetaSync) {
+      cloudMetaSync.textContent = active ? "রিয়েল-টাইম সিঙ্ক সক্রিয়" : "অফলাইন মোড সক্রিয়";
+    }
+    if (project && cloudMetaProject) {
+      cloudMetaProject.textContent = project;
+    }
+    if (lastSync && cloudMetaTime) {
+      cloudMetaTime.textContent = lastSync;
+    }
+  };
+
+  const populateCloudConfigTextarea = () => {
+    if (!firebaseConfigTextarea) return;
+    const stored = localStorage.getItem(FIREBASE_CONFIG_STORAGE_KEY);
+    if (stored && !firebaseConfigTextarea.value) {
+      try {
+        firebaseConfigTextarea.value = JSON.stringify(JSON.parse(stored), null, 2);
+      } catch (e) {
+        firebaseConfigTextarea.value = stored;
+      }
+    }
+  };
+
+  const parseFirebaseConfig = (inputStr) => {
+    if (!inputStr) return null;
+    let cleaned = inputStr.trim();
+    if (cleaned.includes("{") && cleaned.includes("}")) {
+      const start = cleaned.indexOf("{");
+      const end = cleaned.lastIndexOf("}") + 1;
+      cleaned = cleaned.substring(start, end);
+    }
+    try {
+      return JSON.parse(cleaned);
+    } catch (e) {
+      try {
+        const parseFn = new Function(`return (${cleaned});`);
+        const result = parseFn();
+        if (result && typeof result === "object") return result;
+      } catch (err) {
+        return null;
+      }
+    }
+    return null;
+  };
+
+  const setupCloudRealtimeListeners = () => {
+    if (!firestoreDb) return;
+
+    // 1. Live Visitors Listener across all devices
+    try {
+      if (unsubscribeVisitors) unsubscribeVisitors();
+      unsubscribeVisitors = firestoreDb.collection("visitors")
+        .orderBy("timestamp", "desc")
+        .limit(400)
+        .onSnapshot((snapshot) => {
+          if (snapshot && !snapshot.empty) {
+            const cloudLogs = [];
+            snapshot.forEach((doc) => {
+              cloudLogs.push(doc.data());
+            });
+            localStorage.setItem("ghoshgaon_all_visitors_log", JSON.stringify(cloudLogs));
+            if (cloudMetaTime) {
+              cloudMetaTime.textContent = new Date().toLocaleTimeString("bn-BD");
+            }
+            renderAdminDashboard();
+            updateTabBadges();
+          }
+        }, (err) => {
+          console.warn("Visitors snapshot error:", err);
+        });
+    } catch (e) {
+      console.warn("Visitors listener attach failed:", e);
+    }
+
+    // 2. Global Views Listener
+    try {
+      if (unsubscribeViews) unsubscribeViews();
+      unsubscribeViews = firestoreDb.collection("analytics").doc("site_stats")
+        .onSnapshot((doc) => {
+          if (doc && doc.exists && typeof doc.data()?.totalViews === "number") {
+            const views = doc.data().totalViews;
+            localStorage.setItem("ghoshgaon_site_total_views", views.toString());
+            if (dashStatTotalViews) dashStatTotalViews.textContent = toBnNum(views);
+          }
+        }, (err) => console.warn("Analytics snapshot error:", err));
+    } catch (e) {}
+
+    // 3. Teachers & Faculty Listener
+    try {
+      if (unsubscribeFaculty) unsubscribeFaculty();
+      unsubscribeFaculty = firestoreDb.collection("faculty")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) => {
+          if (snapshot && !snapshot.empty) {
+            const cloudFaculty = [];
+            snapshot.forEach((doc) => {
+              cloudFaculty.push(doc.data());
+            });
+            localStorage.setItem("ghoshgaon_custom_faculty_list", JSON.stringify(cloudFaculty));
+            renderDashboardFacultyTable();
+            if (typeof renderCustomTeachers === "function") {
+              renderCustomTeachers();
+            }
+            updateTabBadges();
+          }
+        }, (err) => console.warn("Faculty snapshot error:", err));
+    } catch (e) {}
+
+    // 4. Student & Alumni Memories Listener
+    try {
+      if (unsubscribeMemories) unsubscribeMemories();
+      unsubscribeMemories = firestoreDb.collection("memories")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) => {
+          if (snapshot && !snapshot.empty) {
+            const cloudMemories = [];
+            snapshot.forEach((doc) => {
+              cloudMemories.push(doc.data());
+            });
+            localStorage.setItem(MEMORIES_STORAGE_KEY, JSON.stringify(cloudMemories));
+            renderDashboardMemoriesTable();
+            if (typeof renderMemories === "function") {
+              renderMemories(currentDecadeFilter || "all");
+            }
+            updateTabBadges();
+          }
+        }, (err) => console.warn("Memories snapshot error:", err));
+    } catch (e) {}
+  };
+
+  const initFirebase = (config, isUserAction = false) => {
+    if (!config || !config.projectId || !config.apiKey) {
+      updateCloudStatusUI(false);
+      return false;
+    }
+
+    try {
+      if (!window.firebase) {
+        console.warn("Firebase SDK not yet loaded.");
+        updateCloudStatusUI(false);
+        return false;
+      }
+
+      if (window.firebase.apps && window.firebase.apps.length > 0) {
+        firebaseApp = window.firebase.app();
+      } else {
+        firebaseApp = window.firebase.initializeApp(config);
+      }
+
+      firestoreDb = window.firebase.firestore();
+      updateCloudStatusUI(true, config.projectId, new Date().toLocaleTimeString("bn-BD"));
+      setupCloudRealtimeListeners();
+
+      if (isUserAction) {
+        showToast("🎉 Google Firebase ক্লাউড ডাটাবেজ সফলভাবে সংযুক্ত হয়েছে!");
+      }
+      return true;
+    } catch (err) {
+      console.error("Firebase connection failed:", err);
+      updateCloudStatusUI(false, "ত্রুটি: " + (err.message || "কানেক্ট করা যায়নি"));
+      if (isUserAction) {
+        showToast("❌ ফায়ারবেস কানেকশন ব্যর্থ হয়েছে: " + err.message);
+      }
+      return false;
+    }
+  };
+
+  // Sync All Local Data to Firestore
+  const syncAllLocalDataToCloud = async () => {
+    if (!isCloudActive || !firestoreDb) {
+      showToast("⚠️ ক্লাউড ডাটাবেজ এখনও কানেক্ট করা হয়নি! প্রথমে ওপরের বক্সে Firebase কনফিগ সেভ করুন।");
+      return;
+    }
+    showToast("⏳ সকল লোকাল ডাটা ক্লাউডে আপলোড হচ্ছে...");
+    try {
+      const batch = firestoreDb.batch();
+
+      // Visitors
+      const visitors = getAllVisitorsLog();
+      visitors.forEach((v) => {
+        const docId = v.id || ("vis_" + v.timestamp);
+        const ref = firestoreDb.collection("visitors").doc(docId);
+        batch.set(ref, v, { merge: true });
+      });
+
+      // Faculty
+      const faculty = getSavedFaculty();
+      faculty.forEach((f) => {
+        if (f.id) {
+          const ref = firestoreDb.collection("faculty").doc(f.id);
+          batch.set(ref, f, { merge: true });
+        }
+      });
+
+      // Memories
+      const memories = getStoredMemories();
+      memories.forEach((m) => {
+        const mId = m.id || ("mem_" + Date.now());
+        const ref = firestoreDb.collection("memories").doc(mId);
+        batch.set(ref, m, { merge: true });
+      });
+
+      // Site Views
+      const totalViews = parseInt(localStorage.getItem("ghoshgaon_site_total_views") || "0", 10);
+      const statsRef = firestoreDb.collection("analytics").doc("site_stats");
+      batch.set(statsRef, { totalViews: totalViews, lastUpdated: Date.now() }, { merge: true });
+
+      await batch.commit();
+      showToast(`🎉 অভিনন্দন! মোট ${toBnNum(visitors.length)} জন ভিজিটর, ${toBnNum(faculty.length)} জন শিক্ষক ও ${toBnNum(memories.length)} টি স্মৃতিচারণ ক্লাউডে আপলোড হয়েছে!`);
+      if (cloudMetaTime) {
+        cloudMetaTime.textContent = new Date().toLocaleTimeString("bn-BD");
+      }
+    } catch (err) {
+      console.error("Cloud push failed:", err);
+      showToast("❌ ক্লাউডে আপলোড ব্যর্থ হয়েছে: " + err.message);
+    }
+  };
+
+  // Pull fresh data from cloud
+  const pullCloudData = async () => {
+    if (!isCloudActive || !firestoreDb) {
+      showToast("⚠️ ক্লাউড কানেক্ট সক্রিয় নেই।");
+      return;
+    }
+    showToast("🔄 ক্লাউড থেকে ডাটা আনা হচ্ছে...");
+    try {
+      const vSnap = await firestoreDb.collection("visitors").orderBy("timestamp", "desc").get();
+      if (!vSnap.empty) {
+        const vList = [];
+        vSnap.forEach((doc) => vList.push(doc.data()));
+        localStorage.setItem("ghoshgaon_all_visitors_log", JSON.stringify(vList));
+      }
+
+      const fSnap = await firestoreDb.collection("faculty").orderBy("timestamp", "desc").get();
+      if (!fSnap.empty) {
+        const fList = [];
+        fSnap.forEach((doc) => fList.push(doc.data()));
+        localStorage.setItem("ghoshgaon_custom_faculty_list", JSON.stringify(fList));
+      }
+
+      const mSnap = await firestoreDb.collection("memories").orderBy("timestamp", "desc").get();
+      if (!mSnap.empty) {
+        const mList = [];
+        mSnap.forEach((doc) => mList.push(doc.data()));
+        localStorage.setItem(MEMORIES_STORAGE_KEY, JSON.stringify(mList));
+      }
+
+      renderAdminDashboard();
+      renderDashboardFacultyTable();
+      renderDashboardMemoriesTable();
+      updateTabBadges();
+      showToast("✅ ক্লাউড ডাটা সফলভাবে রিফ্রেশ হয়েছে!");
+    } catch (err) {
+      showToast("❌ ডাটা আনতে ব্যর্থ: " + err.message);
+    }
+  };
+
+  // Cloud Action Button Handlers
+  btnSaveFirebaseConfig?.addEventListener("click", () => {
+    const rawVal = firebaseConfigTextarea?.value || "";
+    const parsed = parseFirebaseConfig(rawVal);
+    if (!parsed || !parsed.projectId || !parsed.apiKey) {
+      showToast("⚠️ সঠিক Firebase Config কোড পেস্ট করুন (কমপক্ষে apiKey ও projectId আবশ্যক)।");
+      return;
+    }
+    localStorage.setItem(FIREBASE_CONFIG_STORAGE_KEY, JSON.stringify(parsed, null, 2));
+    const ok = initFirebase(parsed, true);
+    if (ok) {
+      setTimeout(() => {
+        syncAllLocalDataToCloud();
+      }, 600);
     }
   });
+
+  btnTestFirebaseConn?.addEventListener("click", async () => {
+    if (!isCloudActive || !firestoreDb) {
+      showToast("⚠️ ক্লাউড ডাটাবেজ এখনো কানেক্ট করা হয়নি।");
+      return;
+    }
+    try {
+      await firestoreDb.collection("_healthcheck").doc("ping").set({ ping: Date.now() });
+      showToast("⚡ Firebase ক্লাউড কানেকশন ১০০% সক্রিয় ও সঠিকভাবে কাজ করছে!");
+    } catch (err) {
+      showToast("❌ কানেকশন টেস্ট ব্যর্থ: " + err.message);
+    }
+  });
+
+  btnSyncAllToCloud?.addEventListener("click", syncAllLocalDataToCloud);
+  btnPullCloudData?.addEventListener("click", pullCloudData);
+
+  // -------------------------------------------------------------------------
+  // DASHBOARD TAB SWITCHING & MULTI-PART MANAGEMENT
+  // -------------------------------------------------------------------------
+  const dashTabBtns = document.querySelectorAll(".admin-dash-tab-btn");
+  const dashTabPanes = document.querySelectorAll(".admin-dash-tab-pane");
+
+  const switchDashboardTab = (tabName) => {
+    dashTabBtns.forEach((btn) => {
+      const match = btn.getAttribute("data-dash-tab") === tabName;
+      btn.classList.toggle("active", match);
+      btn.setAttribute("aria-selected", match ? "true" : "false");
+    });
+
+    dashTabPanes.forEach((pane) => {
+      const isTarget = pane.id === `dash-pane-${tabName}`;
+      pane.classList.toggle("active", isTarget);
+      pane.style.display = isTarget ? "flex" : "none";
+    });
+
+    if (tabName === "faculty") renderDashboardFacultyTable();
+    if (tabName === "memories") renderDashboardMemoriesTable();
+    if (tabName === "visitors") renderAdminDashboard();
+    if (tabName === "cloud") populateCloudConfigTextarea();
+    updateTabBadges();
+  };
+
+  dashTabBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const target = btn.getAttribute("data-dash-tab");
+      if (target) switchDashboardTab(target);
+    });
+  });
+
+  // Render Faculty List in Dashboard
+  const renderDashboardFacultyTable = () => {
+    const tbody = document.getElementById("admin-dash-faculty-tbody");
+    const emptyState = document.getElementById("admin-dash-faculty-empty");
+    if (!tbody) return;
+
+    const list = getSavedFaculty();
+    const searchQuery = (document.getElementById("dash-faculty-search")?.value || "").toLowerCase().trim();
+    const typeFilter = document.getElementById("dash-faculty-type-filter")?.value || "all";
+
+    const filtered = list.filter((item) => {
+      const matchSearch = !searchQuery ||
+        (item.name && item.name.toLowerCase().includes(searchQuery)) ||
+        (item.designation && item.designation.toLowerCase().includes(searchQuery)) ||
+        (item.subject && item.subject.toLowerCase().includes(searchQuery));
+      let matchType = true;
+      if (typeFilter === "present") matchType = item.type !== "retired";
+      if (typeFilter === "retired") matchType = item.type === "retired";
+      return matchSearch && matchType;
+    });
+
+    tbody.innerHTML = "";
+    if (filtered.length === 0) {
+      if (emptyState) emptyState.style.display = "block";
+    } else {
+      if (emptyState) emptyState.style.display = "none";
+      filtered.forEach((item, index) => {
+        const tr = document.createElement("tr");
+        const isRet = item.type === "retired";
+        tr.innerHTML = `
+          <td style="text-align: center; font-weight: 700; color: #94a3b8;">${toBnNum(index + 1)}</td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <img src="${item.photo || 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=150&q=80'}" 
+                alt="${item.name}" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 1px solid #cbd5e1;">
+              <div>
+                <strong style="color: #0f172a; display: block;">${sanitizeHtml(item.name)}</strong>
+                <span style="font-size: 0.76rem; color: #64748b;">${sanitizeHtml(item.subject || 'সাধারণ')}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span style="font-weight: 600; color: #1e293b; display: block;">${sanitizeHtml(item.designation)}</span>
+            <span class="${isRet ? 'badge-ssc-alumni' : 'badge-visitor-other'}" style="margin-top: 3px;">
+              ${isRet ? '📜 অবসরপ্রাপ্ত / প্রাক্তন' : '💼 কর্মরত শিক্ষক'}
+            </span>
+          </td>
+          <td style="font-size: 0.82rem; color: #475569;">
+            ${sanitizeHtml(item.qualification || 'বি.এ, বি.এড')}
+          </td>
+          <td style="font-size: 0.82rem; color: #64748b;">
+            ${sanitizeHtml(item.years || 'ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়')}
+          </td>
+          <td style="text-align: center;">
+            <button type="button" class="btn-delete-visitor-row" data-delete-faculty-id="${item.id}" title="মুছে ফেলুন">
+              🗑️
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      tbody.querySelectorAll("[data-delete-faculty-id]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-delete-faculty-id");
+          const teacher = list.find((t) => t.id === id);
+          if (confirm(`আপনি কি "${teacher ? teacher.name : 'এই'}" শিক্ষকের তথ্য মুছে ফেলতে চান?`)) {
+            const updated = list.filter((t) => t.id !== id);
+            localStorage.setItem("ghoshgaon_custom_faculty_list", JSON.stringify(updated));
+            if (isCloudActive && firestoreDb) {
+              firestoreDb.collection("faculty").doc(id).delete().catch(console.warn);
+            }
+            renderDashboardFacultyTable();
+            if (typeof renderCustomTeachers === "function") {
+              renderCustomTeachers();
+            }
+            updateTabBadges();
+            showToast("শিক্ষকের তথ্য তালিকা থেকে মুছে ফেলা হয়েছে।");
+          }
+        });
+      });
+    }
+  };
+
+  // Render Memories List in Dashboard
+  const renderDashboardMemoriesTable = () => {
+    const tbody = document.getElementById("admin-dash-memories-tbody");
+    const emptyState = document.getElementById("admin-dash-memories-empty");
+    if (!tbody) return;
+
+    const list = getStoredMemories();
+    const searchQuery = (document.getElementById("dash-memories-search")?.value || "").toLowerCase().trim();
+    const batchFilter = document.getElementById("dash-memories-batch-filter")?.value || "all";
+
+    const filtered = list.filter((m) => {
+      const matchSearch = !searchQuery ||
+        (m.name && m.name.toLowerCase().includes(searchQuery)) ||
+        (m.favoriteTeacher && m.favoriteTeacher.toLowerCase().includes(searchQuery)) ||
+        (m.note && m.note.toLowerCase().includes(searchQuery));
+      const matchBatch = batchFilter === "all" || (m.batch && m.batch.toString() === batchFilter);
+      return matchSearch && matchBatch;
+    });
+
+    tbody.innerHTML = "";
+    if (filtered.length === 0) {
+      if (emptyState) emptyState.style.display = "block";
+    } else {
+      if (emptyState) emptyState.style.display = "none";
+      filtered.forEach((m, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td style="text-align: center; font-weight: 700; color: #94a3b8;">${toBnNum(index + 1)}</td>
+          <td>
+            <img src="${m.image || 'hero-students.jpg'}" 
+              alt="${sanitizeHtml(m.name)}" style="width: 50px; height: 38px; border-radius: 6px; object-fit: cover; border: 1px solid #cbd5e1;">
+          </td>
+          <td>
+            <strong style="color: #0f172a; display: block;">${sanitizeHtml(m.name)}</strong>
+            <span class="badge-ssc-alumni" style="margin-top: 3px;">🎓 ব্যাচ: ${toBanglaNum(m.batch)}</span>
+          </td>
+          <td>
+            <strong style="color: #1e293b; font-size: 0.84rem; display: block;">প্রিয় শিক্ষক: ${sanitizeHtml(m.favoriteTeacher || 'সকল শিক্ষক')}</strong>
+            <p style="margin: 0; font-size: 0.78rem; color: #64748b; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${sanitizeHtml(m.note)}</p>
+          </td>
+          <td style="font-size: 0.8rem; color: #64748b;">
+            <span>${sanitizeHtml(m.postDate || 'সম্প্রতি')}</span>
+            <div style="font-size: 0.75rem; color: #e11d48; margin-top: 2px;">❤️ ${toBanglaNum(m.likes || 0)} লাইক</div>
+          </td>
+          <td style="text-align: center;">
+            <button type="button" class="btn-delete-visitor-row" data-delete-memory-id="${m.id}" title="স্মৃতি মুছুন">
+              🗑️
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      tbody.querySelectorAll("[data-delete-memory-id]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-delete-memory-id");
+          if (confirm("আপনি কি সত্যিই এই স্মৃতিচারণ পোস্টটি মুছে ফেলতে চান?")) {
+            const updated = list.filter((m) => String(m.id) !== String(id));
+            localStorage.setItem(MEMORIES_STORAGE_KEY, JSON.stringify(updated));
+            if (isCloudActive && firestoreDb) {
+              firestoreDb.collection("memories").doc(id).delete().catch(console.warn);
+            }
+            renderDashboardMemoriesTable();
+            if (typeof renderMemories === "function") {
+              renderMemories(currentDecadeFilter || "all");
+            }
+            updateTabBadges();
+            showToast("স্মৃতিচারণ পোস্টটি সফলভাবে অপসারিত হয়েছে।");
+          }
+        });
+      });
+    }
+  };
+
+  const updateTabBadges = () => {
+    const vBadge = document.getElementById("tab-badge-visitors");
+    const fBadge = document.getElementById("tab-badge-faculty");
+    const mBadge = document.getElementById("tab-badge-memories");
+
+    if (vBadge) vBadge.textContent = toBnNum(getAllVisitorsLog().length);
+    if (fBadge) fBadge.textContent = toBnNum(getSavedFaculty().length);
+    if (mBadge) mBadge.textContent = toBnNum(getStoredMemories().length);
+  };
+
+  // Populate Batch Filter Dropdown for Dashboard Memories Tab
+  const dashMemoriesBatchFilter = document.getElementById("dash-memories-batch-filter");
+  if (dashMemoriesBatchFilter) {
+    for (let yr = 2026; yr >= 1973; yr--) {
+      const opt = document.createElement("option");
+      opt.value = yr.toString();
+      opt.textContent = `এসএসসি ব্যাচ: ${toBanglaNum(yr)}`;
+      dashMemoriesBatchFilter.appendChild(opt);
+    }
+  }
+
+  // Dashboard Toolbar Filters
+  document.getElementById("dash-faculty-search")?.addEventListener("input", renderDashboardFacultyTable);
+  document.getElementById("dash-faculty-type-filter")?.addEventListener("change", renderDashboardFacultyTable);
+  document.getElementById("dash-memories-search")?.addEventListener("input", renderDashboardMemoriesTable);
+  document.getElementById("dash-memories-batch-filter")?.addEventListener("change", renderDashboardMemoriesTable);
+
+  // Quick action buttons in dashboard
+  document.getElementById("btn-dash-add-faculty-quick")?.addEventListener("click", () => {
+    closeAdminDashboardModal();
+    if (typeof openExTeacherModal === "function") {
+      openExTeacherModal();
+    } else {
+      document.getElementById("btn-open-teacher-modal")?.click();
+    }
+  });
+
+  document.getElementById("btn-dash-open-memories-form")?.addEventListener("click", () => {
+    closeAdminDashboardModal();
+    if (typeof window.openMemoryModal === "function") {
+      window.openMemoryModal();
+    }
+  });
+
+  // Auto initialize cloud if stored config exists
+  try {
+    const savedConfigStr = localStorage.getItem(FIREBASE_CONFIG_STORAGE_KEY);
+    if (savedConfigStr) {
+      const cfg = parseFirebaseConfig(savedConfigStr);
+      if (cfg) {
+        initFirebase(cfg, false);
+      }
+    }
+  } catch (e) {}
 
   // 10. Automatically trigger Entry Gateway for First-Time Normal Visitors
   if (!localStorage.getItem("ghoshgaon_visitor_profile") && !isAdminLoggedIn()) {
@@ -1235,6 +1849,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const list = getSavedFaculty();
     list.unshift(item);
     localStorage.setItem("ghoshgaon_custom_faculty_list", JSON.stringify(list));
+    if (isCloudActive && firestoreDb && item.id) {
+      firestoreDb.collection("faculty").doc(item.id).set(item).catch((err) => {
+        console.warn("Firestore save teacher warning:", err);
+      });
+    }
+    if (typeof renderDashboardFacultyTable === "function") {
+      renderDashboardFacultyTable();
+    }
+    if (typeof updateTabBadges === "function") {
+      updateTabBadges();
+    }
   };
 
   const removeCustomTeacher = (id, cardElement, name) => {
@@ -1245,6 +1870,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (confirm(`আপনি কি সত্যিই "${name}" শিক্ষকের তথ্য তালিকা থেকে মুছে ফেলতে চান?`)) {
       const list = getSavedFaculty().filter((i) => i.id !== id);
       localStorage.setItem("ghoshgaon_custom_faculty_list", JSON.stringify(list));
+      if (isCloudActive && firestoreDb) {
+        firestoreDb.collection("faculty").doc(id).delete().catch(console.warn);
+      }
       cardElement.style.transition = "opacity 0.3s ease, transform 0.3s ease";
       cardElement.style.opacity = "0";
       cardElement.style.transform = "scale(0.9)";
@@ -1254,6 +1882,12 @@ document.addEventListener("DOMContentLoaded", () => {
           customFacultySection.style.display = "none";
         }
       }, 300);
+      if (typeof renderDashboardFacultyTable === "function") {
+        renderDashboardFacultyTable();
+      }
+      if (typeof updateTabBadges === "function") {
+        updateTabBadges();
+      }
       showToast(`শিক্ষক ${name}-এর তথ্য তালিকা থেকে সফলভাবে অপসারিত হয়েছে।`);
     }
   };
@@ -1522,7 +2156,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const drawerBtnThemeLight = document.getElementById("btn-theme-light");
   const drawerBtnThemeDark = document.getElementById("btn-theme-dark");
 
+  const isGlobalDarkAllowed = () => {
+    if (window.SchoolDB && window.SchoolDB.getSettings) {
+      try {
+        const s = window.SchoolDB.getSettings();
+        return s.globalDarkModeEnabled !== false;
+      } catch (e) {}
+    }
+    return true;
+  };
+
   const getStoredTheme = () => {
+    if (!isGlobalDarkAllowed()) return "light";
     try {
       const saved = localStorage.getItem("ghoshgaon_theme");
       if (saved === "dark" || saved === "light") return saved;
@@ -1531,7 +2176,16 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const applyThemeMode = (theme, showToastAlert = false) => {
-    const isDark = theme === "dark";
+    let isDark = theme === "dark";
+
+    if (isDark && !isGlobalDarkAllowed()) {
+      isDark = false;
+      theme = "light";
+      if (showToastAlert) {
+        showToast("অ্যাডমিনিস্ট্রেটর কর্তৃক ওয়েবসাইটে ডার্ক মোড সাময়িকভাবে নিষ্ক্রিয় রাখা হয়েছে।");
+      }
+    }
+
     if (isDark) {
       document.documentElement.setAttribute("data-theme", "dark");
     } else {
@@ -1562,13 +2216,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    if (showToastAlert) {
+    if (showToastAlert && (isDark || theme === "light")) {
       showToast(isDark ? "🌙 ডার্ক মোড (Night Mode) সক্রিয় করা হয়েছে" : "☀️ লাইট মোড (Day Mode) সক্রিয় করা হয়েছে");
     }
   };
 
   // Click Handler for Header Toggle Button
   themeToggleBtn?.addEventListener("click", () => {
+    if (!isGlobalDarkAllowed()) {
+      showToast("অ্যাডমিনিস্ট্রেটর কর্তৃক ওয়েবসাইটে ডার্ক মোড বর্তমানে নিষ্ক্রিয় রাখা হয়েছে।");
+      return;
+    }
     const isCurrentlyDark = document.documentElement.getAttribute("data-theme") === "dark";
     applyThemeMode(isCurrentlyDark ? "light" : "dark", true);
   });
@@ -1579,6 +2237,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   drawerBtnThemeDark?.addEventListener("click", () => {
+    if (!isGlobalDarkAllowed()) {
+      showToast("অ্যাডমিনিস্ট্রেটর কর্তৃক ওয়েবসাইটে ডার্ক মোড বর্তমানে নিষ্ক্রিয় রাখা হয়েছে।");
+      return;
+    }
     applyThemeMode("dark", true);
   });
 
@@ -2278,6 +2940,18 @@ document.addEventListener("DOMContentLoaded", () => {
       all.unshift(newEntry);
       saveStoredMemories(all);
 
+      if (isCloudActive && firestoreDb) {
+        firestoreDb.collection("memories").doc(newEntry.id).set(newEntry).catch((err) => {
+          console.warn("Cloud memories sync warning:", err);
+        });
+      }
+      if (typeof renderDashboardMemoriesTable === "function") {
+        renderDashboardMemoriesTable();
+      }
+      if (typeof updateTabBadges === "function") {
+        updateTabBadges();
+      }
+
       // Reset form
       alumniMemoryForm.reset();
       selectedPhotoData = "";
@@ -2337,6 +3011,20 @@ document.addEventListener("DOMContentLoaded", () => {
     inquiryForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const parentName = document.getElementById("inq-parent-name")?.value || "অভিভাবক";
+      const phone = document.getElementById("inq-phone")?.value || "";
+      const message = document.getElementById("inq-message")?.value || "";
+
+      if (window.SchoolDB && window.SchoolDB.submitMessage) {
+        try {
+          window.SchoolDB.submitMessage({
+            name: parentName,
+            phone: phone,
+            subject: 'অভিযোগ বা ভর্তি নোট',
+            message: message
+          });
+        } catch (err) {}
+      }
+
       inquiryForm.reset();
       showToast(`আপনার নোট ও বার্তা জমা হয়েছে! ধন্যবাদ ${parentName}। প্রতিষ্ঠান প্রশাসন দ্রুত আপনার সাথে যোগাযোগ করবে।`);
     });
