@@ -5,7 +5,12 @@
   <meta http-equiv="refresh" content="0; url=admin/index.html">
   <title>অ্যাডমিন প্যানেল | ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়</title>
   <script>
-    window.location.replace("admin/index.html" + window.location.search + window.location.hash);
+    (function() {
+      var repoBase = "/school_landing_pages";
+      var path = window.location.pathname || "";
+      var target = (path.indexOf(repoBase) === 0 ? repoBase : "") + "/admin/index.html" + window.location.search + window.location.hash;
+      window.location.replace(target);
+    })();
   </script>
 </head>
 <body style="font-family: system-ui, -apple-system, sans-serif; background: #0f172a; color: #f8fafc; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center;">
