@@ -1300,6 +1300,10 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }, (err) => {
           console.warn("Visitors snapshot error:", err);
+          const msg = (err && err.message) ? err.message.toLowerCase() : '';
+          if (msg.includes('not been used') || msg.includes('disabled') || msg.includes('permission_denied')) {
+            updateCloudStatusUI(false, "Firestore Database তৈরি করুন (Firebase Console)");
+          }
         });
     } catch (e) {
       console.warn("Visitors listener attach failed:", e);

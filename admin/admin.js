@@ -145,7 +145,13 @@
         }, (err) => {
           console.warn('Firestore snapshot error:', err);
           if (statusPill) {
-            statusPill.textContent = '⚠️ কানেকশন সমস্যা';
+            const msg = (err && err.message) ? err.message.toLowerCase() : '';
+            if (msg.includes('not been used') || msg.includes('disabled') || msg.includes('permission_denied') || msg.includes('not-found')) {
+              statusPill.textContent = '⚠️ Firestore সক্রিয় করুন';
+              statusPill.title = 'Firebase Console-এ গিয়ে "Create database" এ ক্লিক করে Test Mode এ চালু করুন।';
+            } else {
+              statusPill.textContent = '⚠️ কানেকশন সমস্যা';
+            }
             statusPill.className = 'badge-status badge-pending-status';
           }
         });
