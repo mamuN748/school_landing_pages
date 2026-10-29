@@ -22,10 +22,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (
       hash === "#admin" ||
       hash === "#/admin" ||
+      hash.indexOf("admin") !== -1 ||
       path.endsWith("/admin") ||
-      path.endsWith("/admin/")
+      path.endsWith("/admin/") ||
+      path.indexOf("/admin") !== -1
     ) {
-      window.location.href = "admin/index.html";
+      if (path.indexOf("/admin/") === -1) {
+        window.location.href = "admin/index.html";
+      }
     }
   };
   checkAdminNavigation();
@@ -875,7 +879,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // 3. Visitor Storage Helpers
   const getAllVisitorsLog = () => {
     try {
-      return JSON.parse(localStorage.getItem("ghoshgaon_all_visitors_log") || "[]");
+      const logs = JSON.parse(localStorage.getItem("ghoshgaon_all_visitors_log") || "[]");
+      return logs.filter((item) => item && item.id && !item.id.startsWith("vis_sample_"));
     } catch (e) {
       return [];
     }
@@ -883,11 +888,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const saveVisitorsLog = (logArray) => {
     try {
-      localStorage.setItem("ghoshgaon_all_visitors_log", JSON.stringify(logArray));
+      const cleanArray = (logArray || []).filter((item) => item && item.id && !item.id.startsWith("vis_sample_"));
+      localStorage.setItem("ghoshgaon_all_visitors_log", JSON.stringify(cleanArray));
     } catch (e) {
       console.error("Error saving visitors log", e);
     }
   };
+
+  // Repeat visit tracking for identified students/visitors
+  try {
+    const savedProfile = JSON.parse(localStorage.getItem("ghoshgaon_visitor_profile") || "null");
+    if (savedProfile && savedProfile.name) {
+      const lastVisitTime = savedProfile.lastRepeatVisit || 0;
+      if (Date.now() - lastVisitTime > 15 * 60 * 1000) {
+        savedProfile.lastRepeatVisit = Date.now();
+        savedProfile.timestamp = Date.now();
+        const isMobile = /Mobile|Android|iP(hone|od|ad)/i.test(navigator.userAgent);
+        const now = new Date();
+        const monthsBn = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+        savedProfile.dateFormatted = `${toBnNum(now.getDate())} ${monthsBn[now.getMonth()]} ${toBnNum(now.getFullYear())}, ${now.toLocaleTimeString("bn-BD", { hour: "2-digit", minute: "2-digit" })}`;
+        savedProfile.device = isMobile ? "📱 মোবাইল" : "💻 কম্পিউটার/ল্যাপটপ";
+        savedProfile.id = "vis_" + Date.now();
+
+        if (window.SchoolDB && window.SchoolDB.addVisitorLog) {
+          window.SchoolDB.addVisitorLog(savedProfile);
+        } else {
+          const current = getAllVisitorsLog();
+          current.unshift(savedProfile);
+          saveVisitorsLog(current);
+        }
+        localStorage.setItem("ghoshgaon_visitor_profile", JSON.stringify(savedProfile));
+      }
+    }
+  } catch (e) {}
 
   // 4. Modal Open/Close Controls
   const openVisitorGatewayModal = () => {
@@ -1052,22 +1085,9 @@ document.addEventListener("DOMContentLoaded", () => {
     showToast("📥 এক্সেল (CSV) ফাইল সফলভাবে ডাউনলোড হয়েছে!");
   };
 
-  // 7. Seed Sample Data for Demo Testing
+  // 7. Seed Sample Data Action (Zero Dummy Data Policy - Real Visitors Only)
   const seedSampleVisitors = () => {
-    const currentLogs = getAllVisitorsLog();
-    const samples = [
-      { id: "vis_sample_1", name: "মাহবুবুর রহমান", sscYear: "1994", sscYearLabel: "১৯৯৪ সাল (SSC 1994)", isAlumni: true, timestamp: Date.now() - 3600000 * 24 * 3, dateFormatted: "২৪ অক্টোবর ২০২৬, ১০:১৫ পূর্বাহ্ন", device: "📱 মোবাইল" },
-      { id: "vis_sample_2", name: "মোঃ রফিকুল ইসলাম", sscYear: "2005", sscYearLabel: "২০০৫ সাল (SSC 2005)", isAlumni: true, timestamp: Date.now() - 3600000 * 24 * 2, dateFormatted: "২৫ অক্টোবর ২০২৬, ০৩:৪০ অপরাহ্ন", device: "💻 কম্পিউটার/ল্যাপটপ" },
-      { id: "vis_sample_3", name: "তানজিলা আক্তার", sscYear: "2016", sscYearLabel: "২০১৬ সাল (SSC 2016)", isAlumni: true, timestamp: Date.now() - 3600000 * 24, dateFormatted: "২৬ অক্টোবর ২০২৬, ১১:২০ পূর্বাহ্ন", device: "📱 মোবাইল" },
-      { id: "vis_sample_4", name: "আরিফুল হাসান শাকিল", sscYear: "2021", sscYearLabel: "২০২১ সাল (SSC 2021)", isAlumni: true, timestamp: Date.now() - 3600000 * 5, dateFormatted: "২৭ অক্টোবর ২০২৬, ০১:১৫ অপরাহ্ন", device: "📱 মোবাইল" },
-      { id: "vis_sample_5", name: "ডাঃ এ. কে. এম. সামসুল হক", sscYear: "1985", sscYearLabel: "১৯৮৫ সাল (SSC 1985)", isAlumni: true, timestamp: Date.now() - 3600000 * 2, dateFormatted: "২৭ অক্টোবর ২০২৬, ০৪:০৫ অপরাহ্ন", device: "💻 কম্পিউটার/ল্যাপটপ" },
-      { id: "vis_sample_6", name: "মোঃ জহিরুল ইসলাম", sscYear: "guardian", sscYearLabel: "সম্মানিত অভিভাবকবৃন্দ", isAlumni: false, timestamp: Date.now() - 3600000, dateFormatted: "২৭ অক্টোবর ২০২৬, ০৫:০০ অপরাহ্ন", device: "📱 মোবাইল" }
-    ];
-
-    const merged = [...samples, ...currentLogs.filter(c => !c.id.startsWith("vis_sample_"))];
-    saveVisitorsLog(merged);
-    renderAdminDashboard();
-    showToast("✨ ডেমো প্রাক্তন শিক্ষার্থী ও অভিভাবক ডাটা সফলভাবে যুক্ত হয়েছে!");
+    showToast("💡 কোনো ডামি ডাটা যোগ করা হবে না। শিক্ষার্থীরা ওয়েবসাইটে প্রবেশ করলেই আসল লাইভ ডাটা সংরক্ষিত হবে।");
   };
 
   // 8. Visitor Entry Form Submission
@@ -1106,6 +1126,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentLogs = getAllVisitorsLog();
     currentLogs.unshift(visitorRecord);
     saveVisitorsLog(currentLogs);
+
+    // Sync directly to central SchoolDB for Admin Dashboard
+    if (window.SchoolDB && window.SchoolDB.addVisitorLog) {
+      window.SchoolDB.addVisitorLog(visitorRecord);
+    }
 
     // Real-Time Cloud Firestore Sync (Synchronizes across all devices)
     if (isCloudActive && firestoreDb) {

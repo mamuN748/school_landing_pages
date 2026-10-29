@@ -1,15 +1,23 @@
 /**
- * Ghoshgaon Shere Bangla High School - Central Database Engine
- * Persistent Multi-Collection Schema with Real CRUD, Seed Data & Audit Logs
+ * ============================================================================
+ * GHOSHGAON SHERE BANGLA HIGH SCHOOL - CENTRAL DATABASE ENGINE (v3.0)
+ * Clean Persistent Storage (No Dummy Data), Real-Time Visitor Logging,
+ * Full CRUD, and Audit Logs
+ * ============================================================================
  */
 (function (global) {
   "use strict";
 
   const DB_STORAGE_KEY = "ghoshgaon_school_erp_db_v2";
+  const VISITOR_STORAGE_KEY = "ghoshgaon_all_visitors_log";
+  const TOTAL_VIEWS_KEY = "ghoshgaon_site_total_views";
 
-  // Initial High Quality Seed Data
+  // Clean Initial State (ZERO dummy records - user adds real data)
   const INITIAL_DB = {
     settings: {
+      adminUsername: "Mamun190a",
+      adminPin: "112292",
+      schoolName: "ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়",
       schoolNameBn: "ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়",
       schoolNameEn: "Ghoshgaon Shere Bangla High School",
       eiin: "111812",
@@ -17,6 +25,7 @@
       motto: "জ্ঞান, শৃঙ্খলা, চরিত্র ও সেবা",
       phone: "+880 1712-345678",
       email: "info@ghoshgaon-school.edu.bd",
+      address: "গ্রাম ও ডাকঘর: ঘোষগাঁও, উপজেলা: ধোবাউড়া, জেলা: ময়মনসিংহ",
       addressBn: "গ্রাম ও ডাকঘর: ঘোষগাঁও, উপজেলা: ধোবাউড়া, জেলা: ময়মনসিংহ",
       principalName: "মো. রফিকুল ইসলাম",
       globalDarkModeEnabled: true,
@@ -24,301 +33,59 @@
       academicYear: "২০২৬",
       maintenanceMode: false
     },
-    students: [
-      {
-        id: "ST-2026-601",
-        nameBn: "মাহিন হাসান",
-        nameEn: "Mahin Hasan",
-        classVal: "6",
-        section: "ক",
-        roll: "১",
-        year: "২০২৬",
-        gender: "ছাত্র",
-        guardianName: "মো. কামরুল হাসান",
-        guardianPhone: "01711223344",
-        bloodGroup: "A+",
-        address: "ঘোষগাঁও, ধোবাউড়া",
-        status: "Active"
-      },
-      {
-        id: "ST-2026-701",
-        nameBn: "ফাতেমা জান্নাত",
-        nameEn: "Fatema Jannat",
-        classVal: "7",
-        section: "খ",
-        roll: "২",
-        year: "২০২৬",
-        gender: "ছাত্রী",
-        guardianName: "আব্দুল জলিল",
-        guardianPhone: "01822334455",
-        bloodGroup: "B+",
-        address: "মুন্সীরহাট, ধোবাউড়া",
-        status: "Active"
-      },
-      {
-        id: "ST-2026-801",
-        nameBn: "তানভীর আহমেদ",
-        nameEn: "Tanvir Ahmed",
-        classVal: "8",
-        section: "ক",
-        roll: "৩",
-        year: "২০২৬",
-        gender: "ছাত্র",
-        guardianName: "মোখলেছুর রহমান",
-        guardianPhone: "01933445566",
-        bloodGroup: "O+",
-        address: "ঘোষগাঁও বাজার, ধোবাউড়া",
-        status: "Active"
-      },
-      {
-        id: "ST-2026-901",
-        nameBn: "সুমাইয়া আক্তার",
-        nameEn: "Sumaiya Akter",
-        classVal: "9",
-        section: "ক",
-        roll: "৪",
-        year: "২০২৬",
-        gender: "ছাত্রী",
-        guardianName: "রফিকুল ইসলাম",
-        guardianPhone: "01755667788",
-        bloodGroup: "AB+",
-        address: "পোড়াকান্দুলিয়া, ধোবাউড়া",
-        status: "Active"
-      },
-      {
-        id: "ST-2026-101",
-        nameBn: "আব্দুল্লাহ আল মামুন",
-        nameEn: "Abdullah Al Mamun",
-        classVal: "10",
-        section: "ক",
-        roll: "৫",
-        year: "২০২৬",
-        gender: "ছাত্র",
-        guardianName: "নুরুল ইসলাম",
-        guardianPhone: "01788990011",
-        bloodGroup: "O+",
-        address: "ঘোষগাঁও, ধোবাউড়া",
-        status: "Active"
-      }
-    ],
-    teachers: [
-      {
-        id: "TCH-001",
-        nameBn: "মাওলানা মো. শামসুল হুদা",
-        nameEn: "Md. Shamsul Huda",
-        designation: "প্রধান শিক্ষক (অব.)",
-        dept: "সাধারণ ও প্রশাসন",
-        subject: "ইসলাম শিক্ষা ও মানবিক",
-        qualification: "এম.এ, বি.এড",
-        phone: "01711002233",
-        email: "headmaster@ghoshgaon-school.edu.bd",
-        type: "retired",
-        publicVisible: true,
-        photo: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=300&q=80"
-      },
-      {
-        id: "TCH-002",
-        nameBn: "ফরিদা খাতুন",
-        nameEn: "Farida Khatoon",
-        designation: "সহকারী প্রধান শিক্ষক",
-        dept: "বিজ্ঞান",
-        subject: "গণিত ও উচ্চতর গণিত",
-        qualification: "এম.এসসি (গণিত), বি.এড",
-        phone: "01811223344",
-        email: "farida@ghoshgaon-school.edu.bd",
-        type: "present",
-        publicVisible: true,
-        photo: "teacher-farida-khatoon.jpg"
-      },
-      {
-        id: "TCH-003",
-        nameBn: "মো. আনিসুর রহমান",
-        nameEn: "Md. Anisur Rahman",
-        designation: "সিনিয়র সহকারী শিক্ষক",
-        dept: "বিজ্ঞান",
-        subject: "পদার্থবিজ্ঞান ও রসায়ন",
-        qualification: "এম.এসসি (পদার্থবিজ্ঞান)",
-        phone: "01911334455",
-        email: "anis@ghoshgaon-school.edu.bd",
-        type: "present",
-        publicVisible: true,
-        photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80"
-      },
-      {
-        id: "TCH-004",
-        nameBn: "মো. মাহমুদুল হাসান",
-        nameEn: "Md. Mahmudul Hasan",
-        designation: "সহকারী শিক্ষক (আইসিটি)",
-        dept: "বিজ্ঞান",
-        subject: "তথ্য ও যোগাযোগ প্রযুক্তি",
-        qualification: "বি.এসসি ইন সিএসই",
-        phone: "01711445566",
-        email: "ict@ghoshgaon-school.edu.bd",
-        type: "present",
-        publicVisible: true,
-        photo: "teacher-ict.jpg"
-      }
-    ],
+    students: [],
+    teachers: [],
     classes: [
-      { id: "CLS-6", name: "ষষ্ঠ শ্রেণি (Class 6)", sections: "ক, খ", classTeacher: "মো. আনিসুর রহমান", studentsCount: 140 },
-      { id: "CLS-7", name: "সপ্তম শ্রেণি (Class 7)", sections: "ক, খ", classTeacher: "ফরিদা খাতুন", studentsCount: 135 },
-      { id: "CLS-8", name: "অষ্টম শ্রেণি (Class 8)", sections: "ক, খ", classTeacher: "মো. মাহমুদুল হাসান", studentsCount: 128 },
-      { id: "CLS-9", name: "নবম শ্রেণি (Class 9)", sections: "ক (বিজ্ঞান), খ (মানবিক)", classTeacher: "মো. আনিসুর রহমান", studentsCount: 115 },
-      { id: "CLS-10", name: "দশম শ্রেণি (Class 10)", sections: "ক (বিজ্ঞান), খ (মানবিক)", classTeacher: "ফরিদা খাতুন", studentsCount: 110 }
+      { id: "CLS-6", name: "Class 6", nameBn: "ষষ্ঠ শ্রেণি (Class 6)", section: "ক", sections: "ক, খ", classTeacher: "নির্ধারিত নয়", roomNo: "১০১", studentsCount: 0 },
+      { id: "CLS-7", name: "Class 7", nameBn: "সপ্তম শ্রেণি (Class 7)", section: "ক", sections: "ক, খ", classTeacher: "নির্ধারিত নয়", roomNo: "১০২", studentsCount: 0 },
+      { id: "CLS-8", name: "Class 8", nameBn: "অষ্টম শ্রেণি (Class 8)", section: "ক", sections: "ক, খ", classTeacher: "নির্ধারিত নয়", roomNo: "১০৩", studentsCount: 0 },
+      { id: "CLS-9", name: "Class 9", nameBn: "নবম শ্রেণি (Class 9)", section: "ক (বিজ্ঞান), খ (মানবিক)", sections: "ক (বিজ্ঞান), খ (মানবিক)", classTeacher: "নির্ধারিত নয়", roomNo: "২০১", studentsCount: 0 },
+      { id: "CLS-10", name: "Class 10", nameBn: "দশম শ্রেণি (Class 10)", section: "ক (বিজ্ঞান), খ (মানবিক)", sections: "ক (বিজ্ঞান), খ (মানবিক)", classTeacher: "নির্ধারিত নয়", roomNo: "২০২", studentsCount: 0 }
     ],
-    admissions: [
-      {
-        id: "ADM-2026-101",
-        applicantName: "রাকিবুল হাসান",
-        desiredClass: "6",
-        previousSchool: "ঘোষগাঁও সরকারি প্রাথমিক বিদ্যালয়",
-        gpa: "৫.০০",
-        guardianName: "মো. দেলোয়ার হোসেন",
-        guardianPhone: "01712987654",
-        dob: "2013-05-12",
-        gender: "ছাত্র",
-        address: "ঘোষগাঁও, ধোবাউড়া",
-        status: "Pending", // Pending, Under Review, Approved, Rejected
-        submissionDate: "২৫ অক্টোবর, ২০২৬",
-        adminNotes: "সনদপত্র যাচাই সম্পন্ন।"
-      },
-      {
-        id: "ADM-2026-102",
-        applicantName: "আফরোজা সুলতানা",
-        desiredClass: "6",
-        previousSchool: "মুন্সীরহাট মডেল একাডেমি",
-        gpa: "৪.৮৩",
-        guardianName: "শাহ আলম",
-        guardianPhone: "01819876543",
-        dob: "2013-08-20",
-        gender: "ছাত্রী",
-        address: "মুন্সীরহাট, ধোবাউড়া",
-        status: "Approved",
-        submissionDate: "২৬ অক্টোবর, ২০২৬",
-        adminNotes: "ভর্তি ফি পরিশোধিত ও রোল নিশ্চিত।"
-      }
-    ],
-    notices: [
-      {
-        id: "NOT-001",
-        title: "২০২৬ শিক্ষাবর্ষে ৬ষ্ঠ থেকে ৯ম শ্রেণিতে ভর্তি আবেদন সংক্রান্ত জরুরি বিজ্ঞপ্তি",
-        category: "ভর্তি",
-        publishDate: "২৪ অক্টোবর, ২০২৬",
-        expiryDate: "১৫ নভেম্বর, ২০২৬",
-        description: "ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ে ২০২৬ শিক্ষাবর্ষে ৬ষ্ঠ হতে ৯ম শ্রেণিতে নতুন শিক্ষার্থী ভর্তির জন্য অনলাইনে আবেদন আহ্বান করা যাচ্ছে। আগ্রহী শিক্ষার্থী ও অভিভাবকবৃন্দ নির্ধারিত ফরম পূরণ করে আবেদন সম্পন্ন করুন।",
-        priority: "pinned",
-        attachmentUrl: "",
-        status: "published"
-      },
-      {
-        id: "NOT-002",
-        title: "অর্ধবার্ষিক মূল্যায়ন পরীক্ষার সময়সূচি ও প্রবেশপত্র বিতরণ",
-        category: "পরীক্ষা",
-        publishDate: "২০ অক্টোবর, ২০২৬",
-        expiryDate: "১০ নভেম্বর, ২০২৬",
-        description: "সকল শিক্ষার্থীদের অবগতির জন্য জানানো যাচ্ছে যে আগামী ১০ নভেম্বর থেকে সকল শ্রেণির অর্ধবার্ষিক মূল্যায়ন পরীক্ষা শুরু হবে। অফিস থেকে নির্ধারিত সময়ের মধ্যে প্রবেশপত্র সংগ্রহ করার নির্দেশ দেওয়া হলো।",
-        priority: "normal",
-        attachmentUrl: "",
-        status: "published"
-      },
-      {
-        id: "NOT-003",
-        title: "জাতীয় শোক দিবস ও আন্তঃস্কুল রচনা প্রতিযোগিতা ২০২৬",
-        category: "একাডেমিক",
-        publishDate: "১৫ আগস্ট, ২০২৬",
-        expiryDate: "৩০ আগস্ট, ২০২৬",
-        description: "বিদ্যালয়ের মিলনায়তনে অনুষ্ঠিত হতে যাচ্ছে শোক দিবস উপলক্ষে কুইজ ও রচনা প্রতিযোগিতা। আগ্রহীদের শ্রেণি শিক্ষকের কাছে নাম তালিকাভুক্ত করার আহ্বান জানানো হলো।",
-        priority: "normal",
-        attachmentUrl: "",
-        status: "published"
-      }
-    ],
-    results: [
-      {
-        id: "RES-2026-1001",
-        studentName: "আব্দুল্লাহ আল মামুন",
-        roll: "১",
-        regNo: "18123456",
-        classVal: "10",
-        examType: "বার্ষিক পরীক্ষা ২০২৬",
-        gpa: "৫.০০",
-        status: "কৃতকার্য (A+)",
-        subjects: [
-          { name: "বাংলা", mark: 85, grade: "A+" },
-          { name: "ইংরেজি", mark: 82, grade: "A+" },
-          { name: "গণিত", mark: 94, grade: "A+" },
-          { name: "বিজ্ঞান", mark: 88, grade: "A+" },
-          { name: "আইসিটি", mark: 48, grade: "A+" }
-        ]
-      },
-      {
-        id: "RES-2026-1002",
-        studentName: "মাহমুদ হাসান",
-        roll: "২",
-        regNo: "18123457",
-        classVal: "10",
-        examType: "বার্ষিক পরীক্ষা ২০২৬",
-        gpa: "৪.৮৫",
-        status: "কৃতকার্য (A)",
-        subjects: [
-          { name: "বাংলা", mark: 78, grade: "A" },
-          { name: "ইংরেজি", mark: 75, grade: "A" },
-          { name: "গণিত", mark: 89, grade: "A+" },
-          { name: "বিজ্ঞান", mark: 80, grade: "A+" },
-          { name: "আইসিটি", mark: 45, grade: "A" }
-        ]
-      }
-    ],
-    gallery: [
-      {
-        id: "GAL-01",
-        title: "বিদ্যালয়ের সুবিশাল ক্যাম্পাস ও সবুজ খেলার মাঠ",
-        category: "ক্যাম্পাস",
-        url: "hero-campus.jpg",
-        date: "২০২৬"
-      },
-      {
-        id: "GAL-02",
-        title: "শ্রেণিকক্ষে আনন্দঘন পাঠদান মুহূর্ত",
-        category: "ক্লাসরুম",
-        url: "hero-students.jpg",
-        date: "২০২৬"
-      },
-      {
-        id: "GAL-03",
-        title: "সুসজ্জিত পাঠাগার ও বিজ্ঞান গবেষণাগার",
-        category: "সুযোগ-সুবিধা",
-        url: "hero-books.jpg",
-        date: "২০২৬"
-      }
-    ],
-    messages: [
-      {
-        id: "MSG-001",
-        senderName: "মো. আলমগীর হোসেন",
-        senderPhone: "01712-998877",
-        senderEmail: "alamgir@gmail.com",
-        subject: "ভর্তি ফি ও হোস্টেল সুবিধা সংক্রান্ত তথ্য জানতে চাই",
-        message: "আসসালামু আলাইকুম। আমার ছেলেকে ৬ষ্ঠ শ্রেণিতে ভর্তি করাতে চাই। বিদ্যালয়ের আবাসিক হোস্টেল সুবিধা এবং মাসিক ফি সম্পর্কে জানালে উপকৃত হতাম।",
-        date: "২৮ অক্টোবর, ২০২৬",
-        read: false
-      }
-    ],
-    auditLogs: [
-      {
-        id: "LOG-001",
-        timestamp: Date.now(),
-        dateFormatted: "২৯ অক্টোবর, ২০২৬",
-        user: "Mamun190a",
-        action: "সিস্টেম ইনিশিয়ালাইজেশন ও সিকিউরিটি কনফিগারেশন সফল।"
-      }
-    ]
+    admissions: [],
+    notices: [],
+    results: [],
+    messages: [],
+    gallery: [],
+    visitorLogs: [],
+    auditLogs: []
   };
 
-  // Database Management Class
   class SchoolDatabase {
     constructor() {
       this.data = this.load();
+    }
+
+    normalizeData(db) {
+      if (!db || typeof db !== "object") return INITIAL_DB;
+
+      // Settings
+      db.settings = { ...INITIAL_DB.settings, ...(db.settings || {}) };
+      if (!db.settings.adminUsername) db.settings.adminUsername = "Mamun190a";
+      if (!db.settings.adminPin) db.settings.adminPin = "112292";
+
+      // Collections
+      if (!Array.isArray(db.students)) db.students = [];
+      if (!Array.isArray(db.teachers)) db.teachers = [];
+      if (!Array.isArray(db.classes) || db.classes.length === 0) db.classes = INITIAL_DB.classes;
+      if (!Array.isArray(db.admissions)) db.admissions = [];
+      if (!Array.isArray(db.notices)) db.notices = [];
+      if (!Array.isArray(db.results)) db.results = [];
+      if (!Array.isArray(db.messages)) db.messages = [];
+      if (!Array.isArray(db.gallery)) db.gallery = [];
+      if (!Array.isArray(db.visitorLogs)) db.visitorLogs = [];
+      if (!Array.isArray(db.auditLogs)) db.auditLogs = [];
+
+      // Filter out any previous dummy items if any exist
+      db.students = db.students.filter(s => !s.id || !s.id.startsWith("ST-2026-"));
+      db.teachers = db.teachers.filter(t => !t.id || !t.id.startsWith("TCH-00"));
+      db.notices = db.notices.filter(n => !n.id || !n.id.startsWith("NOT-00"));
+      db.admissions = db.admissions.filter(a => !a.id || !a.id.startsWith("ADM-2026-"));
+      db.results = db.results.filter(r => !r.id || !r.id.startsWith("RES-2026-"));
+      db.messages = db.messages.filter(m => !m.id || !m.id.startsWith("MSG-00"));
+      db.gallery = db.gallery.filter(g => !g.id || !g.id.startsWith("GAL-00"));
+
+      return db;
     }
 
     load() {
@@ -326,22 +93,12 @@
         const raw = localStorage.getItem(DB_STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
-          // Merge with initial db to ensure missing fields exist
-          return {
-            settings: { ...INITIAL_DB.settings, ...(parsed.settings || {}) },
-            students: Array.isArray(parsed.students) ? parsed.students : INITIAL_DB.students,
-            teachers: Array.isArray(parsed.teachers) ? parsed.teachers : INITIAL_DB.teachers,
-            classes: Array.isArray(parsed.classes) ? parsed.classes : INITIAL_DB.classes,
-            admissions: Array.isArray(parsed.admissions) ? parsed.admissions : INITIAL_DB.admissions,
-            notices: Array.isArray(parsed.notices) ? parsed.notices : INITIAL_DB.notices,
-            results: Array.isArray(parsed.results) ? parsed.results : INITIAL_DB.results,
-            gallery: Array.isArray(parsed.gallery) ? parsed.gallery : INITIAL_DB.gallery,
-            messages: Array.isArray(parsed.messages) ? parsed.messages : INITIAL_DB.messages,
-            auditLogs: Array.isArray(parsed.auditLogs) ? parsed.auditLogs : INITIAL_DB.auditLogs
-          };
+          const normalized = this.normalizeData(parsed);
+          this.save(normalized);
+          return normalized;
         }
       } catch (e) {
-        console.warn("Error loading database, resetting to seed data:", e);
+        console.warn("Error loading database, resetting to clean state:", e);
       }
       this.save(INITIAL_DB);
       return JSON.parse(JSON.stringify(INITIAL_DB));
@@ -358,13 +115,16 @@
       }
     }
 
-    logAudit(action, user = "Mamun190a") {
+    // --- Audit Logs ---
+    addAuditLog(action, details = "", user = "Mamun190a") {
+      const now = new Date();
       const logEntry = {
         id: "LOG-" + Date.now(),
-        timestamp: Date.now(),
-        dateFormatted: new Date().toLocaleString("bn-BD"),
-        user: user,
-        action: action
+        timestamp: now.toLocaleTimeString("bn-BD"),
+        dateFormatted: now.toLocaleString("bn-BD"),
+        action: action,
+        details: details || action,
+        user: user || "Mamun190a"
       };
       if (!this.data.auditLogs) this.data.auditLogs = [];
       this.data.auditLogs.unshift(logEntry);
@@ -372,16 +132,35 @@
         this.data.auditLogs.pop();
       }
       this.save();
+      return logEntry;
+    }
+
+    logAudit(action, user = "Mamun190a") {
+      return this.addAuditLog(action, action, user);
+    }
+
+    getAuditLogs() {
+      return this.data.auditLogs || [];
     }
 
     // --- Settings ---
     getSettings() {
+      if (!this.data.settings) {
+        this.data.settings = { ...INITIAL_DB.settings };
+      }
+      if (!this.data.settings.adminUsername) {
+        this.data.settings.adminUsername = "Mamun190a";
+      }
+      if (!this.data.settings.adminPin) {
+        this.data.settings.adminPin = "112292";
+      }
       return this.data.settings;
     }
+
     updateSettings(newSettings, user = "Mamun190a") {
       this.data.settings = { ...this.data.settings, ...newSettings };
       this.save();
-      this.logAudit("ওয়েবসাইট ও গ্লোবাল সেটিংস আপডেট করা হয়েছে", user);
+      this.addAuditLog("SETTINGS_UPDATE", "ওয়েবসাইট ও গ্লোবাল সেটিংস আপডেট করা হয়েছে", user);
       return this.data.settings;
     }
 
@@ -389,31 +168,40 @@
     getStudents() {
       return this.data.students || [];
     }
+
+    getStudentById(id) {
+      return (this.data.students || []).find((s) => s.id === id) || null;
+    }
+
     addStudent(student, user = "Mamun190a") {
       if (!student.id) {
-        student.id = "ST-" + Date.now();
+        student.id = "STU-" + Date.now().toString().slice(-6);
       }
+      student.nameBn = student.nameBn || student.name;
+      student.name = student.name || student.nameBn;
       this.data.students.unshift(student);
       this.save();
-      this.logAudit(`নতুন শিক্ষার্থী যুক্ত: ${student.nameBn} (রোল: ${student.roll})`, user);
+      this.addAuditLog("STUDENT_ADD", `নতুন শিক্ষার্থী যুক্ত: ${student.name} (রোল: ${student.roll})`, user);
       return student;
     }
+
     updateStudent(id, updatedFields, user = "Mamun190a") {
-      const idx = this.data.students.findIndex(s => s.id === id);
+      const idx = this.data.students.findIndex((s) => s.id === id);
       if (idx !== -1) {
         this.data.students[idx] = { ...this.data.students[idx], ...updatedFields };
         this.save();
-        this.logAudit(`শিক্ষার্থী তথ্য সংশোধন: ${this.data.students[idx].nameBn}`, user);
+        this.addAuditLog("STUDENT_UPDATE", `শিক্ষার্থী তথ্য সংশোধন: ${this.data.students[idx].name}`, user);
         return this.data.students[idx];
       }
       return null;
     }
+
     deleteStudent(id, user = "Mamun190a") {
-      const target = this.data.students.find(s => s.id === id);
-      this.data.students = this.data.students.filter(s => s.id !== id);
+      const target = this.data.students.find((s) => s.id === id);
+      this.data.students = this.data.students.filter((s) => s.id !== id);
       this.save();
       if (target) {
-        this.logAudit(`শিক্ষার্থী রেকর্ড অপসারিত: ${target.nameBn}`, user);
+        this.addAuditLog("STUDENT_DELETE", `শিক্ষার্থী রেকর্ড অপসারিত: ${target.name}`, user);
       }
       return true;
     }
@@ -422,39 +210,50 @@
     getTeachers() {
       return this.data.teachers || [];
     }
+
     addTeacher(teacher, user = "Mamun190a") {
       if (!teacher.id) {
-        teacher.id = "TCH-" + Date.now();
+        teacher.id = "TCH-" + Date.now().toString().slice(-4);
       }
+      teacher.nameBn = teacher.nameBn || teacher.name;
+      teacher.name = teacher.name || teacher.nameBn;
       this.data.teachers.unshift(teacher);
       this.save();
-      this.logAudit(`নতুন শিক্ষক তথ্য যুক্ত: ${teacher.nameBn} (${teacher.designation})`, user);
+      this.addAuditLog("TEACHER_ADD", `নতুন শিক্ষক তথ্য যুক্ত: ${teacher.name} (${teacher.designation})`, user);
       return teacher;
     }
+
     updateTeacher(id, updatedFields, user = "Mamun190a") {
-      const idx = this.data.teachers.findIndex(t => t.id === id);
+      const idx = this.data.teachers.findIndex((t) => t.id === id);
       if (idx !== -1) {
         this.data.teachers[idx] = { ...this.data.teachers[idx], ...updatedFields };
         this.save();
-        this.logAudit(`শিক্ষক তথ্য সংশোধন: ${this.data.teachers[idx].nameBn}`, user);
+        this.addAuditLog("TEACHER_UPDATE", `শিক্ষক তথ্য সংশোধন: ${this.data.teachers[idx].name}`, user);
         return this.data.teachers[idx];
       }
       return null;
     }
+
     deleteTeacher(id, user = "Mamun190a") {
-      const target = this.data.teachers.find(t => t.id === id);
-      this.data.teachers = this.data.teachers.filter(t => t.id !== id);
+      const target = this.data.teachers.find((t) => t.id === id);
+      this.data.teachers = this.data.teachers.filter((t) => t.id !== id);
       this.save();
       if (target) {
-        this.logAudit(`শিক্ষক রেকর্ড অপসারিত: ${target.nameBn}`, user);
+        this.addAuditLog("TEACHER_DELETE", `শিক্ষক রেকর্ড অপসারিত: ${target.name}`, user);
       }
       return true;
+    }
+
+    // --- Classes ---
+    getClasses() {
+      return this.data.classes || [];
     }
 
     // --- Admissions ---
     getAdmissions() {
       return this.data.admissions || [];
     }
+
     submitAdmission(application) {
       if (!application.id) {
         application.id = "ADM-" + Date.now().toString().slice(-6);
@@ -468,24 +267,26 @@
       }
       this.data.admissions.unshift(application);
       this.save();
-      this.logAudit(`নতুন অনলাইন ভর্তি আবেদন দাখিল: ${application.applicantName} (শ্রেণি: ${application.desiredClass})`, "Public");
+      this.addAuditLog("ADMISSION_SUBMIT", `নতুন অনলাইন ভর্তি আবেদন দাখিল: ${application.applicantName}`, "Public");
       return application;
     }
+
     updateAdmissionStatus(id, newStatus, adminNotes = "", user = "Mamun190a") {
-      const app = this.data.admissions.find(a => a.id === id);
+      const app = this.data.admissions.find((a) => a.id === id);
       if (app) {
         app.status = newStatus;
         if (adminNotes) app.adminNotes = adminNotes;
         this.save();
-        this.logAudit(`ভর্তি আবেদন স্ট্যাটাস পরিবর্তন: ${app.applicantName} -> ${newStatus}`, user);
+        this.addAuditLog("ADMISSION_UPDATE", `ভর্তি আবেদন স্ট্যাটাস পরিবর্তন: ${app.applicantName} -> ${newStatus}`, user);
         return app;
       }
       return null;
     }
+
     deleteAdmission(id, user = "Mamun190a") {
-      this.data.admissions = this.data.admissions.filter(a => a.id !== id);
+      this.data.admissions = this.data.admissions.filter((a) => a.id !== id);
       this.save();
-      this.logAudit(`ভর্তি আবেদন অপসারিত: ID ${id}`, user);
+      this.addAuditLog("ADMISSION_DELETE", `ভর্তি আবেদন অপসারিত: ID ${id}`, user);
       return true;
     }
 
@@ -493,32 +294,37 @@
     getNotices() {
       return this.data.notices || [];
     }
+
     addNotice(notice, user = "Mamun190a") {
       if (!notice.id) {
         notice.id = "NOT-" + Date.now().toString().slice(-6);
       }
-      if (!notice.publishDate) {
-        notice.publishDate = new Date().toLocaleDateString("bn-BD");
+      if (!notice.date) {
+        notice.date = new Date().toLocaleDateString("bn-BD");
       }
+      notice.publishDate = notice.date;
+      notice.status = notice.isPublished ? "published" : "draft";
       this.data.notices.unshift(notice);
       this.save();
-      this.logAudit(`নতুন নোটিশ প্রকাশিত: "${notice.title.slice(0, 30)}..."`, user);
+      this.addAuditLog("NOTICE_ADD", `নতুন নোটিশ প্রকাশিত: "${notice.title.slice(0, 30)}..."`, user);
       return notice;
     }
+
     updateNotice(id, updatedFields, user = "Mamun190a") {
-      const idx = this.data.notices.findIndex(n => n.id === id);
+      const idx = this.data.notices.findIndex((n) => n.id === id);
       if (idx !== -1) {
         this.data.notices[idx] = { ...this.data.notices[idx], ...updatedFields };
         this.save();
-        this.logAudit(`নোটিশ সংশোধন: "${this.data.notices[idx].title.slice(0, 30)}..."`, user);
+        this.addAuditLog("NOTICE_UPDATE", `নোটিশ সংশোধন: "${this.data.notices[idx].title.slice(0, 30)}..."`, user);
         return this.data.notices[idx];
       }
       return null;
     }
+
     deleteNotice(id, user = "Mamun190a") {
-      this.data.notices = this.data.notices.filter(n => n.id !== id);
+      this.data.notices = this.data.notices.filter((n) => n.id !== id);
       this.save();
-      this.logAudit(`নোটিশ অপসারিত: ID ${id}`, user);
+      this.addAuditLog("NOTICE_DELETE", `নোটিশ অপসারিত: ID ${id}`, user);
       return true;
     }
 
@@ -526,25 +332,28 @@
     getResults() {
       return this.data.results || [];
     }
+
     searchResult(classVal, examType, roll) {
-      return (this.data.results || []).find(r => 
-        String(r.classVal).trim() === String(classVal).trim() &&
+      return (this.data.results || []).find((r) =>
+        String(r.class || r.classVal).trim() === String(classVal).trim() &&
         String(r.roll).trim() === String(roll).trim()
       );
     }
+
     addResult(resultItem, user = "Mamun190a") {
       if (!resultItem.id) {
-        resultItem.id = "RES-" + Date.now();
+        resultItem.id = "RES-" + Date.now().toString().slice(-6);
       }
       this.data.results.unshift(resultItem);
       this.save();
-      this.logAudit(`ফলাফল আপলোড: ${resultItem.studentName} (রোল: ${resultItem.roll})`, user);
+      this.addAuditLog("RESULT_ADD", `ফলাফল আপলোড: ${resultItem.studentName} (রোল: ${resultItem.roll})`, user);
       return resultItem;
     }
+
     deleteResult(id, user = "Mamun190a") {
-      this.data.results = this.data.results.filter(r => r.id !== id);
+      this.data.results = this.data.results.filter((r) => r.id !== id);
       this.save();
-      this.logAudit(`ফলাফল রেকর্ড অপসারিত: ID ${id}`, user);
+      this.addAuditLog("RESULT_DELETE", `ফলাফল রেকর্ড অপসারিত: ID ${id}`, user);
       return true;
     }
 
@@ -552,30 +361,41 @@
     getMessages() {
       return this.data.messages || [];
     }
+
     submitMessage(msg) {
       if (!msg.id) {
         msg.id = "MSG-" + Date.now().toString().slice(-6);
       }
-      msg.date = new Date().toLocaleDateString("bn-BD");
-      msg.read = false;
+      msg.timestamp = new Date().toLocaleString("bn-BD");
+      msg.date = msg.timestamp;
+      msg.status = msg.status || "Unread";
+      msg.read = msg.status === "Read";
+      msg.name = msg.name || msg.senderName || "অভিভাবক";
       this.data.messages.unshift(msg);
       this.save();
-      this.logAudit(`নতুন ওয়েবসাইট বার্তা: ${msg.senderName} (${msg.subject})`, "Public");
+      this.addAuditLog("MESSAGE_SUBMIT", `নতুন ওয়েবসাইট বার্তা: ${msg.name} (${msg.subject})`, "Public");
       return msg;
     }
-    markMessageRead(id, user = "Mamun190a") {
-      const msg = this.data.messages.find(m => m.id === id);
+
+    updateMessageStatus(id, status = "Read", user = "Mamun190a") {
+      const msg = this.data.messages.find((m) => m.id === id);
       if (msg) {
-        msg.read = true;
+        msg.status = status;
+        msg.read = status === "Read";
         this.save();
         return msg;
       }
       return null;
     }
+
+    markMessageRead(id, user = "Mamun190a") {
+      return this.updateMessageStatus(id, "Read", user);
+    }
+
     deleteMessage(id, user = "Mamun190a") {
-      this.data.messages = this.data.messages.filter(m => m.id !== id);
+      this.data.messages = this.data.messages.filter((m) => m.id !== id);
       this.save();
-      this.logAudit(`বার্তা অপসারিত: ID ${id}`, user);
+      this.addAuditLog("MESSAGE_DELETE", `বার্তা অপসারিত: ID ${id}`, user);
       return true;
     }
 
@@ -583,44 +403,137 @@
     getGallery() {
       return this.data.gallery || [];
     }
+
     addGalleryItem(item, user = "Mamun190a") {
       if (!item.id) {
         item.id = "GAL-" + Date.now().toString().slice(-6);
       }
       this.data.gallery.unshift(item);
       this.save();
-      this.logAudit(`গ্যালারিতে নতুন ছবি যুক্ত: ${item.title}`, user);
+      this.addAuditLog("GALLERY_ADD", `গ্যালারিতে নতুন ছবি যুক্ত: ${item.title}`, user);
       return item;
     }
+
     deleteGalleryItem(id, user = "Mamun190a") {
-      this.data.gallery = this.data.gallery.filter(g => g.id !== id);
+      this.data.gallery = this.data.gallery.filter((g) => g.id !== id);
       this.save();
-      this.logAudit(`গ্যালারি ছবি অপসারিত: ID ${id}`, user);
+      this.addAuditLog("GALLERY_DELETE", `গ্যালারি ছবি অপসারিত: ID ${id}`, user);
       return true;
     }
 
-    // --- Backup & Restore ---
-    exportJSON() {
-      return JSON.stringify(this.data, null, 2);
-    }
-    importJSON(jsonString, user = "Mamun190a") {
+    // --- REAL-TIME VISITOR / STUDENT ACCESS TRACKING ---
+    getVisitorLogs() {
+      // Pull real visitor logs from shared localStorage
+      let logs = [];
       try {
-        const parsed = JSON.parse(jsonString);
-        if (parsed.settings && Array.isArray(parsed.students)) {
-          this.data = parsed;
-          this.save();
-          this.logAudit("ব্যাকআপ থেকে সম্পূর্ণ ডাটাবেজ রিস্টোর করা হয়েছে", user);
-          return { success: true };
+        const raw = localStorage.getItem(VISITOR_STORAGE_KEY);
+        if (raw) {
+          logs = JSON.parse(raw);
         }
-        return { success: false, error: "ভুল ফাইল ফরম্যাট" };
-      } catch (err) {
-        return { success: false, error: err.message };
+      } catch (e) {}
+
+      // Combine with database visitorLogs without duplicates
+      const dbLogs = this.data.visitorLogs || [];
+      const combinedMap = new Map();
+
+      logs.forEach(l => { if (l && l.id) combinedMap.set(l.id, l); });
+      dbLogs.forEach(l => { if (l && l.id) combinedMap.set(l.id, l); });
+
+      const sorted = Array.from(combinedMap.values()).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+      return sorted;
+    }
+
+    addVisitorLog(visitorRecord) {
+      if (!visitorRecord.id) {
+        visitorRecord.id = "vis_" + Date.now();
+      }
+      if (!this.data.visitorLogs) this.data.visitorLogs = [];
+      this.data.visitorLogs.unshift(visitorRecord);
+      this.save();
+
+      // Also sync to shared VISITOR_STORAGE_KEY
+      try {
+        const existing = JSON.parse(localStorage.getItem(VISITOR_STORAGE_KEY) || "[]");
+        existing.unshift(visitorRecord);
+        localStorage.setItem(VISITOR_STORAGE_KEY, JSON.stringify(existing));
+      } catch (e) {}
+
+      return visitorRecord;
+    }
+
+    deleteVisitorLog(id) {
+      this.data.visitorLogs = (this.data.visitorLogs || []).filter(l => l.id !== id);
+      this.save();
+
+      try {
+        const existing = JSON.parse(localStorage.getItem(VISITOR_STORAGE_KEY) || "[]");
+        const updated = existing.filter(l => l.id !== id);
+        localStorage.setItem(VISITOR_STORAGE_KEY, JSON.stringify(updated));
+      } catch (e) {}
+
+      return true;
+    }
+
+    clearVisitorLogs() {
+      this.data.visitorLogs = [];
+      this.save();
+      try {
+        localStorage.removeItem(VISITOR_STORAGE_KEY);
+      } catch (e) {}
+      return true;
+    }
+
+    getTotalSiteViews() {
+      try {
+        return parseInt(localStorage.getItem(TOTAL_VIEWS_KEY) || "0", 10);
+      } catch (e) {
+        return 0;
       }
     }
+
+    // --- Backup & Restore ---
+    exportDatabaseJSON() {
+      const fullExport = {
+        ...this.data,
+        visitorLogs: this.getVisitorLogs(),
+        totalViews: this.getTotalSiteViews()
+      };
+      return JSON.stringify(fullExport, null, 2);
+    }
+
+    exportJSON() {
+      return this.exportDatabaseJSON();
+    }
+
+    restoreDatabase(jsonString, user = "Mamun190a") {
+      try {
+        const parsed = JSON.parse(jsonString);
+        if (parsed && typeof parsed === "object") {
+          this.data = this.normalizeData(parsed);
+          this.save();
+          if (Array.isArray(parsed.visitorLogs)) {
+            try {
+              localStorage.setItem(VISITOR_STORAGE_KEY, JSON.stringify(parsed.visitorLogs));
+            } catch (e) {}
+          }
+          this.addAuditLog("RESTORE", "ব্যাকআপ থেকে সম্পূর্ণ ডাটাবেজ রিস্টোর করা হয়েছে", user);
+          return true;
+        }
+      } catch (err) {
+        console.error("Restore error:", err);
+      }
+      return false;
+    }
+
+    importJSON(jsonString, user = "Mamun190a") {
+      const ok = this.restoreDatabase(jsonString, user);
+      return { success: ok, error: ok ? null : "ভুল ফাইল ফরম্যাট" };
+    }
+
     resetToDefault(user = "Mamun190a") {
       this.data = JSON.parse(JSON.stringify(INITIAL_DB));
       this.save();
-      this.logAudit("ডাটাবেজ ফ্যাক্টরি রিসেট করা হয়েছে", user);
+      this.addAuditLog("RESET", "ডাটাবেজ ফ্যাক্টরি রিসেট করা হয়েছে", user);
       return true;
     }
   }

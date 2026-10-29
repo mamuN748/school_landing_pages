@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>রিডাইরেক্ট হচ্ছে... | ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়</title>
+  <script>
+    (function () {
+      var pathname = window.location.pathname || '';
+      var search = window.location.search || '';
+      var hash = window.location.hash || '';
+
+      // If URL contains /admin or #admin
+      if (pathname.indexOf('/admin') !== -1 || hash.indexOf('admin') !== -1) {
+        var adminPos = pathname.indexOf('/admin');
+        if (adminPos !== -1) {
+          var prefix = pathname.substring(0, adminPos);
+          window.location.replace(prefix + '/admin/index.html' + search + hash);
+          return;
+        } else {
+          var repoBase = '/school_landing_pages';
+          if (pathname.indexOf(repoBase) === 0) {
+            window.location.replace(repoBase + '/admin/index.html' + search + hash);
+            return;
+          } else {
+            window.location.replace('/admin/index.html' + search + hash);
+            return;
+          }
+        }
+      } else {
+        // Otherwise return to main landing page
+        var repoBase = '/school_landing_pages';
+        if (pathname.indexOf(repoBase) === 0) {
+          window.location.replace(repoBase + '/index.html' + search + hash);
+        } else {
+          window.location.replace('index.html' + search + hash);
+        }
+      }
+    })();
+  </script>
+</head>
+<body style="font-family: system-ui, -apple-system, sans-serif; background: #0f172a; color: #f8fafc; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center;">
+  <div>
+    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">অ্যাডমিন ড্যাশবোর্ডে প্রবেশ করা হচ্ছে...</h2>
+    <p style="color: #94a3b8; font-size: 0.95rem;">অনুগ্রহ করে কয়েক মুহূর্ত অপেক্ষা করুন...</p>
+    <p style="margin-top: 1.5rem;"><a href="admin/index.html" style="color: #c89d3d; text-decoration: none; font-weight: bold;">সরাসরি প্রবেশ করতে এখানে ক্লিক করুন →</a></p>
+  </div>
+</body>
+</html>

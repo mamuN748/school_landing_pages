@@ -29,7 +29,7 @@
         ভুল ইউজারনেম বা পিন নম্বর! আবার চেষ্টা করুন।
       </div>
 
-      <form id="auth-login-form">
+      <form id="auth-login-form" onsubmit="return false;">
         <div class="form-group">
           <label class="form-label" for="admin-username">অ্যাডমিন ইউজারনেম (Username)</label>
           <div class="input-with-icon">
@@ -40,20 +40,21 @@
 
         <div class="form-group">
           <label class="form-label" for="admin-pin">অ্যাডমিন সিক্রেট পিন / পাসওয়ার্ড (PIN)</label>
-          <div class="input-with-icon">
+          <div class="input-with-icon" style="position: relative;">
             <span class="input-icon">🔒</span>
-            <input type="password" id="admin-pin" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+            <input type="password" id="admin-pin" class="form-control" placeholder="যেমন: 112292" required autocomplete="current-password" style="padding-right: 2.75rem;">
+            <button type="button" id="btn-toggle-pin-visibility" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #94a3b8; font-size: 1.1rem; padding: 4px;" title="পিন দেখুন বা লুকান">👁️</button>
           </div>
         </div>
 
-        <button type="submit" class="btn-primary-auth">
+        <button type="button" id="btn-submit-auth" class="btn-primary-auth">
           <span>ড্যাশবোর্ডে লগইন করুন</span>
           <span>➜</span>
         </button>
       </form>
 
       <div class="auth-footer-help">
-        <p>ডিফল্ট অ্যাডমিন ক্রেডেনশিয়াল: <strong>Mamun190a</strong> / <strong>190190a</strong></p>
+        <p>অ্যাডমিন ক্রেডেনশিয়াল: ইউজারনেম: <strong>Mamun190a</strong> / পিন: <strong>112292</strong></p>
         <p style="margin-top: 0.5rem;"><a href="../index.html">← মূল ওয়েবসাইটে ফিরে যান</a></p>
       </div>
     </div>
@@ -90,6 +91,14 @@
             <span>শিক্ষার্থী ব্যবস্থাপনা</span>
           </span>
           <span class="nav-badge-pill" id="sidebar-badge-students">0</span>
+        </button>
+
+        <button type="button" class="nav-item-btn" data-view="visitors">
+          <span class="nav-btn-left">
+            <span class="nav-icon" style="color: #ef4444;">🔴</span>
+            <span>লাইভ শিক্ষার্থী ভিজিটর ট্র্যাকিং</span>
+          </span>
+          <span class="nav-badge-pill" id="sidebar-badge-visitors" style="background: #ef4444; color: #fff;">0</span>
         </button>
 
         <button type="button" class="nav-item-btn" data-view="teachers">
@@ -209,7 +218,22 @@
              =================================================================== -->
         <section id="view-overview" class="admin-view-pane active">
           <!-- KPI Summary Cards -->
-          <div class="admin-kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-card-info">
+                <span>মোট পেজ ভিউ</span>
+                <h3 id="kpi-total-views">0</h3>
+              </div>
+              <div class="kpi-card-icon icon-blue">🌐</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-card-info">
+                <span>লাইভ শিক্ষার্থী ভিজিটর</span>
+                <h3 id="kpi-total-visitors">0</h3>
+              </div>
+              <div class="kpi-card-icon icon-red">👥</div>
+            </div>
+
             <div class="kpi-card">
               <div class="kpi-card-info">
                 <span>মোট শিক্ষার্থী</span>
@@ -327,6 +351,32 @@
                     </tr>
                   </thead>
                   <tbody id="overview-recent-notices-tbody">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Recent Live Student Visits Feed -->
+            <div class="table-responsive-card" style="grid-column: 1 / -1;">
+              <div style="padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
+                <h3 style="font-size: 1rem; font-weight: 700; color: #ef4444; display: flex; align-items: center; gap: 0.4rem;">
+                  <span>🔴</span>
+                  <span>সাম্প্রতিক শিক্ষার্থী ও এসএসসি ভিজিটরদের লাইভ তালিকা (Real-Time Visits)</span>
+                </h3>
+                <button type="button" class="btn-action-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.78rem;" onclick="window.AdminApp.switchView('visitors')">সম্পূর্ণ তালিকা দেখুন →</button>
+              </div>
+              <div style="overflow-x: auto;">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>শিক্ষার্থীর / ভিজিটরের নাম</th>
+                      <th>এসএসসি সাল / শ্রেণি পরিচয়</th>
+                      <th>ভিজিটের সময়</th>
+                      <th>ব্যবহৃত ডিভাইস</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overview-recent-visitors-tbody">
                     <!-- Populated by JS -->
                   </tbody>
                 </table>
@@ -687,6 +737,95 @@
                   </tr>
                 </thead>
                 <tbody id="messages-table-tbody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             VIEW: LIVE STUDENT VISITOR TRACKING & SSC BATCH RECORDS
+             =================================================================== -->
+        <section id="view-visitors" class="admin-view-pane">
+          <!-- Visitor Metrics Grid -->
+          <div class="admin-kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-card-info">
+                <span>মোট পেজ ভিউ (Total Views)</span>
+                <h3 id="stat-total-views">0</h3>
+              </div>
+              <div class="kpi-card-icon icon-blue">🌐</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-card-info">
+                <span>নিবন্ধিত শিক্ষার্থী ও ভিজিটর</span>
+                <h3 id="stat-total-visitors">0</h3>
+              </div>
+              <div class="kpi-card-icon icon-red">👥</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-card-info">
+                <span>এসএসসি অ্যালামনাই</span>
+                <h3 id="stat-alumni-count">0</h3>
+              </div>
+              <div class="kpi-card-icon icon-gold">🎓</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-card-info">
+                <span>বর্তমান শিক্ষার্থী ও অন্যান্য</span>
+                <h3 id="stat-current-count">0</h3>
+              </div>
+              <div class="kpi-card-icon icon-green">🎒</div>
+            </div>
+          </div>
+
+          <!-- Toolbar -->
+          <div class="module-toolbar">
+            <div class="toolbar-search-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="visitor-search-input" placeholder="শিক্ষার্থীর নাম, সাল বা ডিভাইস দিয়ে খুঁজুন...">
+            </div>
+
+            <div class="toolbar-actions">
+              <select id="visitor-category-filter" class="filter-select">
+                <option value="ALL">সকল ভিজিটর (সকল সাল)</option>
+                <option value="ALUMNI">শুধুমাত্র এসএসসি অ্যালামনাই</option>
+                <option value="CURRENT">বর্তমান শিক্ষার্থী ও অভিভাবক</option>
+              </select>
+
+              <button type="button" class="btn-action-primary" id="btn-export-visitors-csv">
+                <span>📥 CSV এক্সপোর্ট</span>
+              </button>
+
+              <button type="button" class="btn-action-secondary" id="btn-refresh-visitors">
+                <span>🔄 রিফ্রেশ</span>
+              </button>
+
+              <button type="button" class="btn-action-secondary btn-icon-delete" id="btn-clear-visitors-log">
+                <span>🗑️ লগ মুছুন</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Visitors Data Table -->
+          <div class="table-responsive-card">
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>ক্রমিক</th>
+                    <th>শিক্ষার্থীর / ভিজিটরের নাম</th>
+                    <th>এসএসসি পাশের সাল / শ্রেণি</th>
+                    <th>প্রবেশের সময় ও তারিখ</th>
+                    <th>ডিভাইস</th>
+                    <th>অ্যাকশন</th>
+                  </tr>
+                </thead>
+                <tbody id="visitors-table-tbody">
                   <!-- Populated by JS -->
                 </tbody>
               </table>
