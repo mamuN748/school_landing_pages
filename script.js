@@ -825,18 +825,18 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace(/'/g, "&#039;");
   };
 
-  // 1. Populate SSC Passing Years (1974 - 2026) + Categories
+  // 1. Populate SSC Passing Years (1973 - 2026) + Categories
   const populateVisitorSscYears = () => {
     if (!visitorSscYearSelect) return;
     visitorSscYearSelect.innerHTML = '<option value="" disabled selected>এসএসসি পাশের সাল / আপনার পরিচয় নির্বাচন করুন...</option>';
 
     const optGroupAlumni = document.createElement("optgroup");
-    optGroupAlumni.label = "🎓 এসএসসি পাশের সাল (১৯৭৪ - ২০২৬)";
+    optGroupAlumni.label = "🎓 এসএসসি পাশের সাল (১৯৭৩ - ২০২৬)";
 
-    for (let y = 2026; y >= 1974; y--) {
+    for (let y = 2026; y >= 1973; y--) {
       const opt = document.createElement("option");
       opt.value = y.toString();
-      opt.textContent = `${toBnNum(y)} সাল (SSC ${y})`;
+      opt.textContent = y === 1973 ? `${toBnNum(y)} সাল (প্রতিষ্ঠাতা ব্যাচ ১৯৭৩)` : `${toBnNum(y)} সাল (SSC ${y})`;
       optGroupAlumni.appendChild(opt);
     }
     visitorSscYearSelect.appendChild(optGroupAlumni);
@@ -876,7 +876,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   incrementTotalPageViews();
 
-  // 3. Visitor Storage Helpers
+  // 3. Visitor Storage Helpers (Zero Dummy Data - Real Visitors Only)
   const getAllVisitorsLog = () => {
     try {
       const logs = JSON.parse(localStorage.getItem("ghoshgaon_all_visitors_log") || "[]");
@@ -894,33 +894,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error saving visitors log", e);
     }
   };
-
-  // Repeat visit tracking for identified students/visitors
-  try {
-    const savedProfile = JSON.parse(localStorage.getItem("ghoshgaon_visitor_profile") || "null");
-    if (savedProfile && savedProfile.name) {
-      const lastVisitTime = savedProfile.lastRepeatVisit || 0;
-      if (Date.now() - lastVisitTime > 15 * 60 * 1000) {
-        savedProfile.lastRepeatVisit = Date.now();
-        savedProfile.timestamp = Date.now();
-        const isMobile = /Mobile|Android|iP(hone|od|ad)/i.test(navigator.userAgent);
-        const now = new Date();
-        const monthsBn = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
-        savedProfile.dateFormatted = `${toBnNum(now.getDate())} ${monthsBn[now.getMonth()]} ${toBnNum(now.getFullYear())}, ${now.toLocaleTimeString("bn-BD", { hour: "2-digit", minute: "2-digit" })}`;
-        savedProfile.device = isMobile ? "📱 মোবাইল" : "💻 কম্পিউটার/ল্যাপটপ";
-        savedProfile.id = "vis_" + Date.now();
-
-        if (window.SchoolDB && window.SchoolDB.addVisitorLog) {
-          window.SchoolDB.addVisitorLog(savedProfile);
-        } else {
-          const current = getAllVisitorsLog();
-          current.unshift(savedProfile);
-          saveVisitorsLog(current);
-        }
-        localStorage.setItem("ghoshgaon_visitor_profile", JSON.stringify(savedProfile));
-      }
-    }
-  } catch (e) {}
 
   // 4. Modal Open/Close Controls
   const openVisitorGatewayModal = () => {
@@ -941,6 +914,65 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.style.overflow = "";
     }
   };
+
+  // Mandatory Entry Gate: Cannot dismiss or close by clicking backdrop until Name & SSC Batch are submitted
+  visitorEntryModal?.addEventListener("click", (e) => {
+    if (e.target === visitorEntryModal) {
+      const savedProfile = localStorage.getItem("ghoshgaon_visitor_profile");
+      if (!savedProfile) {
+        const card = visitorEntryModal.querySelector(".visitor-gateway-container");
+        if (card) {
+          card.classList.remove("shake-animate");
+          void card.offsetWidth;
+          card.classList.add("shake-animate");
+        }
+      }
+    }
+  });
+
+  // Check Repeat Visit or Trigger Mandatory Entry Gate on Load
+  try {
+    const savedProfile = JSON.parse(localStorage.getItem("ghoshgaon_visitor_profile") || "null");
+    if (savedProfile && savedProfile.name) {
+      // Repeat visit tracking for already identified visitors
+      const lastVisitTime = savedProfile.lastRepeatVisit || 0;
+      if (Date.now() - lastVisitTime > 15 * 60 * 1000) {
+        savedProfile.lastRepeatVisit = Date.now();
+        savedProfile.timestamp = Date.now();
+        const isMobile = /Mobile|Android|iP(hone|od|ad)/i.test(navigator.userAgent);
+        const now = new Date();
+        const monthsBn = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+        savedProfile.dateFormatted = `${toBnNum(now.getDate())} ${monthsBn[now.getMonth()]} ${toBnNum(now.getFullYear())}, ${now.toLocaleTimeString("bn-BD", { hour: "2-digit", minute: "2-digit" })}`;
+        savedProfile.device = isMobile ? "📱 মোবাইল" : "💻 কম্পিউটার/ল্যাপটপ";
+        savedProfile.id = "vis_" + Date.now();
+
+        if (window.SchoolDB && window.SchoolDB.addVisitorLog) {
+          window.SchoolDB.addVisitorLog(savedProfile);
+        } else {
+          const current = getAllVisitorsLog();
+          current.unshift(savedProfile);
+          saveVisitorsLog(current);
+        }
+        localStorage.setItem("ghoshgaon_visitor_profile", JSON.stringify(savedProfile));
+
+        // Sync repeat visit to cloud
+        try {
+          if (window.firebase && window.firebase.apps && window.firebase.apps.length > 0) {
+            window.firebase.firestore().collection("visitors").doc(savedProfile.id).set(savedProfile).catch(() => {});
+          }
+        } catch (e) {}
+      }
+    } else {
+      // Normal person viewing for the first time -> MUST fillup Name & SSC Batch before viewing!
+      setTimeout(() => {
+        openVisitorGatewayModal();
+      }, 250);
+    }
+  } catch (e) {
+    setTimeout(() => {
+      openVisitorGatewayModal();
+    }, 250);
+  }
 
   const openAdminDashboardModal = () => {
     if (!isAdminLoggedIn()) {
@@ -1115,6 +1147,7 @@ document.addEventListener("DOMContentLoaded", () => {
       name: name,
       sscYear: sscVal,
       sscYearLabel: sscLabel,
+      batch: isAlumni ? `${toBnNum(sscVal)} ব্যাচ` : sscLabel,
       isAlumni: isAlumni,
       timestamp: Date.now(),
       dateFormatted: dateFormatted,
@@ -1132,15 +1165,20 @@ document.addEventListener("DOMContentLoaded", () => {
       window.SchoolDB.addVisitorLog(visitorRecord);
     }
 
-    // Real-Time Cloud Firestore Sync (Synchronizes across all devices)
-    if (isCloudActive && firestoreDb) {
-      firestoreDb.collection("visitors").doc(visitorRecord.id).set(visitorRecord).catch((err) => {
-        console.warn("Cloud visitor sync warning:", err);
-      });
-      firestoreDb.collection("analytics").doc("site_stats").set({
-        totalViews: window.firebase.firestore.FieldValue.increment(1),
-        lastUpdated: Date.now()
-      }, { merge: true }).catch(() => {});
+    // Real-Time Cloud Firestore Sync (Synchronizes across all devices to Admin Dashboard)
+    try {
+      const activeDb = firestoreDb || (window.firebase && window.firebase.apps && window.firebase.apps.length > 0 ? window.firebase.firestore() : null);
+      if (activeDb) {
+        activeDb.collection("visitors").doc(visitorRecord.id).set(visitorRecord).catch((err) => {
+          console.warn("Cloud visitor sync warning:", err);
+        });
+        activeDb.collection("analytics").doc("site_stats").set({
+          totalViews: window.firebase.firestore.FieldValue.increment(1),
+          lastUpdated: Date.now()
+        }, { merge: true }).catch(() => {});
+      }
+    } catch (err) {
+      console.warn("Cloud visitor sync error:", err);
     }
 
     closeVisitorGatewayModal();
@@ -2188,114 +2226,12 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // =========================================================================
-  // 8.5. DARK & LIGHT THEME SYSTEM (PERSISTENCE, SYNC & USER TOGGLE)
+  // 8.5. CLEAN LIGHT THEME SYSTEM (DARK MODE PERMANENTLY REMOVED)
   // =========================================================================
-  const themeToggleBtn = document.getElementById("theme-toggle-btn");
-  const themeToggleText = document.getElementById("theme-toggle-text");
-  const drawerBtnThemeLight = document.getElementById("btn-theme-light");
-  const drawerBtnThemeDark = document.getElementById("btn-theme-dark");
-
-  const isGlobalDarkAllowed = () => {
-    if (window.SchoolDB && window.SchoolDB.getSettings) {
-      try {
-        const s = window.SchoolDB.getSettings();
-        return s.globalDarkModeEnabled !== false;
-      } catch (e) {}
-    }
-    return true;
-  };
-
-  const getStoredTheme = () => {
-    if (!isGlobalDarkAllowed()) return "light";
-    try {
-      const saved = localStorage.getItem("ghoshgaon_theme");
-      if (saved === "dark" || saved === "light") return saved;
-    } catch (e) {}
-    return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
-  };
-
-  const applyThemeMode = (theme, showToastAlert = false) => {
-    let isDark = theme === "dark";
-
-    if (isDark && !isGlobalDarkAllowed()) {
-      isDark = false;
-      theme = "light";
-      if (showToastAlert) {
-        showToast("অ্যাডমিনিস্ট্রেটর কর্তৃক ওয়েবসাইটে ডার্ক মোড সাময়িকভাবে নিষ্ক্রিয় রাখা হয়েছে।");
-      }
-    }
-
-    if (isDark) {
-      document.documentElement.setAttribute("data-theme", "dark");
-    } else {
-      document.documentElement.removeAttribute("data-theme");
-    }
-
-    try {
-      localStorage.setItem("ghoshgaon_theme", theme);
-    } catch (e) {}
-
-    // Update Header Button State
-    if (themeToggleBtn) {
-      themeToggleBtn.setAttribute("aria-label", isDark ? "লাইট মোডে ফিরে যান" : "ডার্ক মোডে পরিবর্তন করুন");
-      themeToggleBtn.title = isDark ? "লাইট মোড চালু করুন (দিন)" : "ডার্ক মোড চালু করুন (রাত)";
-    }
-    if (themeToggleText) {
-      themeToggleText.textContent = isDark ? "লাইট" : "ডার্ক";
-    }
-
-    // Update Mobile Drawer Button States
-    if (drawerBtnThemeLight && drawerBtnThemeDark) {
-      if (isDark) {
-        drawerBtnThemeDark.classList.add("active");
-        drawerBtnThemeLight.classList.remove("active");
-      } else {
-        drawerBtnThemeLight.classList.add("active");
-        drawerBtnThemeDark.classList.remove("active");
-      }
-    }
-
-    if (showToastAlert && (isDark || theme === "light")) {
-      showToast(isDark ? "🌙 ডার্ক মোড (Night Mode) সক্রিয় করা হয়েছে" : "☀️ লাইট মোড (Day Mode) সক্রিয় করা হয়েছে");
-    }
-  };
-
-  // Click Handler for Header Toggle Button
-  themeToggleBtn?.addEventListener("click", () => {
-    if (!isGlobalDarkAllowed()) {
-      showToast("অ্যাডমিনিস্ট্রেটর কর্তৃক ওয়েবসাইটে ডার্ক মোড বর্তমানে নিষ্ক্রিয় রাখা হয়েছে।");
-      return;
-    }
-    const isCurrentlyDark = document.documentElement.getAttribute("data-theme") === "dark";
-    applyThemeMode(isCurrentlyDark ? "light" : "dark", true);
-  });
-
-  // Click Handlers for Mobile Drawer Buttons
-  drawerBtnThemeLight?.addEventListener("click", () => {
-    applyThemeMode("light", true);
-  });
-
-  drawerBtnThemeDark?.addEventListener("click", () => {
-    if (!isGlobalDarkAllowed()) {
-      showToast("অ্যাডমিনিস্ট্রেটর কর্তৃক ওয়েবসাইটে ডার্ক মোড বর্তমানে নিষ্ক্রিয় রাখা হয়েছে।");
-      return;
-    }
-    applyThemeMode("dark", true);
-  });
-
-  // Synchronize on load
-  applyThemeMode(getStoredTheme(), false);
-
-  // Listen to System Preference changes if user has not explicitly locked a choice
-  if (window.matchMedia) {
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-      try {
-        if (!localStorage.getItem("ghoshgaon_theme")) {
-          applyThemeMode(e.matches ? "dark" : "light", false);
-        }
-      } catch (err) {}
-    });
-  }
+  document.documentElement.setAttribute("data-theme", "light");
+  try {
+    localStorage.removeItem("ghoshgaon_theme");
+  } catch (e) {}
 
   // Lightbox helper for Memory Photos
   window.viewMemoryPhoto = (imgSrc, title, subtitle) => {

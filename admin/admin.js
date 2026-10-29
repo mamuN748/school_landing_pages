@@ -351,26 +351,13 @@
     },
 
     // ------------------------------------------------------------------------
-    // THEME HANDLING (LIGHT / DARK)
+    // THEME HANDLING (CLEAN LIGHT THEME ONLY - DARK MODE REMOVED)
     // ------------------------------------------------------------------------
     bindThemeEvents: function () {
-      const themeToggleBtn = document.getElementById('btn-theme-toggle');
-      const themeIcon = document.getElementById('theme-icon');
-
-      const savedTheme = localStorage.getItem('gsba_admin_theme') || 'light';
-      document.documentElement.setAttribute('data-theme', savedTheme);
-      if (themeIcon) themeIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-
-      if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', () => {
-          const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-          const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-theme', nextTheme);
-          localStorage.setItem('gsba_admin_theme', nextTheme);
-          if (themeIcon) themeIcon.textContent = nextTheme === 'dark' ? '☀️' : '🌙';
-          this.showToast(`থিম পরিবর্তন করা হয়েছে: ${nextTheme === 'dark' ? 'ডার্ক মোড' : 'লাইট মোড'}`);
-        });
-      }
+      document.documentElement.setAttribute('data-theme', 'light');
+      try {
+        localStorage.removeItem('gsba_admin_theme');
+      } catch (e) {}
     },
 
     // ------------------------------------------------------------------------
