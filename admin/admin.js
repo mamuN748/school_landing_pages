@@ -20,6 +20,7 @@
       this.bindModalEvents();
       this.bindModuleEvents();
       this.bindLiveSyncEvents();
+      this.initFirebaseSync();
       this.checkSession();
     },
 
@@ -67,6 +68,86 @@
           this.renderVisitors();
         }
       }, 4000);
+    },
+
+    initFirebaseSync: function () {
+      const stored = localStorage.getItem('ghoshgaon_firebase_config_v1');
+      const statusPill = document.getElementById('admin-cloud-status');
+      if (!stored) {
+        if (statusPill) {
+          statusPill.textContent = '🟡 অফলাইন (লোকাল মোড)';
+          statusPill.className = 'badge-status badge-pending-status';
+        }
+        return;
+      }
+
+      try {
+        let cfg = null;
+        try {
+          cfg = JSON.parse(stored);
+        } catch (e) {
+          try {
+            cfg = new Function(`return (${stored});`)();
+          } catch (err) {
+            cfg = null;
+          }
+        }
+
+        if (!cfg || !cfg.apiKey || !cfg.projectId) {
+          if (statusPill) {
+            statusPill.textContent = '⚠️ অসম্পূর্ণ কনফিগ';
+            statusPill.className = 'badge-status badge-pending-status';
+          }
+          return;
+        }
+
+        if (!window.firebase) {
+          console.warn('Firebase SDK not loaded.');
+          return;
+        }
+
+        let app = null;
+        if (window.firebase.apps && window.firebase.apps.length > 0) {
+          app = window.firebase.app();
+        } else {
+          app = window.firebase.initializeApp(cfg);
+        }
+
+        const db = window.firebase.firestore();
+        if (statusPill) {
+          statusPill.textContent = '🟢 অনলাইন (ক্লাউড সক্রিয়)';
+          statusPill.className = 'badge-status badge-approved';
+        }
+
+        // Real-time listener on visitors collection across all devices
+        db.collection('visitors').orderBy('timestamp', 'desc').limit(400).onSnapshot((snapshot) => {
+          if (snapshot && !snapshot.empty) {
+            const cloudLogs = [];
+            snapshot.forEach((doc) => {
+              const d = doc.data();
+              if (d && (d.id || d.name)) {
+                if (!d.id) d.id = 'vis_' + (d.timestamp || Date.now());
+                cloudLogs.push(d);
+              }
+            });
+
+            if (cloudLogs.length > 0) {
+              localStorage.setItem('ghoshgaon_all_visitors_log', JSON.stringify(cloudLogs));
+              this.updateBadgesAndKPIs();
+              if (this.currentView === 'overview') this.renderOverview();
+              if (this.currentView === 'visitors') this.renderVisitors();
+            }
+          }
+        }, (err) => {
+          console.warn('Firestore snapshot error:', err);
+          if (statusPill) {
+            statusPill.textContent = '⚠️ কানেকশন সমস্যা';
+            statusPill.className = 'badge-status badge-pending-status';
+          }
+        });
+      } catch (err) {
+        console.error('Firebase init error in admin:', err);
+      }
     },
 
     // ------------------------------------------------------------------------
@@ -1235,6 +1316,16 @@
 
       // Security PIN fields
       this.setVal('setting-new-username', settings.adminUsername);
+
+      // Firebase Cloud Config
+      const savedFb = localStorage.getItem('ghoshgaon_firebase_config_v1');
+      if (savedFb) {
+        try {
+          this.setVal('admin-firebase-config-input', JSON.stringify(JSON.parse(savedFb), null, 2));
+        } catch (e) {
+          this.setVal('admin-firebase-config-input', savedFb);
+        }
+      }
     },
 
     setVal: function (id, val) {
@@ -1637,6 +1728,53 @@
               window.location.reload();
             }
           }
+        });
+      }
+
+      // Settings: Firebase Cloud Sync Form
+      const fbForm = document.getElementById('admin-firebase-form');
+      const fbInput = document.getElementById('admin-firebase-config-input');
+      const fbTestBtn = document.getElementById('btn-admin-test-firebase');
+
+      if (fbForm && fbInput) {
+        fbForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const val = fbInput.value.trim();
+          if (!val) {
+            localStorage.removeItem('ghoshgaon_firebase_config_v1');
+            this.showToast('ফায়ারবেস কনফিগ মুছে ফেলা হয়েছে (লোকাল মোড সক্রিয়)');
+            this.initFirebaseSync();
+            return;
+          }
+          try {
+            let parsed = null;
+            try {
+              parsed = JSON.parse(val);
+            } catch (err) {
+              parsed = new Function(`return (${val});`)();
+            }
+            if (!parsed || !parsed.apiKey || !parsed.projectId) {
+              alert('অনুগ্রহ করে সঠিক Firebase Config কোড দিন (apiKey ও projectId থাকা আবশ্যক)!');
+              return;
+            }
+            localStorage.setItem('ghoshgaon_firebase_config_v1', JSON.stringify(parsed));
+            this.showToast('ফায়ারবেস ক্লাউড কানেকশন সফল! রিয়েল-টাইম সিঙ্ক চালু হয়েছে।');
+            this.initFirebaseSync();
+          } catch (err) {
+            alert('ভুল কনফিগ ফরম্যাট: ' + err.message);
+          }
+        });
+      }
+
+      if (fbTestBtn && fbInput) {
+        fbTestBtn.addEventListener('click', () => {
+          const val = fbInput.value.trim();
+          if (!val) {
+            alert('টেস্ট করার জন্য প্রথমে বক্সে Firebase Config কোড পেস্ট করুন!');
+            return;
+          }
+          this.showToast('কানেকশন টেস্ট করা হচ্ছে...');
+          this.initFirebaseSync();
         });
       }
     },
