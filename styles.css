@@ -5526,6 +5526,8 @@ body.is-admin-active .btn-remove-teacher {
   .visitor-gateway-container {
     padding: 1.5rem 1.25rem !important;
   }
+}
+
 /* ==========================================================================
    ADMIN DASHBOARD TABS & CLOUD FIRESTORE STYLES
    ========================================================================== */
@@ -6958,6 +6960,23 @@ body.is-admin-active .btn-remove-teacher {
   right: -20px;
 }
 
+/* Position floating arrows safely inside container on mid-sized screens to prevent horizontal overflow */
+@media (max-width: 1260px) and (min-width: 769px) {
+  .memory-slider-prev {
+    left: 4px;
+  }
+  .memory-slider-next {
+    right: 4px;
+  }
+}
+
+/* Hide floating side arrows on mobile and small tablet; users swipe and use the bottom controls */
+@media (max-width: 768px) {
+  .memory-slider-arrow {
+    display: none !important;
+  }
+}
+
 /* Memory Cards Grid: Horizontal Sliding Track */
 .memory-cards-grid {
   display: flex !important;
@@ -6973,6 +6992,7 @@ body.is-admin-active .btn-remove-teacher {
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
   cursor: grab;
+  touch-action: pan-y pinch-zoom;
 }
 
 .memory-cards-grid.is-dragging {
@@ -6985,7 +7005,7 @@ body.is-admin-active .btn-remove-teacher {
   display: none !important;
 }
 
-/* Desktop: EXACTLY 5 CARDS PER ROW / VIEW */
+/* Responsive Cards Layout Tier 1: Large Desktop (>= 1200px) - 5 Cards */
 .memory-card {
   flex: 0 0 calc((100% - 4 * 1rem) / 5) !important;
   min-width: calc((100% - 4 * 1rem) / 5) !important;
@@ -7006,13 +7026,69 @@ body.is-admin-active .btn-remove-teacher {
   animation: memoryCardIn 0.45s ease forwards;
 }
 
+/* Responsive Cards Layout Tier 2: Laptop / Mid Desktop (992px to 1199px) - 4 Cards */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .memory-card {
+    flex: 0 0 calc((100% - 3 * 1rem) / 4) !important;
+    min-width: calc((100% - 3 * 1rem) / 4) !important;
+    max-width: calc((100% - 3 * 1rem) / 4) !important;
+  }
+}
+
+/* Responsive Cards Layout Tier 3: Tablet (768px to 991px) - 3 Cards */
+@media (min-width: 768px) and (max-width: 991px) {
+  .memory-cards-grid {
+    gap: 0.9rem !important;
+  }
+  .memory-card {
+    flex: 0 0 calc((100% - 2 * 0.9rem) / 3) !important;
+    min-width: calc((100% - 2 * 0.9rem) / 3) !important;
+    max-width: calc((100% - 2 * 0.9rem) / 3) !important;
+  }
+}
+
+/* Responsive Cards Layout Tier 4: Small Tablet / Large Mobile (541px to 767px) - 2 Cards */
+@media (min-width: 541px) and (max-width: 767px) {
+  .memory-cards-grid {
+    gap: 0.85rem !important;
+    padding: 0.45rem 0.2rem 1rem 0.2rem !important;
+  }
+  .memory-card {
+    flex: 0 0 calc((100% - 0.85rem) / 2) !important;
+    min-width: calc((100% - 0.85rem) / 2) !important;
+    max-width: calc((100% - 0.85rem) / 2) !important;
+  }
+}
+
+/* Responsive Cards Layout Tier 5: Mobile Portrait (<= 540px) - 1 Card with Carousel Peek */
+@media (max-width: 540px) {
+  .memory-cards-grid {
+    gap: 0.75rem !important;
+    padding: 0.4rem 0.2rem 0.9rem 0.2rem !important;
+  }
+  .memory-card {
+    flex: 0 0 85% !important;
+    min-width: 85% !important;
+    max-width: 85% !important;
+  }
+}
+
+/* Responsive Cards Layout Tier 6: Small Mobile (<= 360px) */
+@media (max-width: 360px) {
+  .memory-card {
+    flex: 0 0 88% !important;
+    min-width: 88% !important;
+    max-width: 88% !important;
+  }
+}
+
 /* Slider Controls & Helper Bar */
 .memory-slider-controls {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1.25rem;
-  margin-top: 0.75rem;
+  margin-top: 0.85rem;
 }
 
 .memory-nav-btn {
@@ -7065,11 +7141,29 @@ body.is-admin-active .btn-remove-teacher {
   box-shadow: 0 0 6px var(--color-accent-gold);
 }
 
-@media (min-width: 992px) and (max-width: 1200px) {
-  .memory-card {
-    flex: 0 0 calc((100% - 3 * 1rem) / 4) !important;
-    min-width: calc((100% - 3 * 1rem) / 4) !important;
-    max-width: calc((100% - 3 * 1rem) / 4) !important;
+@media (max-width: 640px) {
+  .memory-slider-controls {
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 0.65rem;
+  }
+
+  .memory-nav-btn {
+    padding: 0.42rem 0.85rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .memory-slider-indicator {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.74rem;
+    flex: 1;
+    justify-content: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -7468,22 +7562,45 @@ body.is-admin-active .btn-remove-teacher {
   margin-top: 0.25rem;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .memory-detail-layout {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 
   .memory-detail-container {
+    width: 94%;
+    max-width: 540px;
     padding: 1.25rem 1rem;
+    max-height: 88vh;
   }
 
   .memory-detail-photo-wrap {
-    max-height: 220px;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    max-height: 230px;
   }
 
   .memory-detail-name {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+  }
+
+  .detail-teacher-box {
+    padding: 0.65rem 0.8rem;
+  }
+
+  .detail-story-box {
+    padding: 0.75rem 0.9rem;
+  }
+
+  .memory-note-text {
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .memory-detail-footer {
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 }
 
@@ -7789,6 +7906,9 @@ body.is-admin-active .btn-remove-teacher {
   .memory-cta-btn {
     width: 100%;
     justify-content: center;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+    min-height: 44px;
   }
 
   .memory-how-steps {
@@ -7835,21 +7955,6 @@ body.is-admin-active .btn-remove-teacher {
     font-size: 0.74rem;
   }
 
-  .memory-slider-arrow {
-    display: none;
-  }
-
-  .memory-cards-grid {
-    gap: 0.85rem !important;
-  }
-
-  .memory-card {
-    flex: 0 0 calc((100% - 2 * 0.85rem) / 3) !important;
-    min-width: calc((100% - 2 * 0.85rem) / 3) !important;
-    max-width: calc((100% - 2 * 0.85rem) / 3) !important;
-  }
-
-
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 0.75rem !important;
@@ -7872,13 +7977,10 @@ body.is-admin-active .btn-remove-teacher {
     font-size: 0.82rem;
   }
 
-  .memory-card-body {
-    padding: 0.75rem 0.7rem 0.7rem;
-  }
-
   .memory-modal-container {
     max-height: 92vh;
     padding: 1.25rem 1rem;
+    width: 94%;
   }
 
   .preset-options {
@@ -7892,80 +7994,71 @@ body.is-admin-active .btn-remove-teacher {
 }
 
 /* ==========================================================================
-   SMALL MOBILE ADJUSTMENTS FOR 2-COLUMN GALLERY (\u003c= 580px)
+   SMALL MOBILE ADJUSTMENTS FOR GALLERY & MEMORIES (<= 580px)
    ========================================================================== */
 @media (max-width: 580px) {
   .gallery-section {
     padding-block: 2.75rem;
   }
 
-  .memory-cards-grid {
-    gap: 0.65rem !important;
-  }
-
-  .memory-card {
-    flex: 0 0 78% !important;
-    min-width: 78% !important;
-    max-width: 78% !important;
-  }
-
+  /* Smritikotha Mobile Card Enhancements - Clean, crisp, touch-friendly */
   .memory-card-photo-wrap {
-    aspect-ratio: 4 / 3 !important;
+    aspect-ratio: 16 / 10 !important;
   }
 
   .memory-batch-badge {
-    font-size: 0.58rem !important;
-    padding: 0.14rem 0.4rem !important;
-    top: 5px !important;
-    right: 5px !important;
+    font-size: 0.7rem !important;
+    padding: 0.18rem 0.5rem !important;
+    top: 6px !important;
+    right: 6px !important;
   }
 
   .memory-zoom-hint {
-    font-size: 0.56rem !important;
-    padding: 0.12rem 0.38rem !important;
-    bottom: 5px !important;
-    right: 5px !important;
+    font-size: 0.65rem !important;
+    padding: 0.15rem 0.45rem !important;
+    bottom: 6px !important;
+    right: 6px !important;
   }
 
   .memory-card-body {
-    padding: 0.55rem 0.5rem 0.55rem !important;
+    padding: 0.75rem 0.8rem 0.8rem !important;
+    gap: 0.45rem !important;
   }
 
   .memory-author-row-clean {
-    gap: 0.35rem !important;
+    gap: 0.5rem !important;
   }
 
   .memory-author-avatar {
-    width: 26px !important;
-    height: 26px !important;
-    font-size: 0.72rem !important;
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 0.84rem !important;
   }
 
   .memory-author-name {
-    font-size: 0.74rem !important;
-    line-height: 1.2 !important;
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
+    font-weight: 700 !important;
   }
 
   .memory-alumni-badge {
-    font-size: 0.52rem !important;
-    padding: 0.06rem 0.26rem !important;
+    font-size: 0.62rem !important;
+    padding: 0.1rem 0.38rem !important;
   }
 
   .memory-card-footer {
-    padding-top: 0.25rem !important;
+    padding-top: 0.45rem !important;
+    margin-top: auto !important;
   }
 
   .memory-like-btn {
-    font-size: 0.62rem !important;
-    padding: 0.2rem 0.42rem !important;
+    font-size: 0.75rem !important;
+    padding: 0.3rem 0.6rem !important;
   }
 
   .memory-click-prompt {
-    font-size: 0.58rem !important;
-  }
-
-  .memory-school-tag {
-    font-size: 0.55rem !important;
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
   }
 }
 

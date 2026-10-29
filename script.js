@@ -2749,7 +2749,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const visibleCount = Math.max(1, Math.round(memoriesGrid.clientWidth / step));
       const startIdx = Math.min(total, Math.max(1, Math.round(sl / step) + 1));
       const endIdx = Math.min(total, startIdx + visibleCount - 1);
-      indicatorText.textContent = `স্মৃতি ${toBanglaNum(startIdx)}–${toBanglaNum(endIdx)} / মোট ${toBanglaNum(total)}টি (স্লাইড করুন)`;
+      if (startIdx >= endIdx) {
+        indicatorText.textContent = `স্মৃতি ${toBanglaNum(startIdx)} / মোট ${toBanglaNum(total)}টি (স্লাইড করুন)`;
+      } else {
+        indicatorText.textContent = `স্মৃতি ${toBanglaNum(startIdx)}–${toBanglaNum(endIdx)} / মোট ${toBanglaNum(total)}টি (স্লাইড করুন)`;
+      }
     }
   };
 
