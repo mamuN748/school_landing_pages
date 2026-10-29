@@ -3049,15 +3049,27 @@ document.addEventListener("DOMContentLoaded", () => {
       const phone = document.getElementById("inq-phone")?.value || "";
       const message = document.getElementById("inq-message")?.value || "";
 
+      const msgObj = {
+        id: "MSG-" + Date.now().toString().slice(-6),
+        name: parentName,
+        phone: phone,
+        subject: 'অভিযোগ বা ভর্তি নোট',
+        message: message,
+        timestamp: Date.now(),
+        date: new Date().toLocaleString("bn-BD"),
+        status: "Unread"
+      };
+
       if (window.SchoolDB && window.SchoolDB.submitMessage) {
         try {
-          window.SchoolDB.submitMessage({
-            name: parentName,
-            phone: phone,
-            subject: 'অভিযোগ বা ভর্তি নোট',
-            message: message
-          });
+          window.SchoolDB.submitMessage(msgObj);
         } catch (err) {}
+      }
+
+      if (isCloudActive && firestoreDb) {
+        firestoreDb.collection("messages").doc(msgObj.id).set(msgObj).catch((err) => {
+          console.warn("Cloud message sync error:", err);
+        });
       }
 
       inquiryForm.reset();

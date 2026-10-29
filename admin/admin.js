@@ -148,6 +148,34 @@
             statusPill.className = 'badge-status badge-pending-status';
           }
         });
+
+        // Real-time listener on site views analytics
+        db.collection('analytics').doc('site_stats').onSnapshot((doc) => {
+          if (doc && doc.exists && typeof doc.data()?.totalViews === 'number') {
+            const views = doc.data().totalViews;
+            localStorage.setItem('ghoshgaon_site_total_views', views.toString());
+            this.setElText('kpi-total-views', views);
+            this.setElText('stat-total-views', views);
+          }
+        }, (err) => console.warn('Analytics snapshot error:', err));
+
+        // Real-time listener on messages collection across all devices
+        db.collection('messages').orderBy('timestamp', 'desc').limit(200).onSnapshot((snapshot) => {
+          if (snapshot && !snapshot.empty) {
+            const cloudMsgs = [];
+            snapshot.forEach((doc) => {
+              const d = doc.data();
+              if (d && (d.id || d.name)) cloudMsgs.push(d);
+            });
+            if (cloudMsgs.length > 0) {
+              window.SchoolDB.data.messages = cloudMsgs;
+              window.SchoolDB.save();
+              this.updateBadgesAndKPIs();
+              if (this.currentView === 'overview') this.renderOverview();
+              if (this.currentView === 'messages') this.renderMessages();
+            }
+          }
+        }, (err) => console.warn('Messages snapshot error:', err));
       } catch (err) {
         console.error('Firebase init error in admin:', err);
       }
