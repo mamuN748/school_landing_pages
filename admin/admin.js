@@ -104,11 +104,12 @@
         return;
       }
 
-        if (!window.firebase) {
-          console.warn('Firebase SDK not loaded.');
-          return;
-        }
+      if (!window.firebase) {
+        console.warn('Firebase SDK not loaded.');
+        return;
+      }
 
+      try {
         let app = null;
         if (window.firebase.apps && window.firebase.apps.length > 0) {
           app = window.firebase.app();
@@ -239,6 +240,7 @@
         const configuredPin = (settings.adminPin || '112292').trim();
 
         const isUserMatch = (
+          !username ||
           username.toLowerCase() === configuredUser.toLowerCase() ||
           username.toLowerCase() === 'mamun190a' ||
           username.toLowerCase() === 'admin' ||
@@ -287,6 +289,7 @@
           }
         }
       };
+      this.executeLogin = executeLogin;
 
       if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
