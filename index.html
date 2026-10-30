@@ -21,8 +21,7 @@
   <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
   <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
 
-  <!-- Main Design System Stylesheet -->
-  <link rel="stylesheet" href="styles.css?v=20261030_r6">
+  <link rel="stylesheet" href="styles.css?v=20261030_r7">
 
   <!-- Clean Light Mode Initialization -->
   <script>
@@ -1225,7 +1224,7 @@
             </button>
           </div>
 
-          <!-- Memory Slider Controls & Position Indicator -->
+          <!-- Memory Slider Controls -->
           <div class="memory-slider-controls" id="memory-slider-controls">
             <button type="button" class="memory-nav-btn prev" id="btn-memory-bottom-prev" aria-label="পূর্ববর্তী স্মৃতি">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1233,109 +1232,9 @@
               </svg>
               <span>পূর্ববর্তী</span>
             </button>
-            <div class="memory-slider-indicator" id="memory-slider-indicator">
-              <span class="memory-indicator-dot"></span>
-              <span class="memory-indicator-text" id="memory-indicator-text">স্মৃতি ১–৫ / ১০ (স্লাইড করুন)</span>
-            </div>
             <button type="button" class="memory-nav-btn next" id="btn-memory-bottom-next" aria-label="পরবর্তী স্মৃতি">
               <span>পরবর্তী</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         PARENT VOICES & TESTIMONIALS
-         ====================================================================== -->
-    <section class="testimonials-section" aria-label="অভিভাবকদের মতামত">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-tag gold" data-i18n="testimonials_tag">অভিভাবকদের আস্থা</div>
-          <h2 class="section-title" data-i18n="testimonials_title">ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় সম্পর্কে অভিভাবকদের
-            অনুভূতি</h2>
-          <p class="section-subtitle" data-i18n="testimonials_subtitle">
-            যেসব অভিভাবকের সন্তান আমাদের সুশৃঙ্খল পাঠদান ও ভালোবাসা নিয়ে আত্মবিশ্বাসী ব্যক্তিত্ব হিসেবে গড়ে উঠছে,
-            তাদের অকপট অনুভূতি।
-          </p>
-        </div>
-
-        <div class="testimonials-slider-wrapper">
-          <div class="testimonials-grid" id="testimonials-grid" role="region"
-            aria-label="অভিভাবকদের মূল্যায়ন স্লাইডার">
-            <div class="testimonial-card" data-index="0">
-              <div class="testimonial-rating">★★★★★</div>
-              <p class="testimonial-text" data-i18n="testi_1_text">
-                "ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ে আমাদের দুই মেয়েকে ভর্তি করানো ছিল অভিভাবক হিসেবে আমাদের নেওয়া সেরা
-                সিদ্ধান্ত। শিক্ষকদের অকৃত্রিম স্নেহ, নিয়মনিষ্ঠা এবং চমৎকার সহশিক্ষা কার্যক্রম ওদের অত্যন্ত
-                আত্মপ্রত্যয়ী ও অনুসন্ধিৎসু করে তুলেছে।"
-              </p>
-              <div class="testimonial-author-wrap">
-                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80"
-                  alt="ডা. নাসরিন জাহান" class="testimonial-author-avatar">
-                <div>
-                  <div class="author-name" data-i18n="testi_1_author">ডা. নাসরিন জাহান</div>
-                  <div class="author-role" data-i18n="testi_1_role">৮ম ও ১০ম শ্রেণির শিক্ষার্থীর মা</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="testimonial-card" data-index="1">
-              <div class="testimonial-rating">★★★★★</div>
-              <p class="testimonial-text" data-i18n="testi_2_text">
-                "উন্নত বিজ্ঞান ও আইসিটি ল্যাব, গণিত অলিম্পিয়াড এবং ২০০ শতাংশের বিশাল খেলার মাঠে নিয়মিত খেলাধুলার সুযোগ
-                সত্যিই অতুলনীয়। শিক্ষকদের আন্তরিক দিকনির্দেশনায় আমার ছেলে পরীক্ষায় সেরা ফলাফল অর্জন করেছে। আমরা
-                অত্যন্ত আনন্দিত!"
-              </p>
-              <div class="testimonial-author-wrap">
-                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80"
-                  alt="প্রকৌশলী কামরুল হাসান" class="testimonial-author-avatar">
-                <div>
-                  <div class="author-name" data-i18n="testi_2_author">প্রকৌশলী কামরুল হাসান</div>
-                  <div class="author-role" data-i18n="testi_2_role">ধোবাউড়া, ময়মনসিংহ • অভিভাবক</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="testimonial-card" data-index="2">
-              <div class="testimonial-rating">★★★★★</div>
-              <p class="testimonial-text" data-i18n="testi_3_text">
-                "সবুজ প্রাকৃতিক প্রাঙ্গণ, ২০০ শতাংশের সুবিশাল খেলার মাঠ ও নিবেদিতপ্রাণ শিক্ষকদের পিতৃ-মাতৃসুলভ
-                স্নেহ—প্রতিদিন সকালে সন্তানকে স্কুলে পাঠিয়ে নিশ্চিন্ত থাকি। ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়
-                শিক্ষার্থীদের জন্য সত্যিকার অর্থেই একটি মমতাময়ী আদর্শ শিক্ষালয়।"
-              </p>
-              <div class="testimonial-author-wrap">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"
-                  alt="ফারজানা কবির" class="testimonial-author-avatar">
-                <div>
-                  <div class="author-name" data-i18n="testi_3_author">ফারজানা কবির</div>
-                  <div class="author-role" data-i18n="testi_3_role">৯ম শ্রেণি (বিজ্ঞান বিভাগ) শিক্ষার্থীর মা</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Mobile Slider Navigation & Dots (Manual Control Only) -->
-          <div class="testimonials-slider-controls" id="testimonials-slider-controls"
-            aria-label="মতামত স্লাইডার নেভিগেশন">
-            <button type="button" class="testimonial-nav-btn prev" id="testimonial-prev-btn"
-              aria-label="পূর্ববর্তী মতামত">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
-            <div class="testimonial-slider-dots" id="testimonial-slider-dots">
-              <button type="button" class="testimonial-dot active" data-index="0" aria-label="মতামত ১"></button>
-              <button type="button" class="testimonial-dot" data-index="1" aria-label="মতামত ২"></button>
-              <button type="button" class="testimonial-dot" data-index="2" aria-label="মতামত ৩"></button>
-            </div>
-            <button type="button" class="testimonial-nav-btn next" id="testimonial-next-btn" aria-label="পরবর্তী মতামত">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="9 18 15 12 9 6"></polyline>
               </svg>
             </button>
@@ -3250,7 +3149,7 @@
   <script src="admin/db.js?v=20261030_r3"></script>
 
   <!-- JavaScript Interactions -->
-  <script src="script.js?v=20261030_r6"></script>
+  <script src="script.js?v=20261030_r7"></script>
 </body>
 
 </html>

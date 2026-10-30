@@ -2755,7 +2755,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextBtn = document.getElementById("btn-memory-slider-next");
     const bottomPrev = document.getElementById("btn-memory-bottom-prev");
     const bottomNext = document.getElementById("btn-memory-bottom-next");
-    const indicatorText = document.getElementById("memory-indicator-text");
 
     const cards = memoriesGrid.querySelectorAll(".memory-card");
     const total = cards.length;
@@ -2764,7 +2763,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (nextBtn) nextBtn.disabled = true;
       if (bottomPrev) bottomPrev.disabled = true;
       if (bottomNext) bottomNext.disabled = true;
-      if (indicatorText) indicatorText.textContent = "কোনো স্মৃতি পাওয়া যায়নি";
       return;
     }
 
@@ -2777,20 +2775,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (bottomPrev) bottomPrev.disabled = atStart;
     if (nextBtn) nextBtn.disabled = atEnd;
     if (bottomNext) bottomNext.disabled = atEnd;
-
-    if (indicatorText) {
-      const cardWidth = cards[0] ? cards[0].offsetWidth : 220;
-      const gap = parseFloat(window.getComputedStyle(memoriesGrid).gap) || 16;
-      const step = cardWidth + gap;
-      const visibleCount = Math.max(1, Math.round(memoriesGrid.clientWidth / step));
-      const startIdx = Math.min(total, Math.max(1, Math.round(sl / step) + 1));
-      const endIdx = Math.min(total, startIdx + visibleCount - 1);
-      if (startIdx >= endIdx) {
-        indicatorText.textContent = `স্মৃতি ${toBanglaNum(startIdx)} / মোট ${toBanglaNum(total)}টি (স্লাইড করুন)`;
-      } else {
-        indicatorText.textContent = `স্মৃতি ${toBanglaNum(startIdx)}–${toBanglaNum(endIdx)} / মোট ${toBanglaNum(total)}টি (স্লাইড করুন)`;
-      }
-    }
   };
 
   // Wire up slider arrow & bottom buttons
@@ -3431,114 +3415,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initAboutVideoShowcase();
 
-  // =========================================================================
-  // 19. MOBILE TESTIMONIALS SLIDER (Manual One-by-One Navigation & Touch-Swipe)
-  // Ensures testimonials slide one card at a time with Prev/Next buttons,
-  // click dots, and native smooth snap-scroll. NO auto-timer ("click korle auto na abar").
-  // =========================================================================
-  const initMobileTestimonialsSlider = () => {
-    const grid = document.getElementById("testimonials-grid");
-    const prevBtn = document.getElementById("testimonial-prev-btn");
-    const nextBtn = document.getElementById("testimonial-next-btn");
-    const dotsContainer = document.getElementById("testimonial-slider-dots");
-
-    if (!grid || !prevBtn || !nextBtn || !dotsContainer) return;
-
-    const cards = Array.from(grid.querySelectorAll(".testimonial-card"));
-    const dots = Array.from(dotsContainer.querySelectorAll(".testimonial-dot"));
-    if (cards.length === 0) return;
-
-    let currentIndex = 0;
-
-    // Smoothly scroll to target card index
-    const scrollToCard = (index, smooth = true) => {
-      if (index < 0) index = 0;
-      if (index >= cards.length) index = cards.length - 1;
-      currentIndex = index;
-
-      const targetCard = cards[currentIndex];
-      if (targetCard) {
-        const targetLeft = targetCard.offsetLeft - grid.offsetLeft;
-        grid.scrollTo({
-          left: targetLeft,
-          behavior: smooth ? "smooth" : "auto"
-        });
-      }
-
-      updateControls();
-    };
-
-    const updateControls = () => {
-      dots.forEach((dot, idx) => {
-        const isActive = idx === currentIndex;
-        dot.classList.toggle("active", isActive);
-        dot.setAttribute("aria-selected", isActive ? "true" : "false");
-      });
-
-      prevBtn.disabled = currentIndex === 0;
-      nextBtn.disabled = currentIndex === cards.length - 1;
-    };
-
-    // Next button: strictly one card forward
-    nextBtn.addEventListener("click", () => {
-      if (currentIndex < cards.length - 1) {
-        scrollToCard(currentIndex + 1);
-      }
-    });
-
-    // Prev button: strictly one card backward
-    prevBtn.addEventListener("click", () => {
-      if (currentIndex > 0) {
-        scrollToCard(currentIndex - 1);
-      }
-    });
-
-    // Click dots: directly jump to specific card
-    dots.forEach((dot, idx) => {
-      dot.addEventListener("click", () => {
-        scrollToCard(idx);
-      });
-    });
-
-    // Real-time synchronization when user swipes or manually scrolls
-    let scrollDebounce;
-    grid.addEventListener("scroll", () => {
-      clearTimeout(scrollDebounce);
-      scrollDebounce = setTimeout(() => {
-        const scrollLeft = grid.scrollLeft;
-        let closestIndex = 0;
-        let minDiff = Infinity;
-
-        cards.forEach((card, idx) => {
-          const cardLeft = card.offsetLeft - grid.offsetLeft;
-          const diff = Math.abs(scrollLeft - cardLeft);
-          if (diff < minDiff) {
-            minDiff = diff;
-            closestIndex = idx;
-          }
-        });
-
-        if (closestIndex !== currentIndex) {
-          currentIndex = closestIndex;
-          updateControls();
-        }
-      }, 50);
-    }, { passive: true });
-
-    // Keyboard navigation accessibility when focused
-    grid.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") {
-        if (currentIndex < cards.length - 1) scrollToCard(currentIndex + 1);
-      } else if (e.key === "ArrowLeft") {
-        if (currentIndex > 0) scrollToCard(currentIndex - 1);
-      }
-    });
-
-    // Initialize controls state
-    updateControls();
-  };
-
-  initMobileTestimonialsSlider();
 
   // ==========================================================================
   // YEARLY GOV. HOLIDAY LIST MODAL POPUP & EDUCATIONAL SHOWCASE
