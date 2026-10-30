@@ -423,6 +423,12 @@
 
     // --- REAL-TIME VISITOR / STUDENT ACCESS TRACKING ---
     getVisitorLogs() {
+      // Refresh in-memory data from localStorage to stay up to date across all tabs
+      try {
+        const rawDb = localStorage.getItem(DB_STORAGE_KEY);
+        if (rawDb) this.data = JSON.parse(rawDb);
+      } catch (e) {}
+
       // Pull real visitor logs from shared localStorage
       let logs = [];
       try {
@@ -436,24 +442,45 @@
       const dbLogs = this.data.visitorLogs || [];
       const combinedMap = new Map();
 
-      logs.forEach(l => { if (l && l.id) combinedMap.set(l.id, l); });
-      dbLogs.forEach(l => { if (l && l.id) combinedMap.set(l.id, l); });
+      // Only accept logs that have a genuine name (never empty or dummy)
+      dbLogs.forEach(l => {
+        if (l && l.id && l.name && String(l.name).trim() !== "" && l.name !== "সম্মানিত অতিথি") {
+          combinedMap.set(l.id, l);
+        }
+      });
+      logs.forEach(l => {
+        if (l && l.id && l.name && String(l.name).trim() !== "" && l.name !== "সম্মানিত অতিথি") {
+          combinedMap.set(l.id, l);
+        }
+      });
 
       const sorted = Array.from(combinedMap.values()).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
       return sorted;
     }
 
     addVisitorLog(visitorRecord) {
+      if (!visitorRecord || !visitorRecord.name || String(visitorRecord.name).trim() === "") {
+        return null;
+      }
       if (!visitorRecord.id) {
         visitorRecord.id = "vis_" + Date.now();
       }
+
+      // Refresh in-memory data
+      try {
+        const rawDb = localStorage.getItem(DB_STORAGE_KEY);
+        if (rawDb) this.data = JSON.parse(rawDb);
+      } catch (e) {}
+
       if (!this.data.visitorLogs) this.data.visitorLogs = [];
+      this.data.visitorLogs = this.data.visitorLogs.filter(l => l && l.id !== visitorRecord.id);
       this.data.visitorLogs.unshift(visitorRecord);
       this.save();
 
       // Also sync to shared VISITOR_STORAGE_KEY
       try {
-        const existing = JSON.parse(localStorage.getItem(VISITOR_STORAGE_KEY) || "[]");
+        let existing = JSON.parse(localStorage.getItem(VISITOR_STORAGE_KEY) || "[]");
+        existing = existing.filter(l => l && l.id !== visitorRecord.id && l.name && String(l.name).trim() !== "" && l.name !== "সম্মানিত অতিথি");
         existing.unshift(visitorRecord);
         localStorage.setItem(VISITOR_STORAGE_KEY, JSON.stringify(existing));
       } catch (e) {}

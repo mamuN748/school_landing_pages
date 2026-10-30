@@ -25,6 +25,23 @@
     },
 
     bindLiveSyncEvents: function () {
+      // BroadcastChannel for instant real-time sync across all open browser tabs
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          const syncChan = new BroadcastChannel('ghoshgaon_visitor_sync');
+          syncChan.onmessage = (evt) => {
+            if (evt.data && evt.data.type === 'NEW_VISITOR' && evt.data.record) {
+              if (window.SchoolDB && window.SchoolDB.addVisitorLog) {
+                window.SchoolDB.addVisitorLog(evt.data.record);
+              }
+              this.updateBadgesAndKPIs();
+              if (this.currentView === 'overview') this.renderOverview();
+              if (this.currentView === 'visitors') this.renderVisitors();
+            }
+          };
+        }
+      } catch (e) {}
+
       // Listen for visitor log changes from other tabs or the public school landing page
       window.addEventListener('storage', (e) => {
         if (
@@ -40,7 +57,7 @@
         }
       });
 
-      // Auto-refresh live feed every 4 seconds for overview and visitor views
+      // Auto-refresh live feed every 3 seconds for overview and visitor views
       setInterval(() => {
         const isAuth = sessionStorage.getItem('gsba_admin_auth') === 'true';
         if (!isAuth) return;
@@ -49,15 +66,15 @@
           const visTbody = document.getElementById('overview-recent-visitors-tbody');
           if (visTbody) {
             const recent = (window.SchoolDB.getVisitorLogs ? window.SchoolDB.getVisitorLogs() : [])
-              .filter((v) => v && !v.id?.startsWith('vis_sample_'))
+              .filter((v) => v && v.name && String(v.name).trim() !== '' && v.name !== 'সম্মানিত অতিথি' && !v.id?.startsWith('vis_sample_'))
               .slice(0, 5);
             if (recent.length === 0) {
               visTbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: var(--text-muted); padding: 1.5rem;">এখনো কোনো লাইভ শিক্ষার্থী বা ভিজিটর রেকর্ড নেই</td></tr>';
             } else {
               visTbody.innerHTML = recent.map((v) => `
                 <tr>
-                  <td><strong>${this.escape(v.name || 'সম্মানিত অতিথি')}</strong></td>
-                  <td><span class="badge-status ${v.isAlumni ? 'badge-approved' : 'badge-review'}">${this.escape(v.sscYearLabel || v.sscYear || 'সাধারণ')}</span></td>
+                  <td><strong>${this.escape(v.name)}</strong></td>
+                  <td><span class="badge-status ${v.isAlumni ? 'badge-approved' : 'badge-review'}">${this.escape(v.batch || v.sscYearLabel || (v.sscYear ? (v.sscYear + ' ব্যাচ') : 'সাধারণ'))}</span></td>
                   <td><small style="color:var(--text-muted);">${this.escape(v.dateFormatted || new Date(v.timestamp || Date.now()).toLocaleString('bn-BD'))}</small></td>
                   <td>${this.escape(v.device || 'ডিভাইস')}</td>
                 </tr>
@@ -67,7 +84,7 @@
         } else if (this.currentView === 'visitors') {
           this.renderVisitors();
         }
-      }, 4000);
+      }, 3000);
     },
 
     DEFAULT_FIREBASE_CONFIG: {
@@ -129,7 +146,7 @@
             const cloudLogs = [];
             snapshot.forEach((doc) => {
               const d = doc.data();
-              if (d && (d.id || d.name)) {
+              if (d && d.name && String(d.name).trim() !== '' && d.name !== 'সম্মানিত অতিথি') {
                 if (!d.id) d.id = 'vis_' + (d.timestamp || Date.now());
                 cloudLogs.push(d);
               }
@@ -457,7 +474,7 @@
       const messages = window.SchoolDB.getMessages();
 
       const visitorLogs = (window.SchoolDB.getVisitorLogs ? window.SchoolDB.getVisitorLogs() : [])
-        .filter((v) => v && !v.id?.startsWith('vis_sample_'));
+        .filter((v) => v && v.name && String(v.name).trim() !== '' && v.name !== 'সম্মানিত অতিথি' && !v.id?.startsWith('vis_sample_'));
       const totalViews = window.SchoolDB.getTotalSiteViews ? window.SchoolDB.getTotalSiteViews() : 0;
       const alumniCount = visitorLogs.filter((v) => v.isAlumni).length;
       const currentCount = visitorLogs.length - alumniCount;
@@ -543,7 +560,7 @@
       const notices = window.SchoolDB.getNotices().slice(0, 5);
       const logs = window.SchoolDB.getAuditLogs().slice(0, 6);
       const recentVisitors = (window.SchoolDB.getVisitorLogs ? window.SchoolDB.getVisitorLogs() : [])
-        .filter((v) => v && !v.id?.startsWith('vis_sample_'))
+        .filter((v) => v && v.name && String(v.name).trim() !== '' && v.name !== 'সম্মানিত অতিথি' && !v.id?.startsWith('vis_sample_'))
         .slice(0, 5);
 
       // Admissions table in overview
@@ -593,8 +610,8 @@
         } else {
           visTbody.innerHTML = recentVisitors.map((v) => `
             <tr>
-              <td><strong>${this.escape(v.name || 'সম্মানিত অতিথি')}</strong></td>
-              <td><span class="badge-status ${v.isAlumni ? 'badge-approved' : 'badge-review'}">${this.escape(v.sscYearLabel || v.sscYear || 'সাধারণ')}</span></td>
+              <td><strong>${this.escape(v.name)}</strong></td>
+              <td><span class="badge-status ${v.isAlumni ? 'badge-approved' : 'badge-review'}">${this.escape(v.batch || v.sscYearLabel || (v.sscYear ? (v.sscYear + ' ব্যাচ') : 'সাধারণ'))}</span></td>
               <td><small style="color:var(--text-muted);">${this.escape(v.dateFormatted || new Date(v.timestamp || Date.now()).toLocaleString('bn-BD'))}</small></td>
               <td>${this.escape(v.device || 'ডিভাইস')}</td>
             </tr>
@@ -634,7 +651,7 @@
       const filterCat = categoryFilter ? categoryFilter.value : 'ALL';
 
       let logs = (window.SchoolDB.getVisitorLogs ? window.SchoolDB.getVisitorLogs() : [])
-        .filter((v) => v && !v.id?.startsWith('vis_sample_'));
+        .filter((v) => v && v.name && String(v.name).trim() !== '' && v.name !== 'সম্মানিত অতিথি' && !v.id?.startsWith('vis_sample_'));
 
       if (filterCat === 'ALUMNI') {
         logs = logs.filter((v) => v.isAlumni);
@@ -645,6 +662,7 @@
       if (query) {
         logs = logs.filter((v) =>
           (v.name && v.name.toLowerCase().includes(query)) ||
+          (v.batch && v.batch.toLowerCase().includes(query)) ||
           (v.sscYearLabel && v.sscYearLabel.toLowerCase().includes(query)) ||
           (v.sscYear && v.sscYear.toLowerCase().includes(query)) ||
           (v.device && v.device.toLowerCase().includes(query))
@@ -660,11 +678,11 @@
         <tr>
           <td><strong>#${idx + 1}</strong></td>
           <td>
-            <strong>${this.escape(v.name || 'সম্মানিত অতিথি')}</strong>
+            <strong>${this.escape(v.name)}</strong>
           </td>
           <td>
             <span class="badge-status ${v.isAlumni ? 'badge-approved' : 'badge-review'}">
-              ${this.escape(v.sscYearLabel || v.sscYear || 'সাধারণ')}
+              ${this.escape(v.batch || v.sscYearLabel || (v.sscYear ? (v.sscYear + ' ব্যাচ') : 'সাধারণ'))}
             </span>
           </td>
           <td>
@@ -702,14 +720,14 @@
 
     exportVisitorsCSV: function () {
       const logs = (window.SchoolDB.getVisitorLogs ? window.SchoolDB.getVisitorLogs() : [])
-        .filter((v) => v && !v.id?.startsWith('vis_sample_'));
+        .filter((v) => v && v.name && String(v.name).trim() !== '' && v.name !== 'সম্মানিত অতিথি' && !v.id?.startsWith('vis_sample_'));
       if (logs.length === 0) {
         alert('এক্সপোর্ট করার মতো কোনো ভিজিটর রেকর্ড নেই!');
         return;
       }
       let csv = '\uFEFFক্রমিক,নাম,এসএসসি সাল / পরিচয়,ভিজিটের সময়,ডিভাইস\n';
       logs.forEach((v, i) => {
-        csv += `"${i + 1}","${(v.name || '').replace(/"/g, '""')}","${(v.sscYearLabel || v.sscYear || '').replace(/"/g, '""')}","${(v.dateFormatted || '').replace(/"/g, '""')}","${(v.device || '').replace(/"/g, '""')}"\n`;
+        csv += `"${i + 1}","${(v.name || '').replace(/"/g, '""')}","${(v.batch || v.sscYearLabel || v.sscYear || '').replace(/"/g, '""')}","${(v.dateFormatted || '').replace(/"/g, '""')}","${(v.device || '').replace(/"/g, '""')}"\n`;
       });
       this.downloadCSV(csv, `Ghoshgaon_Student_Visitors_${new Date().toISOString().slice(0, 10)}.csv`);
     },

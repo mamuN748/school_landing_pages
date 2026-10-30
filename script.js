@@ -880,7 +880,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const getAllVisitorsLog = () => {
     try {
       const logs = JSON.parse(localStorage.getItem("ghoshgaon_all_visitors_log") || "[]");
-      return logs.filter((item) => item && item.id && !item.id.startsWith("vis_sample_"));
+      return logs.filter((item) => item && item.id && item.name && String(item.name).trim() !== "" && item.name !== "সম্মানিত অতিথি" && !item.id.startsWith("vis_sample_"));
     } catch (e) {
       return [];
     }
@@ -888,7 +888,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const saveVisitorsLog = (logArray) => {
     try {
-      const cleanArray = (logArray || []).filter((item) => item && item.id && !item.id.startsWith("vis_sample_"));
+      const cleanArray = (logArray || []).filter((item) => item && item.id && item.name && String(item.name).trim() !== "" && item.name !== "সম্মানিত অতিথি" && !item.id.startsWith("vis_sample_"));
       localStorage.setItem("ghoshgaon_all_visitors_log", JSON.stringify(cleanArray));
     } catch (e) {
       console.error("Error saving visitors log", e);
@@ -1048,15 +1048,15 @@ document.addEventListener("DOMContentLoaded", () => {
         <tr data-id="${log.id}">
           <td class="visitor-row-num">${toBnNum(index + 1)}</td>
           <td class="visitor-cell-name">
-            <span>👤 ${sanitizeHtml(log.name)}</span>
+            <strong>👤 ${sanitizeHtml(log.name)}</strong>
           </td>
           <td>
             <span class="${badgeClass}">
-              ${badgeIcon} ${sanitizeHtml(log.sscYearLabel)}
+              ${badgeIcon} ${sanitizeHtml(log.batch || log.sscYearLabel || (log.sscYear ? (toBnNum(log.sscYear) + ' ব্যাচ') : 'সাধারণ'))}
             </span>
           </td>
           <td class="visitor-cell-time">
-            <span>📅 ${sanitizeHtml(log.dateFormatted)}</span>
+            <span>📅 ${sanitizeHtml(log.dateFormatted || new Date(log.timestamp || Date.now()).toLocaleString("bn-BD"))}</span>
           </td>
           <td class="visitor-cell-device">
             <span>${sanitizeHtml(log.device || "💻 কম্পিউটার")}</span>
@@ -1123,15 +1123,21 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // 8. Visitor Entry Form Submission
-  formVisitorEntry?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const name = visitorNameInput?.value.trim();
-    const sscVal = visitorSscYearSelect?.value;
-    const sscOption = visitorSscYearSelect?.options[visitorSscYearSelect?.selectedIndex];
-    const sscLabel = sscOption ? sscOption.textContent : sscVal;
+  const handleVisitorSubmit = (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+
+    const nameInput = document.getElementById("visitor-name");
+    const sscSelect = document.getElementById("visitor-ssc-year");
+
+    const name = nameInput ? nameInput.value.trim() : "";
+    const sscVal = sscSelect ? sscSelect.value.trim() : "";
+    const sscOption = sscSelect && sscSelect.selectedIndex >= 0 ? sscSelect.options[sscSelect.selectedIndex] : null;
+    const sscLabel = (sscOption && sscOption.value !== "") ? sscOption.textContent.trim() : (sscVal ? `${toBnNum(sscVal)} সাল` : "সাধারণ ভিজিটর");
 
     if (!name || !sscVal) {
       alert("অনুগ্রহ করে আপনার নাম এবং এসএসসি পাশের সাল নির্বাচন করুন।");
+      if (!name && nameInput) nameInput.focus();
+      else if (sscSelect) sscSelect.focus();
       return;
     }
 
@@ -1143,7 +1149,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const dateFormatted = `${toBnNum(now.getDate())} ${monthsBn[now.getMonth()]} ${toBnNum(now.getFullYear())}, ${now.toLocaleTimeString("bn-BD", { hour: "2-digit", minute: "2-digit" })}`;
 
     const visitorRecord = {
-      id: "vis_" + Date.now(),
+      id: "vis_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
       name: name,
       sscYear: sscVal,
       sscYearLabel: sscLabel,
@@ -1154,18 +1160,29 @@ document.addEventListener("DOMContentLoaded", () => {
       device: isMobile ? "📱 মোবাইল" : "💻 কম্পিউটার/ল্যাপটপ"
     };
 
-    localStorage.setItem("ghoshgaon_visitor_profile", JSON.stringify(visitorRecord));
+    // Save profile locally for session recognition
+    try {
+      localStorage.setItem("ghoshgaon_visitor_profile", JSON.stringify(visitorRecord));
+    } catch (err) {}
 
-    const currentLogs = getAllVisitorsLog();
-    currentLogs.unshift(visitorRecord);
-    saveVisitorsLog(currentLogs);
-
-    // Sync directly to central SchoolDB for Admin Dashboard
+    // 1. Sync directly to central SchoolDB for Admin Dashboard
     if (window.SchoolDB && window.SchoolDB.addVisitorLog) {
       window.SchoolDB.addVisitorLog(visitorRecord);
+    } else {
+      const currentLogs = getAllVisitorsLog();
+      currentLogs.unshift(visitorRecord);
+      saveVisitorsLog(currentLogs);
     }
 
-    // Real-Time Cloud Firestore Sync (Synchronizes across all devices to Admin Dashboard)
+    // 2. BroadcastChannel for instant 0ms sync across all open tabs
+    try {
+      if (typeof BroadcastChannel !== "undefined") {
+        const syncChan = new BroadcastChannel("ghoshgaon_visitor_sync");
+        syncChan.postMessage({ type: "NEW_VISITOR", record: visitorRecord });
+      }
+    } catch (err) {}
+
+    // 3. Real-Time Cloud Firestore Sync (Multi-Device Sync)
     try {
       const activeDb = firestoreDb || (window.firebase && window.firebase.apps && window.firebase.apps.length > 0 ? window.firebase.firestore() : null);
       if (activeDb) {
@@ -1188,6 +1205,16 @@ document.addEventListener("DOMContentLoaded", () => {
       renderAdminDashboard();
     }
     updateTabBadges();
+  };
+
+  formVisitorEntry?.addEventListener("submit", handleVisitorSubmit);
+  const btnSubmitVisitor = document.getElementById("btn-submit-visitor");
+  btnSubmitVisitor?.addEventListener("click", (e) => {
+    // If not triggered by form, handle directly
+    if (formVisitorEntry && !formVisitorEntry.checkValidity()) {
+      return;
+    }
+    handleVisitorSubmit(e);
   });
 
   // 9. Dashboard Event Handlers
