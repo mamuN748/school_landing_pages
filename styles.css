@@ -10570,4 +10570,421 @@ body.is-admin-active .btn-remove-teacher {
   .admission-form {
     padding: 1.15rem;
   }
-}
+}
+
+/* ==========================================================================
+   DHOBAURA UPZAZILA: GHOSHGAON & DAKSHIN MAIJPARA UNIONS LIVE MAP
+   ========================================================================== */
+.unions-map-section {
+  padding: 5rem 0 5.5rem;
+  background: linear-gradient(180deg, #fdfbf7 0%, #f7f1e6 50%, #faf5ec 100%);
+  border-top: 1.5px solid rgba(200, 157, 61, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.unions-map-section::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  right: -100px;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 157, 61, 0.12) 0%, rgba(200, 157, 61, 0) 70%);
+  pointer-events: none;
+}
+
+.unions-map-section::after {
+  content: "";
+  position: absolute;
+  bottom: -150px;
+  left: -120px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(118, 16, 38, 0.08) 0%, rgba(118, 16, 38, 0) 70%);
+  pointer-events: none;
+}
+
+/* Union Switcher Tab Bar */
+.unions-tab-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.union-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1.4rem;
+  background: #ffffff;
+  border: 1.5px solid rgba(200, 157, 61, 0.35);
+  border-radius: 10px !important;
+  color: var(--color-primary-deep, #520919);
+  cursor: pointer;
+  transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  position: relative;
+  text-align: left;
+}
+
+.union-tab-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-accent-gold, #c89d3d);
+  box-shadow: 0 6px 20px rgba(200, 157, 61, 0.2);
+}
+
+.union-tab-btn.active {
+  background: linear-gradient(135deg, #761026 0%, #520919 100%);
+  color: #ffffff;
+  border-color: var(--color-accent-gold, #c89d3d);
+  box-shadow: 0 8px 24px rgba(118, 16, 38, 0.28);
+}
+
+.union-tab-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.union-tab-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.union-tab-text strong {
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.union-tab-text small {
+  font-size: 0.76rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.union-tab-btn.active .union-tab-text small {
+  color: #fce7b0;
+}
+
+.union-tab-active-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  transition: all 0.25s ease;
+}
+
+.union-tab-btn.active .union-tab-active-dot {
+  background: #f59e0b;
+  box-shadow: 0 0 10px #f59e0b;
+}
+
+/* Grid Layout */
+.unions-map-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 1.75rem;
+  align-items: stretch;
+}
+
+/* Map Frame Card */
+.unions-map-frame-card {
+  background: #ffffff;
+  border-radius: 12px !important;
+  border: 1.5px solid rgba(200, 157, 61, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-card-topbar {
+  padding: 1rem 1.35rem;
+  background: linear-gradient(135deg, #fdfbf7 0%, #faf3e5 100%);
+  border-bottom: 1px solid rgba(200, 157, 61, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.map-badge-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.map-live-pulse-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.25rem 0.65rem;
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 6px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.pulse-dot-red {
+  width: 7px;
+  height: 7px;
+  background-color: #ef4444;
+  border-radius: 50%;
+  animation: pulseAnimation 1.6s infinite;
+}
+
+.map-current-union-pill {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.btn-open-ext-map {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-primary-deep, #520919);
+  background: #ffffff;
+  border: 1px solid rgba(200, 157, 61, 0.4);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.22s ease;
+}
+
+.btn-open-ext-map:hover {
+  background: var(--color-accent-gold, #c89d3d);
+  color: #1a0b02;
+  border-color: var(--color-accent-gold, #c89d3d);
+}
+
+.map-iframe-container {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  background: #e2e8f0;
+}
+
+.map-iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.map-mobile-touch-hint {
+  display: none;
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  font-size: 0.74rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.map-bottom-meta-bar {
+  padding: 0.85rem 1.25rem;
+  background: #ffffff;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.82rem;
+  color: #475569;
+}
+
+.map-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Info Card */
+.unions-info-card {
+  background: #ffffff;
+  border-radius: 12px !important;
+  border: 1.5px solid rgba(200, 157, 61, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.union-crest-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(200, 157, 61, 0.18);
+  color: #8c6717;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 6px;
+  border: 1px solid rgba(200, 157, 61, 0.35);
+  margin-bottom: 0.5rem;
+}
+
+.union-info-title {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--color-primary-deep, #520919);
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.union-info-lead {
+  margin: 0.5rem 0 1.25rem;
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.55;
+}
+
+.union-section-box {
+  background: #fdfbf7;
+  border: 1px solid rgba(200, 157, 61, 0.25);
+  border-radius: 8px;
+  padding: 1rem 1.15rem;
+  margin-bottom: 1.1rem;
+}
+
+.union-box-title {
+  margin: 0 0 0.65rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.union-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.union-tag-pill {
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  color: #334155;
+  transition: all 0.2s ease;
+}
+
+.union-tag-pill:hover {
+  border-color: var(--color-accent-gold, #c89d3d);
+  background: #fffbeb;
+}
+
+.union-tag-pill.active-school {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #92400e;
+  font-weight: 700;
+}
+
+.union-travel-desc {
+  margin: 0;
+  font-size: 0.84rem;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.union-kpi-compact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+}
+
+.kpi-compact-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+}
+
+.kpi-compact-label {
+  display: block;
+  font-size: 0.72rem;
+  color: #64748b;
+  margin-bottom: 2px;
+}
+
+.kpi-compact-val {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.union-action-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: auto;
+}
+
+.union-dir-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .unions-map-grid {
+    grid-template-columns: 1fr;
+  }
+  .map-iframe-container {
+    height: 400px;
+  }
+}
+
+@media (max-width: 640px) {
+  .unions-map-section {
+    padding: 3.5rem 0 4rem;
+  }
+  .unions-tab-bar {
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .union-tab-btn {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .map-iframe-container {
+    height: 330px;
+  }
+  .map-mobile-touch-hint {
+    display: block;
+  }
+  .unions-info-card {
+    padding: 1.25rem;
+  }
+}
+

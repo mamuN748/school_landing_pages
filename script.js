@@ -4338,6 +4338,153 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnDownloadFooter = document.getElementById("btn-footer-download-pdf");
   btnDownloadHeader?.addEventListener("click", downloadHolidayPDF);
   btnDownloadFooter?.addEventListener("click", downloadHolidayPDF);
+
+  // =========================================================================
+  // DHOBAURA UPAZILA: GHOSHGAON & DAKSHIN MAIJPARA UNIONS LIVE MAP SWITCHER
+  // =========================================================================
+  const initUnionsLiveMap = () => {
+    const tabButtons = document.querySelectorAll(".union-tab-btn");
+    const mapIframe = document.getElementById("unions-live-iframe");
+    const mapActiveBadge = document.getElementById("map-active-badge");
+    const mapFullscreenBtn = document.getElementById("map-fullscreen-btn");
+    const infoBadge = document.getElementById("union-info-badge");
+    const infoTitle = document.getElementById("union-info-title");
+    const infoLead = document.getElementById("union-info-lead");
+    const kpiUpazila = document.getElementById("kpi-upazila");
+    const kpiDistrict = document.getElementById("kpi-district");
+    const kpiUnionNo = document.getElementById("kpi-union-no");
+    const kpiCenter = document.getElementById("kpi-center");
+    const tagsContainer = document.getElementById("union-tags-container");
+    const travelDesc = document.getElementById("union-travel-desc");
+    const dirBtn = document.getElementById("union-dir-btn");
+    const gmapsLink = document.getElementById("union-gmaps-link");
+
+    if (!tabButtons.length || !mapIframe) return;
+
+    const unionData = {
+      ghoshgaon: {
+        badgeText: "৬নং ঘোষগাঁও ইউনিয়ন",
+        fullBadgeText: "৬নং ঘোষগাঁও ইউনিয়ন পরিষদ",
+        title: "ঘোষগাঁও ইউনিয়ন ও বিদ্যালয় ক্যাম্পাস",
+        lead: "ঐতিহ্যবাহী ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় ধোবাউড়া উপজেলার ৬নং ঘোষগাঁও ইউনিয়নে অবস্থিত। এটি ঘোষগাঁও বাজার সংলগ্ন এবং উপজেলা সদর ও পার্শ্ববর্তী অঞ্চলগুলোর সাথে সুপরিচিত সড়ক যোগাযোগ ব্যবস্থা রয়েছে।",
+        upazila: "ধোবাউড়া",
+        district: "ময়মনসিংহ",
+        unionNo: "৬নং ইউনিয়ন",
+        center: "ঘোষগাঁও বাজার",
+        iframeSrc: "https://maps.google.com/maps?q=Ghoshgaon%20Union%2C%20Dhobaura%2C%20Mymensingh&t=&z=13&ie=UTF8&iwloc=&output=embed",
+        extUrl: "https://www.google.com/maps/search/?api=1&query=Ghoshgaon+Union+Dhobaura+Mymensingh",
+        directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=Ghoshgaon+Shere+Bangla+High+School+Dhobaura",
+        tags: [
+          { text: "🏫 ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়", isSchool: true },
+          { text: "🏪 ঘোষগাঁও বাজার", isSchool: false },
+          { text: "🏛️ ৬নং ঘোষগাঁও ইউপি ভবন", isSchool: false },
+          { text: "🌊 নিতাই নদী তীরবর্তী জনপদ", isSchool: false },
+          { text: "🛣️ ঘোষগাঁও-ধোবাউড়া মেইন রোড", isSchool: false },
+          { text: "🏥 ঘোষগাঁও উপ-স্বাস্থ্য কেন্দ্র", isSchool: false },
+          { text: "🌾 বহরভিটা ও সংলগ্ন গ্রামসমূহ", isSchool: false }
+        ],
+        travel: "ধোবাউড়া উপজেলা সদর বা হালুয়াঘাট দিক থেকে ঘোষগাঁও বাজার অভিমুখী পাকা সড়কে খুব সহজেই সিএনজি, অটো বা বাসে করে বিদ্যালয়ে পৌঁছানো যায়। বিদ্যালয়টি ঘোষগাঁও বাজারের প্রাণকেন্দ্রে অবস্থিত।"
+      },
+      maijpara: {
+        badgeText: "১নং দক্ষিণ মাইজপাড়া ইউনিয়ন",
+        fullBadgeText: "১নং দক্ষিণ মাইজপাড়া ইউনিয়ন পরিষদ",
+        title: "১নং দক্ষিণ মাইজপাড়া ইউনিয়ন ও সংলগ্ন অঞ্চল",
+        lead: "ধোবাউড়া উপজেলার উত্তরের সীমান্তবর্তী ১নং দক্ষিণ মাইজপাড়া ইউনিয়ন প্রাকৃতিক সৌন্দর্য ও কংস-নিতাই নদী অববাহিকায় বিস্তৃত। ঘোষগাঁও ইউনিয়নের শিক্ষার্থীদের একটি বড় অংশ এই ইউনিয়ন থেকে প্রতিদিন বিদ্যালয়ে যাতায়াত করে।",
+        upazila: "ধোবাউড়া",
+        district: "ময়মনসিংহ",
+        unionNo: "১নং ইউনিয়ন",
+        center: "মাইজপাড়া বাজার",
+        iframeSrc: "https://maps.google.com/maps?q=Dakshin%20Maijpara%20Union%2C%20Dhobaura%2C%20Mymensingh&t=&z=13&ie=UTF8&iwloc=&output=embed",
+        extUrl: "https://www.google.com/maps/search/?api=1&query=Dakshin+Maijpara+Union+Dhobaura+Mymensingh",
+        directionsUrl: "https://www.google.com/maps/dir/?api=1&origin=Dakshin+Maijpara+Dhobaura&destination=Ghoshgaon+Shere+Bangla+High+School+Dhobaura",
+        tags: [
+          { text: "🏛️ ১নং দক্ষিণ মাইজপাড়া ইউপি ভবন", isSchool: false },
+          { text: "🏪 মাইজপাড়া বাজার", isSchool: false },
+          { text: "🌳 ঘিলাগড়া ও মুন্সীরহাট", isSchool: false },
+          { text: "🌾 সোহাগীপাড়া ও বোয়ালমারী", isSchool: false },
+          { text: "🏞️ সীমান্তবর্তী পাহাড়ি জনপদ", isSchool: false },
+          { text: "🛣️ মাইজপাড়া-ঘোষগাঁও সংযোগ সড়ক", isSchool: false },
+          { text: "🏫 ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় (সংলগ্ন শিক্ষাকেন্দ্র)", isSchool: true }
+        ],
+        travel: "দক্ষিণ মাইজপাড়া থেকে সংযোগ সড়ক ও সীমান্ত সড়ক হয়ে সরাসরি অটো, মোটরসাইকেল বা সাইকেলে ১৫-২৫ মিনিটে ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ে যাতায়াত করা যায়।"
+      },
+      dhobaura: {
+        badgeText: "ধোবাউড়া উপজেলা সদর",
+        fullBadgeText: "ধোবাউড়া উপজেলা (সার্বিক মানচিত্র)",
+        title: "ধোবাউড়া উপজেলা সার্বিক মানচিত্র",
+        lead: "ময়মনসিংহ জেলার সীমান্তবর্তী ধোবাউড়া উপজেলার অধীনে ৭টি ইউনিয়ন রয়েছে, যার মধ্যে ৬নং ঘোষগাঁও এবং ১নং দক্ষিণ মাইজপাড়া অন্যতম প্রধান ও সংলগ্ন দুটি ইউনিয়ন।",
+        upazila: "ধোবাউড়া উপজেলা",
+        district: "ময়মনসিংহ",
+        unionNo: "৭টি ইউনিয়ন পরিষদ",
+        center: "উপজেলা পরিষদ চত্বর",
+        iframeSrc: "https://maps.google.com/maps?q=Dhobaura%20Upazila%2C%20Mymensingh&t=&z=11&ie=UTF8&iwloc=&output=embed",
+        extUrl: "https://www.google.com/maps/search/?api=1&query=Dhobaura+Upazila+Mymensingh",
+        directionsUrl: "https://www.google.com/maps/dir/?api=1&origin=Dhobaura+Upazila+Complex&destination=Ghoshgaon+Shere+Bangla+High+School+Dhobaura",
+        tags: [
+          { text: "🏛️ ধোবাউড়া উপজেলা পরিষদ", isSchool: false },
+          { text: "🏫 ৬নং ঘোষগাঁও ইউনিয়ন (বিদ্যালয় ক্যাম্পাস)", isSchool: true },
+          { text: "📍 ১নং দক্ষিণ মাইজপাড়া ইউনিয়ন", isSchool: false },
+          { text: "🏥 উপজেলা স্বাস্থ্য কমপ্লেক্স", isSchool: false },
+          { text: "👮 ধোবাউড়া থানা", isSchool: false },
+          { text: "🌉 কংস ও নিতাই নদী অববাহিকা", isSchool: false }
+        ],
+        travel: "উপজেলা সদর ধোবাউড়া থেকে ঘোষগাঁও উচ্চ বিদ্যালয়ের দূরত্ব আনুমানিক ৮-১০ কি.মি., যা পাকা সড়ক পথে নিয়মিত সিএনজি ও অটোরিকশায় অনায়াসেই যাতায়াত করা যায়।"
+      }
+    };
+
+    const renderUnion = (key) => {
+      const data = unionData[key];
+      if (!data) return;
+
+      // Update Tabs UI
+      tabButtons.forEach((btn) => {
+        const isCurrent = btn.getAttribute("data-union") === key;
+        btn.classList.toggle("active", isCurrent);
+        btn.setAttribute("aria-selected", isCurrent ? "true" : "false");
+      });
+
+      // Update Map Iframe smoothly
+      if (mapIframe.src !== data.iframeSrc) {
+        mapIframe.src = data.iframeSrc;
+      }
+
+      // Update Labels & Badges
+      if (mapActiveBadge) mapActiveBadge.textContent = data.badgeText;
+      if (mapFullscreenBtn) mapFullscreenBtn.href = data.extUrl;
+      if (infoBadge) infoBadge.textContent = data.fullBadgeText;
+      if (infoTitle) infoTitle.textContent = data.title;
+      if (infoLead) infoLead.textContent = data.lead;
+
+      // Update KPIs
+      if (kpiUpazila) kpiUpazila.textContent = data.upazila;
+      if (kpiDistrict) kpiDistrict.textContent = data.district;
+      if (kpiUnionNo) kpiUnionNo.textContent = data.unionNo;
+      if (kpiCenter) kpiCenter.textContent = data.center;
+
+      // Update Travel info
+      if (travelDesc) travelDesc.textContent = data.travel;
+      if (dirBtn) dirBtn.href = data.directionsUrl;
+      if (gmapsLink) gmapsLink.href = data.extUrl;
+
+      // Update Tags
+      if (tagsContainer) {
+        tagsContainer.innerHTML = data.tags
+          .map((t) => `<span class="union-tag-pill${t.isSchool ? " active-school" : ""}">${t.text}</span>`)
+          .join("");
+      }
+    };
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const unionKey = btn.getAttribute("data-union");
+        if (unionKey) {
+          renderUnion(unionKey);
+        }
+      });
+    });
+  };
+
+  initUnionsLiveMap();
 });
 
 
