@@ -4350,6 +4350,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const infoBadge = document.getElementById("union-info-badge");
     const infoTitle = document.getElementById("union-info-title");
     const infoLead = document.getElementById("union-info-lead");
+    const plusCodeVal = document.getElementById("union-pluscode-val");
     const kpiUpazila = document.getElementById("kpi-upazila");
     const kpiDistrict = document.getElementById("kpi-district");
     const kpiUnionNo = document.getElementById("kpi-union-no");
@@ -4366,39 +4367,43 @@ document.addEventListener("DOMContentLoaded", () => {
         badgeText: "৬নং ঘোষগাঁও ইউনিয়ন",
         fullBadgeText: "৬নং ঘোষগাঁও ইউনিয়ন পরিষদ",
         title: "ঘোষগাঁও ইউনিয়ন ও বিদ্যালয় ক্যাম্পাস",
-        lead: "ঐতিহ্যবাহী ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় ধোবাউড়া উপজেলার ৬নং ঘোষগাঁও ইউনিয়নে অবস্থিত। এটি ঘোষগাঁও বাজার সংলগ্ন এবং উপজেলা সদর ও পার্শ্ববর্তী অঞ্চলগুলোর সাথে সুপরিচিত সড়ক যোগাযোগ ব্যবস্থা রয়েছে।",
+        plusCode: "4GX9+C78 (চরুয়াপাড়া – ঘোষগাঁও বাজার রোড)",
+        lead: "ঐতিহ্যবাহী ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয় ধোবাউড়া উপজেলার ৬নং ঘোষগাঁও ইউনিয়নে চরুয়াপাড়া থেকে ঘোষগাঁও বাজার রোডে অবস্থিত। এটি উপজেলা সদর ও পার্শ্ববর্তী অঞ্চলগুলোর সাথে সুপরিচিত সড়ক যোগাযোগ ব্যবস্থা রয়েছে।",
         upazila: "ধোবাউড়া",
         district: "ময়মনসিংহ",
         unionNo: "৬নং ইউনিয়ন",
         center: "ঘোষগাঁও বাজার",
-        iframeSrc: "https://maps.google.com/maps?q=Ghoshgaon%20Union%2C%20Dhobaura%2C%20Mymensingh&t=&z=13&ie=UTF8&iwloc=&output=embed",
-        extUrl: "https://www.google.com/maps/search/?api=1&query=Ghoshgaon+Union+Dhobaura+Mymensingh",
-        directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=Ghoshgaon+Shere+Bangla+High+School+Dhobaura",
+        iframeSrc: "https://maps.google.com/maps?q=4GX9%2BC78%2C+Charuapara+to+Ghoshgaon+Bazaar+Road%2C+Ghoshgaon%2C+Bangladesh&t=&z=15&ie=UTF8&iwloc=&output=embed",
+        extUrl: "https://www.google.com/maps/search/?api=1&query=4GX9%2BC78%2C+Charuapara+to+Ghoshgaon+Bazaar+Road%2C+Ghoshgaon%2C+Bangladesh",
+        directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=4GX9%2BC78%2C+Charuapara+to+Ghoshgaon+Bazaar+Road%2C+Ghoshgaon%2C+Bangladesh",
         tags: [
           { text: "🏫 ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়", isSchool: true },
+          { text: "📍 4GX9+C78 প্লাস কোড পয়েন্ট", isSchool: true },
           { text: "🏪 ঘোষগাঁও বাজার", isSchool: false },
           { text: "🏛️ ৬নং ঘোষগাঁও ইউপি ভবন", isSchool: false },
           { text: "🌊 নিতাই নদী তীরবর্তী জনপদ", isSchool: false },
-          { text: "🛣️ ঘোষগাঁও-ধোবাউড়া মেইন রোড", isSchool: false },
+          { text: "🛣️ চরুয়াপাড়া-ঘোষগাঁও বাজার রোড", isSchool: false },
           { text: "🏥 ঘোষগাঁও উপ-স্বাস্থ্য কেন্দ্র", isSchool: false },
           { text: "🌾 বহরভিটা ও সংলগ্ন গ্রামসমূহ", isSchool: false }
         ],
-        travel: "ধোবাউড়া উপজেলা সদর বা হালুয়াঘাট দিক থেকে ঘোষগাঁও বাজার অভিমুখী পাকা সড়কে খুব সহজেই সিএনজি, অটো বা বাসে করে বিদ্যালয়ে পৌঁছানো যায়। বিদ্যালয়টি ঘোষগাঁও বাজারের প্রাণকেন্দ্রে অবস্থিত।"
+        travel: "ধোবাউড়া উপজেলা সদর বা হালুয়াঘাট দিক থেকে চরুয়াপাড়া-ঘোষগাঁও বাজার অভিমুখী পাকা সড়কে খুব সহজেই সিএনজি, অটো বা বাসে করে বিদ্যালয়ে পৌঁছানো যায়। বিদ্যালয়টি ঘোষগাঁও বাজারের প্রাণকেন্দ্রে অবস্থিত।"
       },
       maijpara: {
         badgeText: "১নং দক্ষিণ মাইজপাড়া ইউনিয়ন",
         fullBadgeText: "১নং দক্ষিণ মাইজপাড়া ইউনিয়ন পরিষদ",
         title: "১নং দক্ষিণ মাইজপাড়া ইউনিয়ন ও সংলগ্ন অঞ্চল",
+        plusCode: "7MQG5H38+J7 (১নং দক্ষিণ মাইজপাড়া, ধোবাউড়া)",
         lead: "ধোবাউড়া উপজেলার উত্তরের সীমান্তবর্তী ১নং দক্ষিণ মাইজপাড়া ইউনিয়ন প্রাকৃতিক সৌন্দর্য ও কংস-নিতাই নদী অববাহিকায় বিস্তৃত। ঘোষগাঁও ইউনিয়নের শিক্ষার্থীদের একটি বড় অংশ এই ইউনিয়ন থেকে প্রতিদিন বিদ্যালয়ে যাতায়াত করে।",
         upazila: "ধোবাউড়া",
         district: "ময়মনসিংহ",
         unionNo: "১নং ইউনিয়ন",
         center: "মাইজপাড়া বাজার",
-        iframeSrc: "https://maps.google.com/maps?q=Dakshin%20Maijpara%20Union%2C%20Dhobaura%2C%20Mymensingh&t=&z=13&ie=UTF8&iwloc=&output=embed",
-        extUrl: "https://www.google.com/maps/search/?api=1&query=Dakshin+Maijpara+Union+Dhobaura+Mymensingh",
-        directionsUrl: "https://www.google.com/maps/dir/?api=1&origin=Dakshin+Maijpara+Dhobaura&destination=Ghoshgaon+Shere+Bangla+High+School+Dhobaura",
+        iframeSrc: "https://maps.google.com/maps?q=7MQG5H38%2BJ7%2C+Dakshin+Maij+Para%2C+Dhobaura%2C+Mymensingh%2C+Bangladesh&t=&z=14&ie=UTF8&iwloc=&output=embed",
+        extUrl: "https://www.google.com/maps/search/?api=1&query=7MQG5H38%2BJ7%2C+Dakshin+Maij+Para%2C+Dhobaura%2C+Mymensingh%2C+Bangladesh",
+        directionsUrl: "https://www.google.com/maps/dir/?api=1&origin=7MQG5H38%2BJ7%2C+Dakshin+Maij+Para%2C+Dhobaura&destination=4GX9%2BC78%2C+Charuapara+to+Ghoshgaon+Bazaar+Road%2C+Ghoshgaon%2C+Bangladesh",
         tags: [
           { text: "🏛️ ১নং দক্ষিণ মাইজপাড়া ইউপি ভবন", isSchool: false },
+          { text: "📍 7MQG5H38+J7 প্লাস কোড পয়েন্ট", isSchool: false },
           { text: "🏪 মাইজপাড়া বাজার", isSchool: false },
           { text: "🌳 ঘিলাগড়া ও মুন্সীরহাট", isSchool: false },
           { text: "🌾 সোহাগীপাড়া ও বোয়ালমারী", isSchool: false },
@@ -4412,14 +4417,15 @@ document.addEventListener("DOMContentLoaded", () => {
         badgeText: "ধোবাউড়া উপজেলা সদর",
         fullBadgeText: "ধোবাউড়া উপজেলা (সার্বিক মানচিত্র)",
         title: "ধোবাউড়া উপজেলা সার্বিক মানচিত্র",
+        plusCode: "3PRM+98 (উপজেলা পরিষদ চত্বর, ধোবাউড়া)",
         lead: "ময়মনসিংহ জেলার সীমান্তবর্তী ধোবাউড়া উপজেলার অধীনে ৭টি ইউনিয়ন রয়েছে, যার মধ্যে ৬নং ঘোষগাঁও এবং ১নং দক্ষিণ মাইজপাড়া অন্যতম প্রধান ও সংলগ্ন দুটি ইউনিয়ন।",
         upazila: "ধোবাউড়া উপজেলা",
         district: "ময়মনসিংহ",
         unionNo: "৭টি ইউনিয়ন পরিষদ",
         center: "উপজেলা পরিষদ চত্বর",
-        iframeSrc: "https://maps.google.com/maps?q=Dhobaura%20Upazila%2C%20Mymensingh&t=&z=11&ie=UTF8&iwloc=&output=embed",
-        extUrl: "https://www.google.com/maps/search/?api=1&query=Dhobaura+Upazila+Mymensingh",
-        directionsUrl: "https://www.google.com/maps/dir/?api=1&origin=Dhobaura+Upazila+Complex&destination=Ghoshgaon+Shere+Bangla+High+School+Dhobaura",
+        iframeSrc: "https://maps.google.com/maps?q=Dhobaura+Upazila+Complex%2C+Dhobaura%2C+Mymensingh%2C+Bangladesh&t=&z=12&ie=UTF8&iwloc=&output=embed",
+        extUrl: "https://www.google.com/maps/search/?api=1&query=Dhobaura+Upazila+Complex%2C+Dhobaura%2C+Mymensingh%2C+Bangladesh",
+        directionsUrl: "https://www.google.com/maps/dir/?api=1&origin=Dhobaura+Upazila+Complex%2C+Dhobaura&destination=4GX9%2BC78%2C+Charuapara+to+Ghoshgaon+Bazaar+Road%2C+Ghoshgaon%2C+Bangladesh",
         tags: [
           { text: "🏛️ ধোবাউড়া উপজেলা পরিষদ", isSchool: false },
           { text: "🏫 ৬নং ঘোষগাঁও ইউনিয়ন (বিদ্যালয় ক্যাম্পাস)", isSchool: true },
@@ -4454,6 +4460,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (infoBadge) infoBadge.textContent = data.fullBadgeText;
       if (infoTitle) infoTitle.textContent = data.title;
       if (infoLead) infoLead.textContent = data.lead;
+      if (plusCodeVal && data.plusCode) plusCodeVal.textContent = data.plusCode;
 
       // Update KPIs
       if (kpiUpazila) kpiUpazila.textContent = data.upazila;
