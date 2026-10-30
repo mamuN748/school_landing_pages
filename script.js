@@ -1018,8 +1018,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const filteredLogs = logs.filter(item => {
       const matchesSearch = !searchQuery ||
         (item.name && item.name.toLowerCase().includes(searchQuery)) ||
-        (item.sscYearLabel && item.sscYearLabel.toLowerCase().includes(searchQuery)) ||
-        (item.device && item.device.toLowerCase().includes(searchQuery));
+        (item.sscYearLabel && item.sscYearLabel.toLowerCase().includes(searchQuery));
 
       let matchesCategory = true;
       if (categoryFilter === "alumni") {
@@ -1058,9 +1057,6 @@ document.addEventListener("DOMContentLoaded", () => {
           <td class="visitor-cell-time">
             <span>📅 ${sanitizeHtml(log.dateFormatted || new Date(log.timestamp || Date.now()).toLocaleString("bn-BD"))}</span>
           </td>
-          <td class="visitor-cell-device">
-            <span>${sanitizeHtml(log.device || "💻 কম্পিউটার")}</span>
-          </td>
           <td style="text-align: center;">
             <button type="button" class="btn-delete-visitor-row" data-id="${log.id}" title="মুছে ফেলুন">
               🗑️
@@ -1092,15 +1088,14 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    let csvContent = "\uFEFFক্রমিক নং,ভিজিটরের পূর্ণ নাম,এসএসসি সাল / পরিচয়,প্রবেশের তারিখ ও সময়,ডিভাইস\r\n";
+    let csvContent = "\uFEFFক্রমিক নং,ভিজিটরের পূর্ণ নাম,এসএসসি সাল / পরিচয়,প্রবেশের তারিখ ও সময়\r\n";
 
     logs.forEach((item, index) => {
       const row = [
         index + 1,
         `"${(item.name || '').replace(/"/g, '""')}"`,
         `"${(item.sscYearLabel || '').replace(/"/g, '""')}"`,
-        `"${(item.dateFormatted || '').replace(/"/g, '""')}"`,
-        `"${(item.device || '').replace(/"/g, '""')}"`
+        `"${(item.dateFormatted || '').replace(/"/g, '""')}"`
       ];
       csvContent += row.join(",") + "\r\n";
     });

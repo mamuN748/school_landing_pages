@@ -87,14 +87,13 @@
               .filter((v) => v && v.name && String(v.name).trim() !== '' && v.name !== 'সম্মানিত অতিথি' && !v.id?.startsWith('vis_sample_'))
               .slice(0, 5);
             if (recent.length === 0) {
-              visTbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: var(--text-muted); padding: 1.5rem;">এখনো কোনো লাইভ শিক্ষার্থী বা ভিজিটর রেকর্ড নেই</td></tr>';
+              visTbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--text-muted); padding: 1.5rem;">এখনো কোনো লাইভ শিক্ষার্থী বা ভিজিটর রেকর্ড নেই</td></tr>';
             } else {
               visTbody.innerHTML = recent.map((v) => `
                 <tr>
                   <td><strong>${this.escape(v.name)}</strong></td>
                   <td><span class="badge-status ${v.isAlumni ? 'badge-approved' : 'badge-review'}">${this.escape(v.batch || v.sscYearLabel || (v.sscYear ? (v.sscYear + ' ব্যাচ') : 'সাধারণ'))}</span></td>
                   <td><small style="color:var(--text-muted);">${this.escape(v.dateFormatted || new Date(v.timestamp || Date.now()).toLocaleString('bn-BD'))}</small></td>
-                  <td>${this.escape(v.device || 'ডিভাইস')}</td>
                 </tr>
               `).join('');
             }
@@ -642,14 +641,13 @@
       const visTbody = document.getElementById('overview-recent-visitors-tbody');
       if (visTbody) {
         if (recentVisitors.length === 0) {
-          visTbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: var(--text-muted); padding: 1.5rem;">এখনো কোনো লাইভ শিক্ষার্থী বা ভিজিটর রেকর্ড নেই। মূল ওয়েবসাইটে প্রবেশকারী শিক্ষার্থীদের তালিকা এখানে স্বয়ংক্রিয়ভাবে ভেসে উঠবে।</td></tr>';
+          visTbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--text-muted); padding: 1.5rem;">এখনো কোনো লাইভ শিক্ষার্থী বা ভিজিটর রেকর্ড নেই। মূল ওয়েবসাইটে প্রবেশকারী শিক্ষার্থীদের তালিকা এখানে স্বয়ংক্রিয়ভাবে ভেসে উঠবে।</td></tr>';
         } else {
           visTbody.innerHTML = recentVisitors.map((v) => `
             <tr>
               <td><strong>${this.escape(v.name)}</strong></td>
               <td><span class="badge-status ${v.isAlumni ? 'badge-approved' : 'badge-review'}">${this.escape(v.batch || v.sscYearLabel || (v.sscYear ? (v.sscYear + ' ব্যাচ') : 'সাধারণ'))}</span></td>
               <td><small style="color:var(--text-muted);">${this.escape(v.dateFormatted || new Date(v.timestamp || Date.now()).toLocaleString('bn-BD'))}</small></td>
-              <td>${this.escape(v.device || 'ডিভাইস')}</td>
             </tr>
           `).join('');
         }
@@ -700,13 +698,12 @@
           (v.name && v.name.toLowerCase().includes(query)) ||
           (v.batch && v.batch.toLowerCase().includes(query)) ||
           (v.sscYearLabel && v.sscYearLabel.toLowerCase().includes(query)) ||
-          (v.sscYear && v.sscYear.toLowerCase().includes(query)) ||
-          (v.device && v.device.toLowerCase().includes(query))
+          (v.sscYear && v.sscYear.toLowerCase().includes(query))
         );
       }
 
       if (logs.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2.5rem;">কোনো শিক্ষার্থী বা ভিজিটর রেকর্ড পাওয়া যায়নি। যখনই কোনো শিক্ষার্থী ওয়েবসাইটে প্রবেশ করবে, রিয়েল-টাইমে তার নাম ও এসএসসি ব্যাচ এখানে ভেসে উঠবে।</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2.5rem;">কোনো শিক্ষার্থী বা ভিজিটর রেকর্ড পাওয়া যায়নি। যখনই কোনো শিক্ষার্থী ওয়েবসাইটে প্রবেশ করবে, রিয়েল-টাইমে তার নাম ও এসএসসি ব্যাচ এখানে ভেসে উঠবে।</td></tr>';
         return;
       }
 
@@ -723,9 +720,6 @@
           </td>
           <td>
             <span style="font-size: 0.88rem;">${this.escape(v.dateFormatted || new Date(v.timestamp || Date.now()).toLocaleString('bn-BD'))}</span>
-          </td>
-          <td>
-            <span style="font-size: 0.88rem;">${this.escape(v.device || 'ডিভাইস')}</span>
           </td>
           <td>
             <div class="row-actions-group">
@@ -761,9 +755,9 @@
         alert('এক্সপোর্ট করার মতো কোনো ভিজিটর রেকর্ড নেই!');
         return;
       }
-      let csv = '\uFEFFক্রমিক,নাম,এসএসসি সাল / পরিচয়,ভিজিটের সময়,ডিভাইস\n';
+      let csv = '\uFEFFক্রমিক,নাম,এসএসসি সাল / পরিচয়,ভিজিটের সময়\n';
       logs.forEach((v, i) => {
-        csv += `"${i + 1}","${(v.name || '').replace(/"/g, '""')}","${(v.batch || v.sscYearLabel || v.sscYear || '').replace(/"/g, '""')}","${(v.dateFormatted || '').replace(/"/g, '""')}","${(v.device || '').replace(/"/g, '""')}"\n`;
+        csv += `"${i + 1}","${(v.name || '').replace(/"/g, '""')}","${(v.batch || v.sscYearLabel || v.sscYear || '').replace(/"/g, '""')}","${(v.dateFormatted || '').replace(/"/g, '""')}"\n`;
       });
       this.downloadCSV(csv, `Ghoshgaon_Student_Visitors_${new Date().toISOString().slice(0, 10)}.csv`);
     },
