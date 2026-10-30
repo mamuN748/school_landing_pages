@@ -251,6 +251,15 @@
 
     // --- Admissions ---
     getAdmissions() {
+      try {
+        const raw = localStorage.getItem(DB_STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && Array.isArray(parsed.admissions)) {
+            this.data.admissions = parsed.admissions;
+          }
+        }
+      } catch (e) {}
       return this.data.admissions || [];
     }
 
@@ -359,6 +368,15 @@
 
     // --- Messages ---
     getMessages() {
+      try {
+        const raw = localStorage.getItem(DB_STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && Array.isArray(parsed.messages)) {
+            this.data.messages = parsed.messages;
+          }
+        }
+      } catch (e) {}
       return this.data.messages || [];
     }
 

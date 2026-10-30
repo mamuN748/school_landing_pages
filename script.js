@@ -1611,6 +1611,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (tabName === "faculty") renderDashboardFacultyTable();
     if (tabName === "memories") renderDashboardMemoriesTable();
+    if (tabName === "admissions") renderDashboardAdmissionsTable();
     if (tabName === "visitors") renderAdminDashboard();
     if (tabName === "cloud") populateCloudConfigTextarea();
     updateTabBadges();
@@ -1781,14 +1782,87 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // Render Admissions & Messages in Dashboard Tab
+  const renderDashboardAdmissionsTable = () => {
+    const admTbody = document.getElementById("admin-dash-admissions-tbody");
+    const admEmpty = document.getElementById("admin-dash-admissions-empty");
+    const msgTbody = document.getElementById("admin-dash-messages-tbody");
+    const msgEmpty = document.getElementById("admin-dash-messages-empty");
+    const countAdmEl = document.getElementById("dash-admissions-count");
+    const countMsgEl = document.getElementById("dash-messages-count");
+
+    const admissions = window.SchoolDB && window.SchoolDB.getAdmissions ? window.SchoolDB.getAdmissions() : [];
+    const messages = window.SchoolDB && window.SchoolDB.getMessages ? window.SchoolDB.getMessages() : [];
+
+    if (countAdmEl) countAdmEl.textContent = toBnNum(admissions.length);
+    if (countMsgEl) countMsgEl.textContent = toBnNum(messages.length);
+
+    // 1. Render Admissions Table
+    if (admTbody) {
+      admTbody.innerHTML = "";
+      if (admissions.length === 0) {
+        if (admEmpty) admEmpty.style.display = "block";
+      } else {
+        if (admEmpty) admEmpty.style.display = "none";
+        admissions.forEach((adm, index) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td style="text-align: center; font-weight: 700; color: #94a3b8;">${toBnNum(index + 1)}</td>
+            <td><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 0.82rem;">${sanitizeHtml(adm.id)}</code></td>
+            <td><strong style="color: #0f172a;">${sanitizeHtml(adm.applicantName)}</strong></td>
+            <td><span class="badge-status badge-review" style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.78rem; background: #e0f2fe; color: #0369a1;">${sanitizeHtml(adm.desiredClass)}</span></td>
+            <td>
+              <div style="font-size: 0.85rem; color: #334155;">${sanitizeHtml(adm.guardianName || 'অনির্ধারিত')}</div>
+              <small style="color: #64748b;"><a href="tel:${sanitizeHtml(adm.guardianPhone)}">${sanitizeHtml(adm.guardianPhone)}</a></small>
+            </td>
+            <td style="font-size: 0.8rem; color: #64748b;">${sanitizeHtml(adm.submissionDate || 'আজ')}</td>
+            <td><span class="badge-status badge-pending-status" style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.78rem; background: #fef3c7; color: #b45309;">${sanitizeHtml(adm.status || 'Pending')}</span></td>
+          `;
+          admTbody.appendChild(tr);
+        });
+      }
+    }
+
+    // 2. Render Messages Table
+    if (msgTbody) {
+      msgTbody.innerHTML = "";
+      if (messages.length === 0) {
+        if (msgEmpty) msgEmpty.style.display = "block";
+      } else {
+        if (msgEmpty) msgEmpty.style.display = "none";
+        messages.forEach((msg, index) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td style="text-align: center; font-weight: 700; color: #94a3b8;">${toBnNum(index + 1)}</td>
+            <td style="font-size: 0.8rem; color: #64748b;">${sanitizeHtml(msg.date || msg.timestamp || 'আজ')}</td>
+            <td><strong style="color: #0f172a;">${sanitizeHtml(msg.name)}</strong></td>
+            <td><a href="tel:${sanitizeHtml(msg.phone || '')}" style="color: #2563eb; font-size: 0.85rem;">${sanitizeHtml(msg.phone || 'অনির্ধারিত')}</a></td>
+            <td>
+              <strong style="font-size: 0.84rem; color: #1e293b; display: block;">${sanitizeHtml(msg.subject || 'অনুসন্ধান')}</strong>
+              <p style="margin: 0; font-size: 0.78rem; color: #64748b; max-width: 320px; white-space: normal;">${sanitizeHtml(msg.message || '')}</p>
+            </td>
+            <td><span class="badge-status" style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.78rem; background: #fee2e2; color: #b91c1c;">${sanitizeHtml(msg.status || 'Unread')}</span></td>
+          `;
+          msgTbody.appendChild(tr);
+        });
+      }
+    }
+  };
+
   const updateTabBadges = () => {
     const vBadge = document.getElementById("tab-badge-visitors");
     const fBadge = document.getElementById("tab-badge-faculty");
     const mBadge = document.getElementById("tab-badge-memories");
+    const aBadge = document.getElementById("tab-badge-admissions-modal");
 
     if (vBadge) vBadge.textContent = toBnNum(getAllVisitorsLog().length);
     if (fBadge) fBadge.textContent = toBnNum(getSavedFaculty().length);
     if (mBadge) mBadge.textContent = toBnNum(getStoredMemories().length);
+    if (aBadge && window.SchoolDB) {
+      const adms = window.SchoolDB.getAdmissions ? window.SchoolDB.getAdmissions() : [];
+      const msgs = window.SchoolDB.getMessages ? window.SchoolDB.getMessages() : [];
+      aBadge.textContent = toBnNum(adms.length + msgs.length);
+    }
   };
 
   // Populate Batch Filter Dropdown for Dashboard Memories Tab
@@ -2993,9 +3067,106 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================================================================
-  // 10. Modal Utilities & Keyboard Accessibility
+  // 10. Modal Utilities, Online Admissions & Keyboard Accessibility
   // =========================================================================
-  window.openAdmissionModal = () => { };
+  const admissionModal = document.getElementById("admission-modal-overlay");
+  const formAdmission = document.getElementById("form-online-admission");
+
+  window.openAdmissionModal = () => {
+    if (admissionModal) {
+      admissionModal.classList.add("active");
+      admissionModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      setTimeout(() => {
+        document.getElementById("adm-student-name")?.focus();
+      }, 100);
+    }
+  };
+
+  window.closeAdmissionModal = () => {
+    if (admissionModal) {
+      admissionModal.classList.remove("active");
+      admissionModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+  };
+
+  admissionModal?.addEventListener("click", (e) => {
+    if (e.target === admissionModal) {
+      window.closeAdmissionModal();
+    }
+  });
+
+  // Admission form submit
+  if (formAdmission) {
+    formAdmission.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const studentName = document.getElementById("adm-student-name")?.value.trim() || "";
+      const desiredClass = document.getElementById("adm-desired-class")?.value || "";
+      const dob = document.getElementById("adm-dob")?.value || "";
+      const guardianName = document.getElementById("adm-guardian-name")?.value.trim() || "";
+      const guardianPhone = document.getElementById("adm-guardian-phone")?.value.trim() || "";
+      const prevSchool = document.getElementById("adm-prev-school")?.value.trim() || "";
+      const address = document.getElementById("adm-address")?.value.trim() || "";
+      const notes = document.getElementById("adm-notes")?.value.trim() || "";
+
+      if (!studentName || !desiredClass || !guardianPhone) {
+        showToast("অনুগ্রহ করে শিক্ষার্থীর নাম, শ্রেণি এবং অভিভাবকের ফোন নম্বর সঠিকভাবে পূরণ করুন।");
+        return;
+      }
+
+      const appId = "ADM-" + Math.floor(100000 + Math.random() * 900000);
+      const appRecord = {
+        id: appId,
+        applicantName: studentName,
+        desiredClass: desiredClass,
+        dob: dob,
+        guardianName: guardianName,
+        guardianPhone: guardianPhone,
+        previousSchool: prevSchool,
+        address: address,
+        notes: notes,
+        status: "Pending",
+        submissionDate: new Date().toLocaleDateString("bn-BD"),
+        timestamp: Date.now()
+      };
+
+      // 1. Save to Central Database Engine
+      if (window.SchoolDB && window.SchoolDB.submitAdmission) {
+        try {
+          window.SchoolDB.submitAdmission(appRecord);
+        } catch (err) {
+          console.error("SchoolDB admission save error:", err);
+        }
+      }
+
+      // 2. Broadcast to open Admin Dashboard tabs (0ms instant sync)
+      try {
+        if (typeof BroadcastChannel !== "undefined") {
+          const ch = new BroadcastChannel("ghoshgaon_visitor_sync");
+          ch.postMessage({ type: "NEW_ADMISSION", record: appRecord });
+        }
+      } catch (err) {}
+
+      // 3. Save to Firebase Firestore Cloud if active
+      if (isCloudActive && firestoreDb) {
+        firestoreDb.collection("admissions").doc(appRecord.id).set(appRecord).catch((err) => {
+          console.warn("Firestore admission cloud error:", err);
+        });
+      }
+
+      // 4. Update tab badges and admissions table if modal open
+      updateTabBadges();
+      renderDashboardAdmissionsTable();
+
+      // 5. Reset & Close
+      formAdmission.reset();
+      window.closeAdmissionModal();
+
+      // 6. Success notification
+      showToast(`🎉 ভর্তি আবেদন সফলভাবে দাখিল হয়েছে! আবেদন নম্বর #${appId}। প্রশাসন দ্রুত আপনার সাথে যোগাযোগ করবে।`);
+    });
+  }
 
   // Keyboard accessibility: Escape to close all modals, Arrow keys for gallery
   document.addEventListener("keydown", (e) => {
@@ -3003,6 +3174,9 @@ document.addEventListener("DOMContentLoaded", () => {
       closeLightbox();
       if (typeof window.closeMemoryModal === "function") {
         window.closeMemoryModal();
+      }
+      if (typeof window.closeAdmissionModal === "function") {
+        window.closeAdmissionModal();
       }
     }
     if (lightboxModal?.classList.contains("active")) {
@@ -3037,11 +3211,22 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (err) {}
       }
 
+      // Broadcast to open Admin Dashboard tabs (0ms instant sync)
+      try {
+        if (typeof BroadcastChannel !== "undefined") {
+          const ch = new BroadcastChannel("ghoshgaon_visitor_sync");
+          ch.postMessage({ type: "NEW_MESSAGE", record: msgObj });
+        }
+      } catch (err) {}
+
       if (isCloudActive && firestoreDb) {
         firestoreDb.collection("messages").doc(msgObj.id).set(msgObj).catch((err) => {
           console.warn("Cloud message sync error:", err);
         });
       }
+
+      updateTabBadges();
+      renderDashboardAdmissionsTable();
 
       inquiryForm.reset();
       showToast(`আপনার নোট ও বার্তা জমা হয়েছে! ধন্যবাদ ${parentName}। প্রতিষ্ঠান প্রশাসন দ্রুত আপনার সাথে যোগাযোগ করবে।`);

@@ -22,7 +22,7 @@
   <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
 
   <!-- Main Design System Stylesheet -->
-  <link rel="stylesheet" href="styles.css?v=20261029_r8">
+  <link rel="stylesheet" href="styles.css?v=20261030_r2">
 
   <!-- Clean Light Mode Initialization -->
   <script>
@@ -183,6 +183,18 @@
               <span class="nav-arrow-mobile">›</span>
             </a>
           </div>
+          <div class="nav-item">
+            <a href="javascript:void(0)" class="nav-link" onclick="openAdmissionModal()">
+              <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+              <span>ভর্তি আবেদন</span>
+              <span class="nav-arrow-mobile">›</span>
+            </a>
+          </div>
         </div>
 
 
@@ -190,7 +202,9 @@
 
       <!-- Action Buttons (Theme Toggle & Contact) -->
       <div class="nav-actions">
-
+        <button type="button" class="btn btn-gold btn-sm btn-nav-admission" id="btn-open-admission-modal" onclick="openAdmissionModal()">
+          <span>📝 ভর্তি আবেদন</span>
+        </button>
 
         <a href="#contact" class="btn btn-primary btn-sm btn-nav-contact">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -265,6 +279,9 @@
           </div>
 
           <div class="hero-actions">
+            <button type="button" class="btn btn-gold btn-lg" onclick="openAdmissionModal()">
+              <span>📝 অনলাইন ভর্তি আবেদন</span>
+            </button>
             <a href="#contact" class="btn btn-primary btn-lg">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path
@@ -1401,6 +1418,9 @@
             <h3 data-i18n="inq_form_title">অভিযোগ বা ভর্তি নোট পাঠান</h3>
             <p data-i18n="inq_form_desc">ভর্তি তথ্য, যেকোনো পরামর্শ বা সুনির্দিষ্ট অভিযোগ থাকলে নিচের ফরমটিতে আপনার নাম,
               নম্বর ও নোট লিখে জমা দিন। আমাদের প্রশাসন দ্রুত যোগাযোগ করবে।</p>
+            <div style="background: rgba(200, 157, 61, 0.12); border: 1px dashed rgba(200, 157, 61, 0.4); border-radius: 8px; padding: 0.65rem 0.85rem; margin-bottom: 1.25rem; font-size: 0.84rem; color: #1e293b;">
+              <span>📝 নতুন সেশনে সরাসরি ভর্তির জন্য: <a href="javascript:void(0)" onclick="openAdmissionModal()" style="color: #b45309; font-weight: 700; text-decoration: underline;">অনলাইন ভর্তি আবেদন ফরম পূরণ করুন ➜</a></span>
+            </div>
 
             <form id="contact-inquiry-form">
               <div class="form-group-row">
@@ -1971,6 +1991,17 @@
           <span class="dash-tab-badge" id="tab-badge-memories">০</span>
         </button>
 
+        <button type="button" class="admin-dash-tab-btn" data-dash-tab="admissions" role="tab" aria-selected="false">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          <span>ভর্তি ও বার্তা</span>
+          <span class="dash-tab-badge" id="tab-badge-admissions-modal">০</span>
+        </button>
+
         <button type="button" class="admin-dash-tab-btn" data-dash-tab="cloud" role="tab" aria-selected="false">
           <span class="dash-cloud-indicator" id="dash-cloud-indicator">🟡</span>
           <span>Firebase ক্লাউড সেটিংস</span>
@@ -2271,6 +2302,78 @@
             </div>
           </div>
         </div>
+
+        <!-- PANE 5: ADMISSIONS & CONTACT INQUIRIES -->
+        <div class="admin-dash-tab-pane" id="dash-pane-admissions" style="display: none; flex-direction: column; gap: 1.25rem;">
+          <div class="admin-dash-toolbar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+            <div>
+              <h4 style="margin: 0; font-size: 1.05rem; color: #0f172a;">📝 নতুন শিক্ষার্থী ভর্তি আবেদন ও যোগাযোগ তালিকা</h4>
+              <p style="margin: 3px 0 0 0; font-size: 0.8rem; color: #64748b;">ওয়েবসাইট থেকে শিক্ষার্থী বা অভিভাবক ফর্ম জমা দিলে তাৎক্ষণিক এখানে এবং /admin ড্যাশবোর্ডে রিয়েল-টাইমে যুক্ত হয়।</p>
+            </div>
+            <a href="admin/index.html" target="_blank" class="btn btn-sm btn-gold" style="text-decoration: none;">
+              <span>পূর্ণাঙ্গ ERP অ্যাডমিন প্যানেল (/admin) ➜</span>
+            </a>
+          </div>
+
+          <!-- Section 1: Admissions -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <strong style="color: #0f172a; font-size: 0.95rem;">🎓 নতুন অনলাইন ভর্তি আবেদনসমূহ (<span id="dash-admissions-count">০</span> টি)</strong>
+            </div>
+            <div class="admin-dash-table-wrapper">
+              <table class="admin-dash-table">
+                <thead>
+                  <tr>
+                    <th style="width: 50px; text-align: center;">#</th>
+                    <th>আবেদন আইডি</th>
+                    <th>শিক্ষার্থীর পূর্ণ নাম</th>
+                    <th>আবেদিত শ্রেণি</th>
+                    <th>অভিভাবকের নাম ও মোবাইল</th>
+                    <th>আবেদনের তারিখ</th>
+                    <th>স্ট্যাটাস</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-dash-admissions-tbody">
+                  <!-- Dynamically populated via JavaScript -->
+                </tbody>
+              </table>
+              <div class="admin-dash-empty-state" id="admin-dash-admissions-empty" style="display: none;">
+                <div class="empty-icon-circle">📝</div>
+                <h4>এখনও কোনো ভর্তি আবেদন জমা পড়েনি</h4>
+                <p>শিক্ষার্থী ওয়েবসাইটে ভর্তি আবেদন ফরম পূরণ করলে তাৎক্ষণিক এখানে তালিকাভুক্ত হবে।</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Contact Inquiries / Messages -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <strong style="color: #0f172a; font-size: 0.95rem;">✉️ অভিভাবক ও দর্শনার্থী বার্তা / অভিযোগ (<span id="dash-messages-count">০</span> টি)</strong>
+            </div>
+            <div class="admin-dash-table-wrapper">
+              <table class="admin-dash-table">
+                <thead>
+                  <tr>
+                    <th style="width: 50px; text-align: center;">#</th>
+                    <th>তারিখ ও সময়</th>
+                    <th>প্রেরকের নাম</th>
+                    <th>মোবাইল নম্বর</th>
+                    <th>বিষয় ও বার্তা</th>
+                    <th>স্ট্যাটাস</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-dash-messages-tbody">
+                  <!-- Dynamically populated via JavaScript -->
+                </tbody>
+              </table>
+              <div class="admin-dash-empty-state" id="admin-dash-messages-empty" style="display: none;">
+                <div class="empty-icon-circle">✉️</div>
+                <h4>এখনও কোনো বার্তা বা অভিযোগ জমা পড়েনি</h4>
+                <p>ওয়েবসাইটের যোগাযোগ ফরম থেকে নোট বা বার্তা পাঠালে এখানে দেখা যাবে।</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Modal Bottom Bar -->
@@ -2281,6 +2384,115 @@
         <div class="admin-dash-footer-actions">
           <button type="button" class="btn btn-secondary" id="btn-close-dashboard-bottom">ড্যাশবোর্ড বন্ধ করুন</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: ONLINE ADMISSION APPLICATION (অনলাইন শিক্ষার্থী ভর্তি আবেদন ফরম)
+       ======================================================================== -->
+  <div class="modal-overlay admission-modal-overlay" id="admission-modal-overlay" aria-hidden="true" role="dialog"
+    aria-labelledby="admission-modal-title">
+    <div class="modal-container admission-modal-container">
+      <button class="modal-close-btn" id="btn-close-admission-modal" aria-label="ভর্তি ফরম বন্ধ করুন" type="button"
+        onclick="closeAdmissionModal()" title="বন্ধ করুন (Esc)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-header-content admission-modal-header">
+        <div class="admission-modal-badge">
+          <span>📝 শিক্ষাবর্ষ ২০২৬ • নতুন শিক্ষার্থী ভর্তি আবেদন</span>
+        </div>
+        <h3 id="admission-modal-title">ঘোষগাঁও শেরে বাংলা উচ্চ বিদ্যালয়ে ভর্তি আবেদন</h3>
+        <p>সঠিক তথ্য দিয়ে ফরমটি পূরণ করে জমা দিন। আবেদন নম্বরটি সংরক্ষণ করুন, প্রশাসন দ্রুত যোগাযোগ করবে।</p>
+      </div>
+
+      <div class="modal-body-content">
+        <form id="form-online-admission" class="admission-form">
+          <div class="form-group-row">
+            <div class="form-group">
+              <label class="form-label" for="adm-student-name">
+                <span class="label-badge-icon">👤</span> শিক্ষার্থীর পূর্ণ নাম <span class="req-star">*</span>
+              </label>
+              <input type="text" id="adm-student-name" class="form-input" placeholder="উদাঃ মোঃ তানভীর আহমেদ" required autocomplete="name">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="adm-desired-class">
+                <span class="label-badge-icon">🏛️</span> ভর্তি হতে ইচ্ছুক শ্রেণি <span class="req-star">*</span>
+              </label>
+              <select id="adm-desired-class" class="form-select" required>
+                <option value="" disabled selected>শ্রেণি নির্বাচন করুন...</option>
+                <option value="Class 6">ষষ্ঠ শ্রেণি (Class 6)</option>
+                <option value="Class 7">সপ্তম শ্রেণি (Class 7)</option>
+                <option value="Class 8">অষ্টম শ্রেণি (Class 8)</option>
+                <option value="Class 9 (Science)">নবম শ্রেণি (বিজ্ঞান বিভাগ)</option>
+                <option value="Class 9 (Arts)">নবম শ্রেণি (মানবিক বিভাগ)</option>
+                <option value="Class 10 (Science)">দশম শ্রেণি (বিজ্ঞান বিভাগ)</option>
+                <option value="Class 10 (Arts)">দশম শ্রেণি (মানবিক বিভাগ)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group-row">
+            <div class="form-group">
+              <label class="form-label" for="adm-dob">
+                <span class="label-badge-icon">📅</span> জন্ম তারিখ <span class="req-star">*</span>
+              </label>
+              <input type="date" id="adm-dob" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="adm-guardian-name">
+                <span class="label-badge-icon">👨‍👩‍👧</span> পিতা / মাতা / অভিভাবকের নাম <span class="req-star">*</span>
+              </label>
+              <input type="text" id="adm-guardian-name" class="form-input" placeholder="উদাঃ মো. রফিকুল ইসলাম" required>
+            </div>
+          </div>
+
+          <div class="form-group-row">
+            <div class="form-group">
+              <label class="form-label" for="adm-guardian-phone">
+                <span class="label-badge-icon">📞</span> অভিভাবকের মোবাইল নম্বর <span class="req-star">*</span>
+              </label>
+              <input type="tel" id="adm-guardian-phone" class="form-input" placeholder="উদাঃ ০১৭১২-৩৪৫৬৭৮" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="adm-prev-school">
+                <span class="label-badge-icon">🏫</span> পূর্ববর্তী শিক্ষা প্রতিষ্ঠানের নাম
+              </label>
+              <input type="text" id="adm-prev-school" class="form-input" placeholder="উদাঃ ঘোষগাঁও সরকারি প্রাথমিক বিদ্যালয়">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="adm-address">
+              <span class="label-badge-icon">📍</span> বর্তমান ঠিকানা ও গ্রাম <span class="req-star">*</span>
+            </label>
+            <input type="text" id="adm-address" class="form-input" placeholder="গ্রাম: ঘোষগাঁও, ডাকঘর: ঘোষগাঁও, ধোবাউড়া, ময়মনসিংহ" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="adm-notes">
+              <span class="label-badge-icon">💬</span> অতিরিক্ত তথ্য বা আবেদন নোট (ঐচ্ছিক)
+            </label>
+            <textarea id="adm-notes" class="form-textarea" rows="2" placeholder="ভর্তি সংক্রান্ত কোনো বিশেষ তথ্য থাকলে লিখুন..."></textarea>
+          </div>
+
+          <div class="modal-btn-row" style="margin-top: 1.25rem;">
+            <button type="button" class="btn btn-secondary" onclick="closeAdmissionModal()">বাতিল</button>
+            <button type="submit" class="btn btn-gold btn-lg" id="btn-submit-admission" style="flex: 1;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>ভর্তি আবেদন জমা দিন</span>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -2842,10 +3054,10 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
   <!-- Shared School Database Engine (Persistent CRUD & Settings) -->
-  <script src="admin/db.js?v=20261029_r8"></script>
+  <script src="admin/db.js?v=20261030_r2"></script>
 
   <!-- JavaScript Interactions -->
-  <script src="script.js?v=20261029_r8"></script>
+  <script src="script.js?v=20261030_r2"></script>
 </body>
 
 </html>

@@ -37,6 +37,22 @@
               this.updateBadgesAndKPIs();
               if (this.currentView === 'overview') this.renderOverview();
               if (this.currentView === 'visitors') this.renderVisitors();
+            } else if (evt.data && evt.data.type === 'NEW_ADMISSION' && evt.data.record) {
+              if (window.SchoolDB && window.SchoolDB.submitAdmission) {
+                window.SchoolDB.submitAdmission(evt.data.record);
+              }
+              this.updateBadgesAndKPIs();
+              if (this.currentView === 'overview') this.renderOverview();
+              if (this.currentView === 'admissions') this.renderAdmissions();
+              this.showToast(`📝 নতুন ভর্তি আবেদন: ${evt.data.record.applicantName} (${evt.data.record.desiredClass})`);
+            } else if (evt.data && evt.data.type === 'NEW_MESSAGE' && evt.data.record) {
+              if (window.SchoolDB && window.SchoolDB.submitMessage) {
+                window.SchoolDB.submitMessage(evt.data.record);
+              }
+              this.updateBadgesAndKPIs();
+              if (this.currentView === 'overview') this.renderOverview();
+              if (this.currentView === 'messages') this.renderMessages();
+              this.showToast(`📩 নতুন বার্তা: ${evt.data.record.name}`);
             }
           };
         }
@@ -54,6 +70,8 @@
           this.updateBadgesAndKPIs();
           if (this.currentView === 'overview') this.renderOverview();
           if (this.currentView === 'visitors') this.renderVisitors();
+          if (this.currentView === 'admissions') this.renderAdmissions();
+          if (this.currentView === 'messages') this.renderMessages();
         }
       });
 
@@ -200,6 +218,24 @@
             }
           }
         }, (err) => console.warn('Messages snapshot error:', err));
+
+        // Real-time listener on admissions collection across all devices
+        db.collection('admissions').orderBy('timestamp', 'desc').limit(200).onSnapshot((snapshot) => {
+          if (snapshot && !snapshot.empty) {
+            const cloudAdms = [];
+            snapshot.forEach((doc) => {
+              const d = doc.data();
+              if (d && (d.id || d.applicantName)) cloudAdms.push(d);
+            });
+            if (cloudAdms.length > 0) {
+              window.SchoolDB.data.admissions = cloudAdms;
+              window.SchoolDB.save();
+              this.updateBadgesAndKPIs();
+              if (this.currentView === 'overview') this.renderOverview();
+              if (this.currentView === 'admissions') this.renderAdmissions();
+            }
+          }
+        }, (err) => console.warn('Admissions snapshot error:', err));
       } catch (err) {
         console.error('Firebase init error in admin:', err);
       }
