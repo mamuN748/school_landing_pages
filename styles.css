@@ -1181,6 +1181,16 @@ h6 {
   border-color: rgba(255, 255, 255, 0.08);
 }
 
+[data-theme="dark"] .teachers-section::before {
+  background: linear-gradient(
+    180deg,
+    rgba(14, 10, 13, 0.94) 0%,
+    rgba(22, 14, 18, 0.88) 35%,
+    rgba(25, 15, 20, 0.86) 65%,
+    rgba(14, 10, 13, 0.96) 100%
+  );
+}
+
 [data-theme="dark"] .faculty-status-bar {
   background: #191217;
   border-color: rgba(255, 255, 255, 0.1);
@@ -4069,9 +4079,47 @@ h6,
    Interactive Teacher Option Button, Head Master at first, and Square Photos
    ========================================================================== */
 .teachers-section {
+  position: relative;
   padding-block: 6rem;
-  background-color: #ffffff;
+  background-color: #faf7f2;
+  background-image: url('teachers-bg.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  isolation: isolate;
+  border-top: 1px solid rgba(200, 157, 61, 0.18);
+  border-bottom: 1px solid rgba(200, 157, 61, 0.18);
 }
+
+.teachers-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.94) 0%,
+    rgba(253, 248, 242, 0.88) 25%,
+    rgba(250, 244, 236, 0.85) 50%,
+    rgba(253, 248, 242, 0.89) 75%,
+    rgba(255, 255, 255, 0.96) 100%
+  );
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .teachers-section {
+    background-attachment: fixed;
+  }
+}
+
+.teachers-section > .container {
+  position: relative;
+  z-index: 1;
+}
+
 
 /* User-Friendly Compact Teacher Option Button */
 .teacher-action-bar {
